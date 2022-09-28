@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<section class="container">
+    <div class="row align-items-center">
+        <div class="col-lg-6 justify-content-center">
+            <h1 class="display-4 fw-bold mt-5 mt-lg-0">Carpool to hundreds of destinations at low prices</h1>
+            @Html.ActionLink("Pick A Ride", "Index", "Home",null, new { @class = "btn btn-lg btn-primary mt-4 px-5 fw-bold" })
+        </div>
+        <div class="col-lg-6">
+            <img src="~/Content/Images/car.png" class="img-fluid" alt="background car" />
+        </div>
+    </div>
+</section>
+
+<hr class="container" />
+
+<section class="container">
+    <div class="row align-items-center text-center p-4">
+        <div class="col-md-8 justify-content-center">
+            <h2 class="mb-4 px-5 fw-bold">Travel in a Secure and Trustworthy Way</h2>
+        </div>
+        <div class="col-md-4 justify-content-center">
+            <img src="~/Content/Images/security.png" class="img-fluid" alt="security" />
+        </div>
+    </div>
+
+    <div class="row align-items-center text-center p-4">
+        <div class="col-md-8 justify-content-center order-md-2 px-5">
+            <h2 class="mb-4 px-5 fw-bold">
+                Over <b class="display-6 fw-bold">7,600</b> Metric Tonnes
+                of CO2 saved since 2015
+            </h2>
+        </div>
+        <div class="col-md-4 justify-content-center order-md-1">
+            <img src="~/Content/Images/earth.png" class="img-fluid px-2" alt="pollution" />
+        </div>
+    </div>
+
+    <div class="row align-items-center text-center p-4">
+        <div class="col-md-8 justify-content-center">
+            <h2 class="mb-4 px-5 fw-bold">Cut your expenses by nearly <b class="display-6 fw-bold">50%</b> or more</h2>
+        </div>
+        <div class="col-md-4 justify-content-center">
+            <img src="~/Content/Images/money.png" class="img-fluid" alt="money" />
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="row align-items-center">
+        <div class="col-lg-6 order-md-2 justify-content-center">
+            <h1 class="display-4 fw-bold mt-5 mt-lg-0">Driving somewhere?</h1>
+            <h5>Save on travel costs by sharing your ride with passengers.</h5>
+            @Html.ActionLink("Share Your Ride", "Index", "Home",null, new { @class = "btn btn-lg btn-primary mt-4 px-5 fw-bold" })
+        </div>
+        <div class="col-lg-6 order-md-1">
+            <img src="~/Content/Images/driver.png" class="img-fluid" alt="background car" />
+        </div>
+    </div>
+</section>

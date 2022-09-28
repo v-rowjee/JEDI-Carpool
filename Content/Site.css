@@ -1,0 +1,19 @@
+﻿* {
+    font-family: Verdana
+}
+
+:root {
+    --blue: #0099ff
+}
+
+.bg-blue {
+    background-color: var(--blue);
+}
+
+.logo {
+    height: 2.5rem;
+}
+
+.rounded-max {
+    border-radius: 5rem;
+}
