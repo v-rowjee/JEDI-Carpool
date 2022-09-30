@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Share";
+}
+
+<div class="container">
+    <h2 class="display-3 fw-bold">Share A Ride</h2>
+    <h4 class="mb-5">Cover your driving costs by filling your seats when you’re driving from A to B.</h4>
+
+    <div class="row align-items-center">
+        <div class="col-md-6 order-md-2">
+            <img src="~/Content/Images/map.png" class="img-fluid p-5" alt="map" />
+        </div>
+        <div class="col-md-6 order-md-1">
+            <h3 class="fw-bold">Itinerary</h3>
+            <p class="mb-5">Your origin, destination, and stops you're willing to make along the way.</p>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="origin" class="form-label">Origin</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" id="oAddress" class="form-control mb-3" placeholder="Address">
+                    <input type="text" id="oCity" class="form-control mb-3" placeholder="City">
+                    <input type="text" id="oCountry" class="form-control mb-3" placeholder="Country">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="destination" class="form-label">Destination</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" id="dAddress" class="form-control mb-3" placeholder="Address">
+                    <input type="text" id="dCity" class="form-control mb-3" placeholder="City">
+                    <input type="text" id="dCountry" class="form-control mb-3" placeholder="Country">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <img src="~/Content/Images/calendar.png" class="img-fluid p-5" alt="" />
+        </div>
+        <div class="col-md-6">
+            <h3 class="fw-bold">Ride Schedule</h3>
+            <p class="mb-5">Enter the precise date and time leaving your Origin mentioned above</p>
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="date" id="date" class="form-control"/>
+            </div>
+            <div class="mb-3">
+                <label for="time" class="form-label">Time</label>
+                <input type="time" id="time" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col-md-6 order-md-2">
+            <img src="~/Content//Images/wallet.png" class="img-fluid p-5" alt="Wallet" />
+        </div>
+        <div class="col-md-6 order-md-1">
+            <h3 class="fw-bold">Price per Seat</h3>
+            <p class="mb-5">We suggest prices based on similar trips. Note all prices are in MUR</p>
+            <div class="mb-3">
+                <label for="fare" class="form-label">Fare</label>
+                <input type="number" id="fare" class="form-control" placeholder="Rs" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

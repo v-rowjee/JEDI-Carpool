@@ -124,6 +124,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\RideController.cs" />
     <Compile Include="DAL\AccountDAL.cs" />
     <Compile Include="DAL\AppUserDAL.cs" />
     <Compile Include="BLL\AccountBL.cs" />
@@ -155,8 +156,12 @@
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
     <Content Include="Content\Bootstrap\bootstrap.rtl.css" />
     <Content Include="Content\Bootstrap\bootstrap.rtl.min.css" />
+    <Content Include="Content\Images\calendar.png" />
+    <Content Include="Content\Images\map.png" />
     <Content Include="Content\Images\register.png" />
     <Content Include="Content\Images\login.png" />
+    <Content Include="Content\Images\security.png" />
+    <Content Include="Content\Images\wallet.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -165,7 +170,6 @@
     <Content Include="Content\Images\earth.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\money.png" />
-    <Content Include="Content\Images\security.png" />
     <Content Include="Scripts\Bootstrap\bootstrap.bundle.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.bundle.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.esm.js" />
@@ -222,6 +226,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Shared\_GuestLayout.cshtml" />
+    <Content Include="Views\Ride\Share.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
