@@ -36,23 +36,12 @@
                         @Html.ActionLink("Tracker", "Index", "Home", null, new { @class = "nav-link" })
                     </li>
                 </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown me-3">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            @ViewBag.Account.FirstName @ViewBag.Account.LastName
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                @Html.ActionLink("Passenger Info", "Index", "Home", null, new { @class = "dropdown-item" })
-                            </li>
-                            <li>
-                                @Html.ActionLink("Driver Info", "Index", "Home", null, new { @class = "dropdown-item" })
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                @Html.ActionLink("Log Out", "Index", "Home", null, new { @class = "dropdown-item" })
-                            </li>
-                        </ul>
+               <ul class="navbar-nav">
+                    <li class="nav-item me-2">
+                        @Html.ActionLink("Login", "Index", "Login", null, new { @class = "btn btn-outline-primary" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Register", "Index", "Register", null, new { @class = "btn btn-primary" })
                     </li>
                 </ul>
             </div>

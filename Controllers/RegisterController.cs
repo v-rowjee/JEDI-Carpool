@@ -13,6 +13,11 @@ namespace JEDI_Carpool.Controllers
     {
         public ActionResult Index()
         {
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+            if (loggeduser != null)
+            {
+                return Redirect("Home/Index");
+            }
             return View();
         }
 

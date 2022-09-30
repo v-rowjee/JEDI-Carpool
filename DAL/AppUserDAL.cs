@@ -2,6 +2,7 @@
 using JEDI_Carpool.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -10,22 +11,23 @@ namespace JEDI_Carpool.DAL
 {
     public class AppUserDAL
     {
-        public const string AuthenticateUserQuery = @"
+        private const string AuthenticateUserQuery = @"
             SELECT acc.*
             FROM [dbo].[Account] acc with(nolock) INNER JOIN [dbo].[AppUser] au with(nolock) ON acc.[AccountId]=au.[AccountId] 
             WHERE acc.[Email] = @Email AND au.[Password] = @Password ";
 
-        public const string RegisterUserQuery = @"
+        private const string RegisterUserQuery = @"
             DECLARE @LocId INT;
-            IF NOT EXISTS (SELECT * FROM [dbo].[Location] WHERE Address=@Address AND City=@City AND Country=@Country)
-            BEGIN
-                INSERT INTO [dbo].[Location] ([Address] ,[City] ,[Country])
-                VALUES (@Address ,@City ,@Country);
-                SET @LocId = SCOPE_IDENTITY()
-            END
-            ELSE BEGIN
-                SET @LocId = (SELECT [LocationId] FROM [dbo].[Location] WHERE Address=@Address AND City=@City AND Country=@Country)
-            END
+            IF NOT EXISTS (SELECT * FROM [dbo].[Location] WHERE [Address]=@Address AND [City]=@City AND [Country]=@Country)
+                BEGIN
+                    INSERT INTO [dbo].[Location] ([Address] ,[City] ,[Country])
+                    VALUES (@Address ,@City ,@Country);
+                    SET @LocId = SCOPE_IDENTITY()
+                END
+            ELSE 
+                BEGIN
+                    SET @LocId = (SELECT [LocationId] FROM [dbo].[Location] WHERE [Address]=@Address AND [City]=@City AND [Country]=@Country)
+                END
 
             INSERT INTO [dbo].[Account] ([FirstName] ,[LastName] ,[Email] ,[AddressId])
             VALUES (@FirstName ,@LastName ,@Email ,@LocId);
@@ -60,5 +62,6 @@ namespace JEDI_Carpool.DAL
 
             return true;
         }
+
     }
 }

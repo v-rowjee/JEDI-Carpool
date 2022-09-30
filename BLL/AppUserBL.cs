@@ -7,7 +7,7 @@ using System.Web;
 
 namespace JEDI_Carpool.BLL
 {
-    public class AppUserBL
+    public static class AppUserBL
     {
         public static bool AuthenticateUser(LoginViewModel model)
         {
