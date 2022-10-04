@@ -1,4 +1,5 @@
-﻿using JEDI_Carpool.DAL.Common;
+﻿using JEDI_Carpool.BLL;
+using JEDI_Carpool.DAL.Common;
 using JEDI_Carpool.Models;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,30 @@ namespace JEDI_Carpool.Controllers
             }
 
             return homeView;
+        }
+
+        [HttpPost]
+        public JsonResult Share(ShareRideViewModel model)
+        {
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+            if (loggeduser != null)
+            {
+                var result = RideBL.Share(model);
+
+                if (result)
+                {
+                    return Json(new { result = "Success", url = Url.Action("Index", "Home") });
+
+                }
+                else
+                {
+                    return Json(new { result = "Error" });
+                }
+            }
+            else
+            {
+                return Json(new { result = "ToLogin", url = Url.Action("Index", "Login") });
+            }
         }
 
     }
