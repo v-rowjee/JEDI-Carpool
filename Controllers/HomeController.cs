@@ -14,21 +14,21 @@ namespace JEDI_Carpool.Controllers
         public ActionResult Index()
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
-            var homeView = View();
+            var view = View();
 
             if (loggeduser != null)
             {
                 var data = AccountBL.GetAccountDetails(loggeduser);
                 ViewBag.Account = data;
 
-                homeView.MasterName = "~/Views/Shared/_Layout.cshtml";
+                view.MasterName = "~/Views/Shared/_Layout.cshtml";
             }
             else
             {
-                homeView.MasterName = "~/Views/Shared/_GuestLayout.cshtml";
+                view.MasterName = "~/Views/Shared/_GuestLayout.cshtml";
             }
 
-            return homeView;
+            return view;
         }
 
     }

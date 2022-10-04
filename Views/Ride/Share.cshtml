@@ -3,6 +3,10 @@
     ViewBag.Title = "Share";
 }
 
+@section scripts {
+    <script src="~/Scripts/share.js"></script>
+}
+
 <div class="container">
     <h2 class="display-3 fw-bold">Share A Ride</h2>
     <h5 class="mb-5">Cover your driving costs by filling your seats when you’re driving from A to B.</h5>
@@ -82,7 +86,7 @@
                 <p class="mb-5">Add any details relevant to your trip for passengers before they book.</p>
                 <div class="mb-3">
                     <label for="comment" class="form-label">Comment</label>
-                    <textarea class="form-control" rows="5" placeholder="Comment"></textarea>
+                    <textarea class="form-control" rows="5" id="comment" placeholder="Comment"></textarea>
                 </div>
             </div>
         </div>

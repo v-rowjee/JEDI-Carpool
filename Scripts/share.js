@@ -33,7 +33,7 @@
         $.ajax({
             type: "POST",
             url: "/Ride/Share",
-            data: formData,
+            data: FormData,
             dataType: "json",
             success: (response) => {
                 if (response.result == "Success") {

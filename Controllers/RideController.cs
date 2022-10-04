@@ -11,45 +11,44 @@ namespace JEDI_Carpool.Controllers
 {
     public class RideController : Controller
     {
-        // GET: Ride
         public ActionResult Index()
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
-            var homeView = View();
+            var view = View();
 
             if (loggeduser != null)
             {
                 var data = AccountBL.GetAccountDetails(loggeduser);
                 ViewBag.Account = data;
 
-                homeView.MasterName = "~/Views/Shared/_Layout.cshtml";
+                view.MasterName = "~/Views/Shared/_Layout.cshtml";
             }
             else
             {
-                homeView.MasterName = "~/Views/Shared/_GuestLayout.cshtml";
+                view.MasterName = "~/Views/Shared/_GuestLayout.cshtml";
             }
 
-            return homeView;
+            return view;
         }
 
         public ViewResult Share()
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
-            var homeView = View();
+            var view = View();
 
             if (loggeduser != null)
             {
                 var data = AccountBL.GetAccountDetails(loggeduser);
                 ViewBag.Account = data;
 
-                homeView.MasterName = "~/Views/Shared/_Layout.cshtml";
+                view.MasterName = "~/Views/Shared/_Layout.cshtml";
             }
             else
             {
-                homeView.MasterName = "~/Views/Shared/_GuestLayout.cshtml";
+                view.MasterName = "~/Views/Shared/_GuestLayout.cshtml";
             }
 
-            return homeView;
+            return view;
         }
 
         [HttpPost]
@@ -58,6 +57,9 @@ namespace JEDI_Carpool.Controllers
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
             if (loggeduser != null)
             {
+                var account = AccountBL.GetAccountDetails(loggeduser);
+                model.DriverId = account.AccountId;
+
                 var result = RideBL.Share(model);
 
                 if (result)

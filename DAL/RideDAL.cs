@@ -11,8 +11,8 @@ namespace JEDI_Carpool.DAL
     public class RideDAL
     {
         private const string CreateRideQuery = @"
-            DECLARE OrgId INT;
-            DECLARE DestId INT;
+            DECLARE @OrgId INT;
+            DECLARE @DestId INT;
 
             IF NOT EXISTS (SELECT * FROM Location WHERE Address=@OAddress AND City=@OCity AND Country=@OCountry)
                 BEGIN
@@ -30,7 +30,7 @@ namespace JEDI_Carpool.DAL
             ELSE
                 SET @DestId = (SELECT LocationId FROM Location WHERE Address=@DAddress AND City=@Dcity AND Country=@DCountry)
 
-            INSERT INTO Ride (DriverId, OriginId, DestinationId, DateTime, Fare) VALUES (@DriverId, @OrgId, @DestId, @DateTime, @Fare)
+            INSERT INTO Ride (DriverId, OriginId, DestinationId, DateTime, Fare, Comment) VALUES (@DriverId, @OrgId, @DestId, @DateTime, @Fare, @Comment)
 
 ";
         public static bool Share(ShareRideViewModel model)

@@ -233,6 +233,7 @@
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Shared\_GuestLayout.cshtml" />
     <Content Include="Views\Ride\Share.cshtml" />
+    <Content Include="Views\Ride\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
