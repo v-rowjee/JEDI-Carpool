@@ -5,14 +5,17 @@
 
 <div class="container">
     <h2 class="display-3 fw-bold">Share A Ride</h2>
-    <h4 class="mb-5">Cover your driving costs by filling your seats when you’re driving from A to B.</h4>
+    <h5 class="mb-5">Cover your driving costs by filling your seats when you’re driving from A to B.</h5>
 
     <div class="row align-items-center">
         <div class="col-md-6 order-md-2">
-            <img src="~/Content/Images/map.png" class="img-fluid p-5" alt="map" />
+            <img src="~/Content/Images/map.png" class="img-fluid px-5" alt="map" />
         </div>
         <div class="col-md-6 order-md-1">
-            <h3 class="fw-bold">Itinerary</h3>
+            <h3 class="fw-bold">
+                <i class="fa-solid fa-location-dot me-2"></i>
+                Itinerary
+            </h3>
             <p class="mb-5">Your origin, destination, and stops you're willing to make along the way.</p>
             <div class="row mb-3">
                 <div class="col-md-4">
@@ -39,14 +42,14 @@
 
     <div class="row align-items-center">
         <div class="col-md-6">
-            <img src="~/Content/Images/calendar.png" class="img-fluid p-5" alt="" />
+            <img src="~/Content/Images/calendar.png" class="img-fluid px-5" alt="" />
         </div>
         <div class="col-md-6">
-            <h3 class="fw-bold">Ride Schedule</h3>
+            <h3 class="fw-bold"><i class="fa-solid fa-clock me-3"></i>Ride Schedule</h3>
             <p class="mb-5">Enter the precise date and time leaving your Origin mentioned above</p>
             <div class="mb-3">
                 <label for="date" class="form-label">Date</label>
-                <input type="date" id="date" class="form-control"/>
+                <input type="date" id="date" class="form-control" />
             </div>
             <div class="mb-3">
                 <label for="time" class="form-label">Time</label>
@@ -57,10 +60,10 @@
 
     <div class="row align-items-center">
         <div class="col-md-6 order-md-2">
-            <img src="~/Content//Images/wallet.png" class="img-fluid p-5" alt="Wallet" />
+            <img src="~/Content//Images/wallet.png" class="img-fluid px-5" alt="Wallet" />
         </div>
         <div class="col-md-6 order-md-1">
-            <h3 class="fw-bold">Price per Seat</h3>
+            <h3 class="fw-bold"><i class="fa-solid fa-money-check-dollar me-3"></i>Price per Seat</h3>
             <p class="mb-5">We suggest prices based on similar trips. Note all prices are in MUR</p>
             <div class="mb-3">
                 <label for="fare" class="form-label">Fare</label>
@@ -69,6 +72,32 @@
         </div>
     </div>
 
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <img src="~/Content//Images/notes.png" class="img-fluid px-5" alt="Notes" />
+        </div>
+        <div class="col-md-6">
+            <h3 class="fw-bold"><i class="fa-solid fa-circle-info me-3"></i>Additional Details</h3>
+            <p class="mb-5">Add any details relevant to your trip for passengers before they book.</p>
+            <div class="mb-3">
+                <label for="comment" class="form-label">Comment</label>
+                <textarea class="form-control" rows="5" placeholder="Comment"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col-md-6 order-md-2">
+            <img src="~/Content//Images/confirm.png" class="img-fluid px-5" alt="Confirm" />
+        </div>
+        <div class="col-md-6 order-md-1">
+            <h3 class="fw-bold"><i class="fa-solid fa-circle-check me-3"></i>Confirm Ride</h3>
+            <p class="text-muted my-4">
+                By clicking on the button below, I agree to these rules, to the Driver Cancellation Policy, Terms of Service and the Privacy Policy.    
+            </p>
+            <input type="submit" id="submit" class="btn btn-primary px-5" value="Share Ride" />
+        </div>
+    </div>
 </div>
 
 

@@ -157,7 +157,9 @@
     <Content Include="Content\Bootstrap\bootstrap.rtl.css" />
     <Content Include="Content\Bootstrap\bootstrap.rtl.min.css" />
     <Content Include="Content\Images\calendar.png" />
+    <Content Include="Content\Images\confirm.png" />
     <Content Include="Content\Images\map.png" />
+    <Content Include="Content\Images\notes.png" />
     <Content Include="Content\Images\register.png" />
     <Content Include="Content\Images\login.png" />
     <Content Include="Content\Images\security.png" />
