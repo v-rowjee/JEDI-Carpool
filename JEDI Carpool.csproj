@@ -137,8 +137,11 @@
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\CarModel.cs" />
+    <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Models\RideViewModel.cs" />
+    <Compile Include="Models\SearchRideViewModel.cs" />
     <Compile Include="Models\ShareRideViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -159,6 +162,7 @@
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
     <Content Include="Content\Bootstrap\bootstrap.rtl.css" />
     <Content Include="Content\Bootstrap\bootstrap.rtl.min.css" />
+    <Content Include="Content\Images\background.png" />
     <Content Include="Content\Images\calendar.png" />
     <Content Include="Content\Images\confirm.png" />
     <Content Include="Content\Images\map.png" />
@@ -216,6 +220,7 @@
     <Content Include="Scripts\login.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\register.js" />
+    <Content Include="Scripts\search.js" />
     <Content Include="Scripts\share.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

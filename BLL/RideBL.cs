@@ -13,5 +13,11 @@ namespace JEDI_Carpool.BLL
         {
             return RideDAL.Share(model);
         }
+
+        public static List<RideViewModel> Search(SearchRideViewModel model)
+        {
+            return RideDAL.Search(model);
+        }
+
     }
 }

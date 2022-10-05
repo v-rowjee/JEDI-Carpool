@@ -78,5 +78,20 @@ namespace JEDI_Carpool.Controllers
             }
         }
 
+
+        [HttpPost]
+        public JsonResult Search(SearchRideViewModel model)
+        {
+            var rides = RideBL.Search(model);
+            if(rides != null)
+            {
+                return Json(new { result = true, data = rides });
+            }
+            else
+            {
+                return Json(new { result = false });
+            }
+        }
+
     }
 }
