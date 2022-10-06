@@ -36,41 +36,48 @@
             success: (response) => {
                 if (response.result) {
                     $("#rides").html('');
-                    $.each(response.data, (i,ride) => {
+                    $.each(response.data, (i, ride) => {
                         $("#rides").append(`
                             <div class="col-md-6">
                                 <div class="card shadow-sm mb-5">
-                                    <div class="card-body">
-                                        <h5 class="fw-bold">
-                                            <i class="fa-solid fa-user me-2"></i>
-                                            ${ride.Driver.FirstName} ${ride.Driver.LastName}
-                                        </h5>
-                                        <p>
-                                            <i class="fa-solid fa-car-side me-2"></i>
-                                            ${ride.Car.Model} (${ride.Car.Year})
-                                        </p>
-                                        <p>
-                                            <i class="fa-solid fa-circle-dollar-to-slot"></i>
-                                            ${ride.Fare}
-                                        </p>
-                                        <p>
-                                            <i class="fa-solid fa-location-dot"></i>
-                                            ${ride.Origin.Address}, ${ride.Origin.City}
-                                            -   
-                                            ${ride.Destination.Address}, ${ride.Destination.City}
-                                        </p>
-                                        <p>
-                                            <i class="fa-solid fa-calendar-days"></i>
-                                            ${Date.parse(ride.DateTime)}
-                                        </p>
-                                        <p>
-                                            <i class="fa-solid fa-clock"></i>
-                                            ${Date.parse(ride.DateTime)}
-                                        </p>
+                                    <div class="card-body p-0">
+                                        <div class="card-header">
+                                            <div class="row pt-2">
+                                                <div class="col">
+                                                    <h5 class="fw-bold">
+                                                        <i class="fa-solid fa-user me-2"></i>
+                                                        ${ride.Driver.FirstName} ${ride.Driver.LastName}
+                                                    </h5>
+                                                </div>
+                                                <div class="col text-end">
+                                                    <h5 class="fw-bold">
+                                                        <i class="fa-solid fa-circle-dollar-to-slot me-2"></i>
+                                                        ${ride.Fare}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>
+                                                <i class="fa-solid fa-car-side me-2"></i>
+                                                ${ride.Car.Model} (${ride.Car.Year})
+                                            </p>
+                                            <p>
+                                                <i class="fa-solid fa-location-dot me-2"></i>
+                                                ${ride.Origin.Address}, ${ride.Origin.City}
+                                                <i class="fa-solid fa-arrow-right mx-3"></i>
+                                                ${ride.Destination.Address}, ${ride.Destination.City}
+                                            </p>
+                                            <p>
+                                                <i class="fa-solid fa-calendar-days me-2"></i>
+                                                ${new Date(ride.DateTime)}
+                                                <i class="fa-solid fa-clock ms-4 me-2"></i>
+                                                ${Date.parse(ride.DateTime)}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        `)
+                            </div>`)
                     })
                 }
                 else {
