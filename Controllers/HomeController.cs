@@ -31,5 +31,12 @@ namespace JEDI_Carpool.Controllers
             return view;
         }
 
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            ViewData.Clear();
+            return RedirectToAction("Index");
+        }
+
     }
 }

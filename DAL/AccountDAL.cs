@@ -17,7 +17,6 @@ namespace JEDI_Carpool.DAL
             FROM [dbo].[Account] as acc JOIN [dbo].[Location] as loc ON acc.[AddressId] = loc.[LocationId]
             WHERE acc.[Email] = @Email
         ";
-
         public static AccountModel GetAccountDetails(LoginViewModel model)
         {
             var account = new AccountModel();
@@ -38,6 +37,31 @@ namespace JEDI_Carpool.DAL
 
             return account;
 
+        }
+
+
+        private const string GetAllAccountsQuery = @"SELECT * FROM Account";
+        public static List<AccountModel> GetAllAccounts()
+        {
+            var accounts = new List<AccountModel>();
+            AccountModel account;
+
+            var dt = DBCommand.GetData(GetAllAccountsQuery);
+            foreach (DataRow row in dt.Rows)
+            {
+                account = new AccountModel();
+                account.AccountId = int.Parse(row["AccountId"].ToString());
+                account.Email = row["Email"].ToString().Trim();
+                account.FirstName = row["FirstName"].ToString();
+                account.LastName = row["LastName"].ToString();
+                account.Address = row["Address"].ToString();
+                account.City = row["City"].ToString();
+                account.Country = row["Country"].ToString();
+
+                accounts.Add(account);
+            }
+
+            return accounts;
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using JEDI_Carpool.DAL;
+using JEDI_Carpool.DAL.Common;
 using JEDI_Carpool.Models;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,18 @@ namespace JEDI_Carpool.BLL
 
         public static bool RegisterUser(RegisterViewModel model)
         {
-            return AppUserDAL.RegisterUser(model);
+            if (ValidateDuplicatedEmail(model.Email))
+            {
+                return AppUserDAL.RegisterUser(model);
+            }
+            return true;
+        }
+
+        private static bool ValidateDuplicatedEmail(string email)
+        {
+            var accounts = AccountDAL.GetAllAccounts().FirstOrDefault(x => x.Email.Equals(email));
+
+            return accounts == null;
         }
     }
 }

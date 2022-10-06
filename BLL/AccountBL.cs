@@ -12,5 +12,11 @@ namespace JEDI_Carpool.DAL.Common
         {
             return AccountDAL.GetAccountDetails(model);
         }
+
+        public static List<AccountModel> GetAllAccounts()
+        {
+            return AccountDAL.GetAllAccounts();
+        }
+
     }
 }

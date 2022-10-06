@@ -17,23 +17,27 @@
         var fare = $("#fare").val()
         var comment = $("#comment").val()
 
-        var FormData = {
-            OAddress: oAddress,
-            OCity: oCity,
-            OCountry: oCountry,
-            DAddress: dAddress,
-            DCity: dCity,
-            DCountry: dCountry,
+        var ShareRideViewModelObj = {
             Date: date,
             Time: time,
             Fare: fare,
-            Comment: comment
+            Comment: comment,
+            Origin: {
+                Address: oAddress,
+                City: oCity,
+                Country: oCountry
+            },
+            Destination: {
+                Address: dAddress,
+                City: dCity,
+                Country: dCountry
+            }
         }
 
         $.ajax({
             type: "POST",
             url: "/Ride/Share",
-            data: FormData,
+            data: ShareRideViewModelObj,
             dataType: "json",
             success: (response) => {
                 if (response.result == "Success") {

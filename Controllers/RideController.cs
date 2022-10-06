@@ -82,7 +82,7 @@ namespace JEDI_Carpool.Controllers
         [HttpPost]
         public JsonResult Search(SearchRideViewModel model)
         {
-            var rides = RideBL.Search(model);
+            var rides = RideBL.GetAllRides();
             if(rides != null)
             {
                 return Json(new { result = true, data = rides });

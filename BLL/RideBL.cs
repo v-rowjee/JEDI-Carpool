@@ -16,7 +16,12 @@ namespace JEDI_Carpool.BLL
 
         public static List<RideViewModel> Search(SearchRideViewModel model)
         {
-            return RideDAL.Search(model);
+            return RideDAL.GetRidesWithCondition(model);
+        }
+
+        public static List<RideViewModel> GetAllRides()
+        {
+            return RideDAL.GetAllRides();
         }
 
     }
