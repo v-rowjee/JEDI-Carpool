@@ -34,7 +34,7 @@ namespace JEDI_Carpool.DAL
             INSERT INTO Ride (DriverId, OriginId, DestinationId, DateTime, Fare, Comment) VALUES (@DriverId, @OrgId, @DestId, @DateTime, @Fare, @Comment)
 
 ";
-        public static bool Share(ShareRideViewModel model)
+        public static string Share(ShareRideViewModel model)
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@DriverId", model.DriverId));
@@ -52,7 +52,7 @@ namespace JEDI_Carpool.DAL
 
             DBCommand.InsertUpdateData(CreateRideQuery, parameters);
 
-            return true;
+            return "Success";
         }
 
 

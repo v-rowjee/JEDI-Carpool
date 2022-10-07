@@ -10,19 +10,18 @@ namespace JEDI_Carpool.BLL
 {
     public class RideBL
     {
-        public static bool Share(ShareRideViewModel model)
+        public static string Share(ShareRideViewModel model)
         {
             if (HasCar(model.DriverId))
             {
                 return RideDAL.Share(model);
             }
-            return false;
+            return "No Registered Car! Please Add A Car!";
         }
 
         private static bool HasCar(int DriverId)
         {
             var car = AccountDAL.GetCar(DriverId);
-
             return car != null;
         }
 

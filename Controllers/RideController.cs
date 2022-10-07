@@ -62,15 +62,11 @@ namespace JEDI_Carpool.Controllers
 
                 var result = RideBL.Share(model);
 
-                if (result)
+                if (result == "Success")
                 {
-                    return Json(new { result = "Success", url = Url.Action("Index", "Home") });
-
+                    return Json(new { result = result, url = Url.Action("Index", "Home") });
                 }
-                else
-                {
-                    return Json(new { result = "Error" });
-                }
+                else return Json(new { result = result });
             }
             else
             {

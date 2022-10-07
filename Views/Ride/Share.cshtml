@@ -27,9 +27,9 @@
                         <label for="origin" class="form-label">Origin</label>
                     </div>
                     <div class="col-md-8">
-                        <input type="text" id="oAddress" class="form-control mb-3" placeholder="Address" value="@if (@ViewBag.Account != null) {@ViewBag.Account.Address}">
-                        <input type="text" id="oCity" class="form-control mb-3" placeholder="City" value="@if (@ViewBag.Account != null) { @ViewBag.Account.City }">
-                        <input type="text" id="oCountry" class="form-control mb-3" placeholder="Country" value="@if (@ViewBag.Account != null) { @ViewBag.Account.Country }">
+                        <input type="text" id="oAddress" class="form-control mb-3" placeholder="Address" value="@if (@ViewBag.Account != null) { @ViewBag.Account.Address.Address }">
+                        <input type="text" id="oCity" class="form-control mb-3" placeholder="City" value="@if (@ViewBag.Account != null) { @ViewBag.Account.Address.City }">
+                        <input type="text" id="oCountry" class="form-control mb-3" placeholder="Country" value="@if (@ViewBag.Account != null) { @ViewBag.Account.Address.Country }">
                     </div>
                 </div>
                 <div class="row mb-3">

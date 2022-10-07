@@ -51,13 +51,14 @@ namespace JEDI_Carpool.DAL
 
         public static CarModel GetCar(string email)
         {
-            var car = new CarModel();
+            CarModel car = null;
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@Email", email));
 
             var dt = DBCommand.GetDataWithCondition(GetCarWithEmailQuery, parameters);
             foreach (DataRow row in dt.Rows)
             {
+                car = new CarModel();
                 car.CarId = int.Parse(row["CarId"].ToString());
                 car.PlateNumber = row["PlateNumber"].ToString();
                 car.Model = row["Model"].ToString();
@@ -75,13 +76,14 @@ namespace JEDI_Carpool.DAL
 
         public static CarModel GetCar(int DriverId)
         {
-            var car = new CarModel();
+            CarModel car = null;
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@DriverId", DriverId));
 
             var dt = DBCommand.GetDataWithCondition(GetCarWithDriverIdQuery, parameters);
             foreach (DataRow row in dt.Rows)
             {
+                car = new CarModel();
                 car.CarId = int.Parse(row["CarId"].ToString());
                 car.PlateNumber = row["PlateNumber"].ToString();
                 car.Model = row["Model"].ToString();
@@ -94,7 +96,9 @@ namespace JEDI_Carpool.DAL
         }
 
 
-        private const string GetAllAccountsQuery = @"SELECT * FROM Account";
+        private const string GetAllAccountsQuery = @"
+            SELECT a.*, l.Address, l.City, l.Country 
+            FROM Account a JOIN Location l ON a.AddressId=l.LocationId";
         public static List<AccountModel> GetAllAccounts()
         {
             var accounts = new List<AccountModel>();

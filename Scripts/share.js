@@ -34,28 +34,29 @@
             }
         }
 
-        $.ajax({
-            type: "POST",
-            url: "/Ride/Share",
-            data: ShareRideViewModelObj,
-            dataType: "json",
-            success: (response) => {
-                if (response.result == "Success") {
-                    Snackbar.show({ text: "Ride created successfully!" });
-                    window.location.replace(response.url);
+        if (!oAddress || !dAddress || !date || !time || !fare) {
+            Snackbar.show({ text: "Fill all required inputs." });
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: "/Ride/Share",
+                data: ShareRideViewModelObj,
+                dataType: "json",
+                success: (response) => {
+                    if (response.result == "Success") {
+                        Snackbar.show({ text: "Ride created successfully!" });
+                        window.location.replace(response.url);
+                    }
+                    else if (response.result == "ToLogin") {
+                        Snackbar.show({ text: "Login required" });
+                        window.location.replace(response.url);
+                    }
+                    else {
+                        Snackbar.show({ text: response.result });
+                    }
                 }
-                else if (response.result == "ToLogin") {
-                    Snackbar.show({ text: "Login required" });
-                    window.location.replace(response.url);
-                }
-                else {
-                    Snackbar.show({ text: "Unable to share ride" });
-                }
-            }
-        })
-
+            })
+        }
     })
-
-
-
 })
