@@ -36,7 +36,8 @@
             success: (response) => {
                 if (response.result) {
                     $("#rides").html('');
-                    $.each(response.data, (i, ride) => {
+                    $.each(response.data, function (i, ride) {
+                        var datetime = moment(new Date(parseInt(ride.DateTime.substr(6))), "DD MM YYYY");
                         $("#rides").append(`
                             <div class="col-md-6">
                                 <div class="card shadow-sm mb-5">
@@ -70,9 +71,9 @@
                                             </p>
                                             <p>
                                                 <i class="fa-solid fa-calendar-days me-2"></i>
-                                                ${new Date(ride.DateTime)}
+                                                ${ datetime.format("DD MMM YYYY") }
                                                 <i class="fa-solid fa-clock ms-4 me-2"></i>
-                                                ${Date.parse(ride.DateTime)}
+                                                ${ datetime.format("HH:SS") }
                                             </p>
                                         </div>
                                     </div>

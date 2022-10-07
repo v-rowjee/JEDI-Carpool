@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 
 namespace JEDI_Carpool.BLL
 {
@@ -11,7 +12,18 @@ namespace JEDI_Carpool.BLL
     {
         public static bool Share(ShareRideViewModel model)
         {
-            return RideDAL.Share(model);
+            if (HasCar(model.DriverId))
+            {
+                return RideDAL.Share(model);
+            }
+            return false;
+        }
+
+        private static bool HasCar(int DriverId)
+        {
+            var car = AccountDAL.GetCar(DriverId);
+
+            return car != null;
         }
 
         public static List<RideViewModel> Search(SearchRideViewModel model)

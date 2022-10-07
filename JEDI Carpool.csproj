@@ -124,6 +124,7 @@
     <Compile Include="BLL\RideBL.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\RideController.cs" />
     <Compile Include="DAL\AccountDAL.cs" />
@@ -219,6 +220,10 @@
     <Content Include="Scripts\jQueryVal\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\login.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Moment\moment-with-locales.js" />
+    <Content Include="Scripts\Moment\moment-with-locales.min.js" />
+    <Content Include="Scripts\Moment\moment.js" />
+    <Content Include="Scripts\Moment\moment.min.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\search.js" />
     <Content Include="Scripts\share.js" />
@@ -239,6 +244,9 @@
     <Content Include="Views\Shared\_GuestLayout.cshtml" />
     <Content Include="Views\Ride\Share.cshtml" />
     <Content Include="Views\Ride\Index.cshtml" />
+    <Content Include="Scripts\Moment\moment.min.js.map" />
+    <Content Include="Scripts\Moment\moment-with-locales.min.js.map" />
+    <Content Include="Views\Profile\Car.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

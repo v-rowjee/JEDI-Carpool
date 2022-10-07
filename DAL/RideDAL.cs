@@ -38,7 +38,7 @@ namespace JEDI_Carpool.DAL
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@DriverId", model.DriverId));
-            parameters.Add(new SqlParameter("@DateTime", model.Date.Date + model.Time.TimeOfDay));
+            parameters.Add(new SqlParameter("@DateTime", model.Date.Date.Add(model.Time.TimeOfDay)));
             parameters.Add(new SqlParameter("@Fare", model.Fare));
             parameters.Add(new SqlParameter("@Comment", model.Comment));
 
