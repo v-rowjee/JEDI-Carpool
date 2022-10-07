@@ -247,6 +247,8 @@
     <Content Include="Scripts\Moment\moment.min.js.map" />
     <Content Include="Scripts\Moment\moment-with-locales.min.js.map" />
     <Content Include="Views\Profile\Car.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\New_Car.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

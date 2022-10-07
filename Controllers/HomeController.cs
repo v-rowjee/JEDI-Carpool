@@ -18,7 +18,7 @@ namespace JEDI_Carpool.Controllers
 
             if (loggeduser != null)
             {
-                var data = AccountBL.GetAccountDetails(loggeduser);
+                var data = AccountBL.GetAccount(loggeduser);
                 ViewBag.Account = data;
 
                 view.MasterName = "~/Views/Shared/_Layout.cshtml";

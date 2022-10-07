@@ -18,7 +18,7 @@ namespace JEDI_Carpool.Controllers
 
             if (loggeduser != null)
             {
-                var data = AccountBL.GetAccountDetails(loggeduser);
+                var data = AccountBL.GetAccount(loggeduser);
                 ViewBag.Account = data;
 
                 view.MasterName = "~/Views/Shared/_Layout.cshtml";
@@ -38,7 +38,7 @@ namespace JEDI_Carpool.Controllers
 
             if (loggeduser != null)
             {
-                var data = AccountBL.GetAccountDetails(loggeduser);
+                var data = AccountBL.GetAccount(loggeduser);
                 ViewBag.Account = data;
 
                 view.MasterName = "~/Views/Shared/_Layout.cshtml";
@@ -57,7 +57,7 @@ namespace JEDI_Carpool.Controllers
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
             if (loggeduser != null)
             {
-                var account = AccountBL.GetAccountDetails(loggeduser);
+                var account = AccountBL.GetAccount(loggeduser);
                 model.DriverId = account.AccountId;
 
                 var result = RideBL.Share(model);

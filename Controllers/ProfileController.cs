@@ -14,7 +14,14 @@ namespace JEDI_Carpool.Controllers
         // GET: Profile
         public ActionResult Index()
         {
-            return View();
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+            if (loggeduser != null)
+            {
+                var data = AccountBL.GetAccount(loggeduser);
+                ViewBag.account = data;
+                return View();
+            }
+            else return Redirect("/");
         }
 
         public ActionResult Car()
@@ -22,12 +29,34 @@ namespace JEDI_Carpool.Controllers
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
             if (loggeduser != null)
             {
-                var data = AccountBL.GetAccountDetails(loggeduser);
-                ViewBag.account = data;
-                return View();
+                var accountData = AccountBL.GetAccount(loggeduser);
+
+                var carData = AccountBL.GetCar(loggeduser);
+                if(carData != null) accountData.Car = carData;
+                else accountData.Car = null;
+
+                ViewBag.Account = accountData;
+                
+                if(ViewBag.Account.Car != null) return View();
+                else return RedirectToAction("New_Car");
             }
             else return Redirect("/");
             
         }
+
+        public ActionResult New_Car()
+        {
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+            if (loggeduser != null)
+            {
+                var data = AccountBL.GetAccount(loggeduser);
+                ViewBag.Account = data;
+
+                if (ViewBag.Account.Car != null) return RedirectToAction("Car");
+                else return View();
+            }
+            else return Redirect("/");
+        }
+
     }
 }

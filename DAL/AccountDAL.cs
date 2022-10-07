@@ -15,14 +15,12 @@ namespace JEDI_Carpool.DAL
     {
 
         private const string GetAccountQuery = @"
-            SELECT acc.*, loc.[Address], loc.[City], loc.[Country], car.CarId, car.PlateNumber,
-            car.Year, car.Model, car.Color, car.Seat
+            SELECT acc.*, loc.[Address], loc.[City], loc.[Country]
             FROM [dbo].[Account] as acc 
             INNER JOIN [dbo].[Location] as loc ON acc.[AddressId] = loc.[LocationId]
-            INNER JOIN Car as car ON acc.AccountId = car.DriverId
             WHERE acc.[Email] = @Email
         ";
-        public static AccountModel GetAccountDetails(LoginViewModel model)
+        public static AccountModel GetAccount(LoginViewModel model)
         {
             var account = new AccountModel();
             var parameters = new List<SqlParameter>();
@@ -41,20 +39,58 @@ namespace JEDI_Carpool.DAL
                 address.City = row["City"].ToString();
                 address.Country = row["Country"].ToString();
                 account.Address = address;
+            }
 
-                var car = new CarModel();
+            return account;
+
+        }
+
+        private const string GetCarWithEmailQuery = @"
+            SELECT * FROM Car c JOIN Account a ON c.DriverId=a.AccountId
+            WHERE a.Email = @Email";
+
+        public static CarModel GetCar(string email)
+        {
+            var car = new CarModel();
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@Email", email));
+
+            var dt = DBCommand.GetDataWithCondition(GetCarWithEmailQuery, parameters);
+            foreach (DataRow row in dt.Rows)
+            {
                 car.CarId = int.Parse(row["CarId"].ToString());
                 car.PlateNumber = row["PlateNumber"].ToString();
                 car.Model = row["Model"].ToString();
                 car.Year = int.Parse(row["Year"].ToString());
                 car.Color = row["Color"].ToString();
                 car.Seat = int.Parse(row["Seat"].ToString());
-                account.Car = car;
-
             }
 
-            return account;
+            return car;
+        }
 
+        private const string GetCarWithDriverIdQuery = @"
+            SELECT * FROM Car
+            WHERE DriverId = @DriverId";
+
+        public static CarModel GetCar(int DriverId)
+        {
+            var car = new CarModel();
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@DriverId", DriverId));
+
+            var dt = DBCommand.GetDataWithCondition(GetCarWithDriverIdQuery, parameters);
+            foreach (DataRow row in dt.Rows)
+            {
+                car.CarId = int.Parse(row["CarId"].ToString());
+                car.PlateNumber = row["PlateNumber"].ToString();
+                car.Model = row["Model"].ToString();
+                car.Year = int.Parse(row["Year"].ToString());
+                car.Color = row["Color"].ToString();
+                car.Seat = int.Parse(row["Seat"].ToString());
+            }
+
+            return car;
         }
 
 
@@ -83,29 +119,6 @@ namespace JEDI_Carpool.DAL
             }
 
             return accounts;
-        }
-
-        private const string GetCarQuery = @"SELECT * FROM Car WHERE DriverId=@DriverId";
-
-        public static CarModel GetCar(int DriverId)
-        {
-            CarModel car = new CarModel();
-            var parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@DriverId", DriverId));
-
-            var dt = DBCommand.GetDataWithCondition(GetCarQuery, parameters);
-            foreach (DataRow row in dt.Rows)
-            {
-                car.CarId = int.Parse(row["CarId"].ToString());
-                car.DriverId = int.Parse(row["DriverId"].ToString());
-                car.PlateNumber = row["PlateNumber"].ToString();
-                car.Model = row["Model"].ToString();
-                car.Color = row["Color"].ToString();
-                car.Seat = int.Parse(row["Seat"].ToString());
-                car.Year = int.Parse(row["Year"].ToString());
-            }
-
-            return car;
         }
 
     }

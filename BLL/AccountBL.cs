@@ -8,15 +8,21 @@ namespace JEDI_Carpool.DAL.Common
 {
     public class AccountBL
     {
-        public static AccountModel GetAccountDetails(LoginViewModel model)
+        public static AccountModel GetAccount(LoginViewModel model)
         {
-            return AccountDAL.GetAccountDetails(model);
+            return AccountDAL.GetAccount(model);
+        }
+
+        public static CarModel GetCar(LoginViewModel model)
+        {
+            return AccountDAL.GetCar(model.Email);
         }
 
         public static List<AccountModel> GetAllAccounts()
         {
             return AccountDAL.GetAllAccounts();
         }
+
 
     }
 }

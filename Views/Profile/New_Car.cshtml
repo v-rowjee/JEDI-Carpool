@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Car";
+    ViewBag.Title = "New Car";
 }
 
 <div class="container">
@@ -15,7 +15,6 @@
                         <li class="nav-item w-100 mb-3">
                             @Html.ActionLink("Car", "Car", "Profile", null, new { @class = "nav-link link-light active" })
                         </li>
-                        <li class="nav-item w-100"><hr></li>
                         <li class="nav-item w-100">
                             @Html.ActionLink("Log Out", "Logout", "Home", null, new { @class = "nav-link link-dark" })
                         </li>
@@ -28,33 +27,33 @@
             <div class="card mb-3">
                 <div class="card-body p-0">
                     <div class="card-header">
-                        <label class="form-label fw-bold">Model</label>
-                        <input type="text" class="form-control mb-3" value="@ViewBag.Account.Car.Model" />
+                        <label class="form-label">Car Model</label>
+                        <input type="text" class="form-control" />
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">PlateNumber</label>
-                                <input type="text" class="form-control" value="@ViewBag.Account.Car.PlateNumber" />
+                                <input type="text" class="form-control" />
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Year</label>
-                                <input type="number" class="form-control" value="@ViewBag.Account.Car.Year" />
+                                <input type="number" class="form-control" value="@DateTime.Now.Year" />
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Color</label>
-                                <input type="text" class="form-control" value="@ViewBag.Account.Car.Color" />
+                                <input type="text" class="form-control" />
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Capacity</label>
-                                <input type="number" class="form-control" value="@ViewBag.Account.Car.Seat" />
+                                <input type="number" class="form-control" min=1/>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <form id="carForm" class="my-3">
-                <input type="submit" id="save" class="btn btn-primary px-5" value="Save Changes" />
+            <form id="newCarForm" class="my-3">
+                <input type="submit" id="create" class="btn btn-primary px-5" value="Add New Car" />
                 <input type="submit" id="cancel" class="btn btn-outline-primary" value="Cancel" />
             </form>
         </div>
