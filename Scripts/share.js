@@ -52,8 +52,12 @@
                         Snackbar.show({ text: "Login required" });
                         window.location.replace(response.url);
                     }
+                    else if (response.result == "NoCar") {
+                        Snackbar.show({ text: "You did not register any car!" });
+                        window.location.replace(response.url);
+                    }
                     else {
-                        Snackbar.show({ text: response.result });
+                        Snackbar.show({ text: "An error occured!" });
                     }
                 }
             })

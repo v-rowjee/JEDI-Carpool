@@ -38,13 +38,21 @@ namespace JEDI_Carpool.Controllers
 
             if (loggeduser != null)
             {
-                var data = AccountBL.GetAccount(loggeduser);
-                ViewBag.Account = data;
+                var account = AccountBL.GetAccount(loggeduser);
+                var car = AccountBL.GetCar(loggeduser);
+                ViewBag.Account = account;
+                ViewBag.Account.Car = car;
+
+                if(car == null)
+                {
+                    ViewBag.Message = "You do not have a registered car. Please add your car details.";
+                }
 
                 view.MasterName = "~/Views/Shared/_Layout.cshtml";
             }
             else
             {
+                ViewBag.Message = "You are not currently logged in. Please sign in to share ride.";
                 view.MasterName = "~/Views/Shared/_GuestLayout.cshtml";
             }
 
@@ -66,7 +74,11 @@ namespace JEDI_Carpool.Controllers
                 {
                     return Json(new { result = result, url = Url.Action("Index", "Home") });
                 }
-                else return Json(new { result = result });
+                else if (result == "NoCar") 
+                { 
+                    return Json(new { result = result, url = Url.Action("Car", "Profile") }); 
+                }
+                else return Json(new { result = "Error" });
             }
             else
             {

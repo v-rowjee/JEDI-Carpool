@@ -8,8 +8,16 @@
 }
 
 <div class="container">
-    <h2 class="display-3 fw-bold">Share A Ride</h2>
-    <h5 class="mb-5">Cover your driving costs by filling your seats when you’re driving from A to B.</h5>
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-primary" role="alert">
+            @ViewBag.Message
+        </div>
+    }
+    <div class="text-center py-3">
+        <h2 class="display-3 fw-bold">Share A Ride</h2>
+        <h5 class="mb-5">Cover your driving costs by filling your seats when you’re driving from A to B.</h5>
+    </div>
 
     <form id="shareForm">
         <div class="row align-items-center">
@@ -27,9 +35,9 @@
                         <label for="origin" class="form-label">Origin</label>
                     </div>
                     <div class="col-md-8">
-                        <input type="text" id="oAddress" class="form-control mb-3" placeholder="Address" value="@if (@ViewBag.Account != null) { @ViewBag.Account.Address.Address }">
+                        <input type="text" id="oAddress" class="form-control mb-3" placeholder="Address" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Address }">
                         <input type="text" id="oCity" class="form-control mb-3" placeholder="City" value="@if (@ViewBag.Account != null) { @ViewBag.Account.Address.City }">
-                        <input type="text" id="oCountry" class="form-control mb-3" placeholder="Country" value="@if (@ViewBag.Account != null) { @ViewBag.Account.Address.Country }">
+                        <input type="text" id="oCountry" class="form-control mb-3" placeholder="Country" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Country }">
                     </div>
                 </div>
                 <div class="row mb-3">
