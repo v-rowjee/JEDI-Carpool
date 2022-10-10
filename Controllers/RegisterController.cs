@@ -25,8 +25,20 @@ namespace JEDI_Carpool.Controllers
         [HttpPost]
         public JsonResult Register(RegisterViewModel model)
         {
-            var IsUserRegistered = AppUserBL.RegisterUser(model);
-            return Json(new { result = IsUserRegistered, url = Url.Action("Index", "Login") });
+            var result = AppUserBL.RegisterUser(model);
+            
+            if (result == "Success")
+            {
+                return Json(new { result = result, url = Url.Action("Index", "Login") });
+            }
+            else if (result == "DuplicatedEmail")
+            {
+                return Json(new { result = result, url = Url.Action("Index", "Login") });
+            }
+            else
+            {
+                return Json(new { result = "Error" });
+            }
         }
 
 

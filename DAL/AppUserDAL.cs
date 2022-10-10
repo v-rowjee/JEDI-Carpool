@@ -47,20 +47,20 @@ namespace JEDI_Carpool.DAL
             return dt.Rows.Count > 0;
         }
 
-        public static bool RegisterUser(RegisterViewModel model)
+        public static string RegisterUser(RegisterViewModel model)
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@Email", model.Email));
             parameters.Add(new SqlParameter("@Password", model.Password));
             parameters.Add(new SqlParameter("@FirstName", model.FirstName));
             parameters.Add(new SqlParameter("@LastName", model.LastName));
-            parameters.Add(new SqlParameter("@Address", model.Address));
-            parameters.Add(new SqlParameter("@City", model.City));
-            parameters.Add(new SqlParameter("@Country", model.Country));
+            parameters.Add(new SqlParameter("@Address", model.Address != null ? model.Address.Address : (object) DBNull.Value));
+            parameters.Add(new SqlParameter("@City", model.Address != null ? model.Address.City : (object)DBNull.Value));
+            parameters.Add(new SqlParameter("@Country", model.Address != null ? model.Address.Country : (object) DBNull.Value));
 
             DBCommand.InsertUpdateData(RegisterUserQuery, parameters);
 
-            return true;
+            return "Success";
         }
 
     }

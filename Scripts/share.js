@@ -82,7 +82,7 @@
                     else if (response.result == "NoCar") {
                         Snackbar.show({
                             text: "You did not register any car.",
-                            actionText: "Add your car.",
+                            actionText: "ADD CAR",
                             actionTextColor: "#2B80FD",
                             onActionClick: () => { window.location.replace(response.url) }
                         });

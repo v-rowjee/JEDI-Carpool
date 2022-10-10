@@ -15,13 +15,13 @@ namespace JEDI_Carpool.BLL
             return AppUserDAL.AuthenticateUser(model);
         }
 
-        public static bool RegisterUser(RegisterViewModel model)
+        public static string RegisterUser(RegisterViewModel model)
         {
             if (ValidateDuplicatedEmail(model.Email))
             {
                 return AppUserDAL.RegisterUser(model);
             }
-            return true;
+            return "DuplicatedEmail";
         }
 
         private static bool ValidateDuplicatedEmail(string email)
