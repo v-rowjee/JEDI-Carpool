@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - JEDI Carpool</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/Scripts/head")
     @* Snackbar JS *@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.min.js" integrity="sha512-iILlngu0qmiyIkOH6MV1RWSya+DL2uzo0cb/nKR4hqwz9H+Xnop1++f8TMw1j5CdbutXGkBUyfRUfg/hmNBfZg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/node-snackbar/0.1.16/snackbar.min.css" integrity="sha512-pKdIPri9vb1aqcci9Rsl1xO7n74wHe5+RMcqRufN36EnXVtOsbct0VKDtBdhAnSCqZeny2jiZBSpXp0iDSzZ+Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -62,6 +60,7 @@
     </footer>
 
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/body")
     @RenderSection("scripts", required: false)
 </body>
 </html>

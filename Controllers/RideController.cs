@@ -31,6 +31,20 @@ namespace JEDI_Carpool.Controllers
             return view;
         }
 
+        [HttpPost]
+        public JsonResult Search(SearchRideViewModel model)
+        {
+            var rides = RideBL.GetAllRides();
+            if (rides != null)
+            {
+                return Json(new { result = true, data = rides });
+            }
+            else
+            {
+                return Json(new { result = false });
+            }
+        }
+
         public ViewResult Share()
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
@@ -76,28 +90,13 @@ namespace JEDI_Carpool.Controllers
                 }
                 else if (result == "NoCar") 
                 { 
-                    return Json(new { result = result, url = Url.Action("Car", "Profile") }); 
+                    return Json(new { result = result, url = Url.Action("Create", "Car") }); 
                 }
                 else return Json(new { result = "Error" });
             }
             else
             {
-                return Json(new { result = "ToLogin", url = Url.Action("Index", "Login") });
-            }
-        }
-
-
-        [HttpPost]
-        public JsonResult Search(SearchRideViewModel model)
-        {
-            var rides = RideBL.GetAllRides();
-            if(rides != null)
-            {
-                return Json(new { result = true, data = rides });
-            }
-            else
-            {
-                return Json(new { result = false });
+                return Json(new { result = "NoUser", url = Url.Action("Index", "Login") });
             }
         }
 

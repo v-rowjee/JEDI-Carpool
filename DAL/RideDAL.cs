@@ -40,7 +40,7 @@ namespace JEDI_Carpool.DAL
             parameters.Add(new SqlParameter("@DriverId", model.DriverId));
             parameters.Add(new SqlParameter("@DateTime", model.Date.Date.Add(model.Time.TimeOfDay)));
             parameters.Add(new SqlParameter("@Fare", model.Fare));
-            parameters.Add(new SqlParameter("@Comment", model.Comment));
+            parameters.Add(new SqlParameter("@Comment", model.Comment != null ? model.Comment : (object)DBNull.Value));
 
             parameters.Add(new SqlParameter("@OAddress",model.Origin.Address));
             parameters.Add(new SqlParameter("@OCity", model.Origin.City));

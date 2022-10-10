@@ -16,7 +16,7 @@ namespace JEDI_Carpool.BLL
             {
                 return RideDAL.Share(model);
             }
-            return "No Registered Car! Please Add A Car!";
+            return "NoCar";
         }
 
         private static bool HasCar(int DriverId)

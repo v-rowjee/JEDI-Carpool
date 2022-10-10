@@ -11,7 +11,7 @@
     @if (ViewBag.Message != null)
     {
         <div class="alert alert-primary" role="alert">
-            @ViewBag.Message
+            <i class="fa-solid fa-triangle-exclamation"></i> @ViewBag.Message
         </div>
     }
     <div class="text-center py-3">
@@ -19,7 +19,7 @@
         <h5 class="mb-5">Cover your driving costs by filling your seats when you’re driving from A to B.</h5>
     </div>
 
-    <form id="shareForm">
+    <form id="shareForm" class="needs-validation" novalidate>
         <div class="row align-items-center">
             <div class="col-md-6 order-md-2">
                 <img src="~/Content/Images/map.png" class="img-fluid px-5" alt="map" />
@@ -30,24 +30,45 @@
                     Itinerary
                 </h3>
                 <p class="mb-5">Your origin, destination, and stops you're willing to make along the way.</p>
-                <div class="row mb-3">
+                <div class="row mb-4">
                     <div class="col-md-4">
                         <label for="origin" class="form-label">Origin</label>
                     </div>
                     <div class="col-md-8">
-                        <input type="text" id="oAddress" class="form-control mb-3" placeholder="Address" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Address }">
-                        <input type="text" id="oCity" class="form-control mb-3" placeholder="City" value="@if (@ViewBag.Account != null) { @ViewBag.Account.Address.City }">
-                        <input type="text" id="oCountry" class="form-control mb-3" placeholder="Country" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Country }">
+                        <input type="text" id="oAddress" class="form-control" placeholder="Address" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Address }" required>
+                        <div class="invalid-feedback">
+                            Please enter an address of origin.
+                        </div>
+                        <input type="text" id="oCity" class="form-control mt-3" placeholder="City" value="@if (@ViewBag.Account != null) { @ViewBag.Account.Address.City }" required>
+                        <div class="invalid-feedback">
+                            Please enter a city of origin.
+                        </div>
                     </div>
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-4">
                     <div class="col-md-4">
                         <label for="destination" class="form-label">Destination</label>
                     </div>
                     <div class="col-md-8">
-                        <input type="text" id="dAddress" class="form-control mb-3" placeholder="Address">
-                        <input type="text" id="dCity" class="form-control mb-3" placeholder="City">
-                        <input type="text" id="dCountry" class="form-control mb-3" placeholder="Country">
+                        <input type="text" id="dAddress" class="form-control" placeholder="Address" required>
+                        <div class="invalid-feedback">
+                            Please enter an address of destination.
+                        </div>
+                        <input type="text" id="dCity" class="form-control mt-3" placeholder="City" required>
+                        <div class="invalid-feedback">
+                            Please enter a city of destination.
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="country" class="form-label">Country</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" id="country" class="form-control" placeholder="Country" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Country }" required>
+                        <div class="invalid-feedback">
+                            Please enter your country.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,11 +83,17 @@
                 <p class="mb-5">Enter the precise date and time leaving your Origin mentioned above</p>
                 <div class="mb-3">
                     <label for="date" class="form-label">Date</label>
-                    <input type="date" id="date" class="form-control" />
+                    <input type="date" id="date" class="form-control" required />
+                    <div class="invalid-feedback">
+                        Please enter a valid date.
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="time" class="form-label">Time</label>
-                    <input type="time" id="time" class="form-control" />
+                    <input type="time" id="time" class="form-control" required />
+                    <div class="invalid-feedback">
+                        Please enter a valid time.
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,7 +107,10 @@
                 <p class="mb-5">We suggest prices based on similar trips. Note all prices are in MUR</p>
                 <div class="mb-3">
                     <label for="fare" class="form-label">Fare</label>
-                    <input type="number" id="fare" class="form-control" placeholder="Rs" />
+                    <input type="number" id="fare" class="form-control" placeholder="Rs" required />
+                    <div class="invalid-feedback">
+                        Please enter a fare.
+                    </div>
                 </div>
             </div>
         </div>
