@@ -57,7 +57,7 @@
             error = error.slice(0,-8) // to remove the last <br><br>
             Snackbar.show({
                 text: error,
-                actionTextColor: "#2B80FD",
+                actionTextColor: "#CFE2FF",
             });
         }
         else {
@@ -75,7 +75,7 @@
                         Snackbar.show({
                             text: "Login required.",
                             actionText: "SIGN IN",
-                            actionTextColor: "#2B80FD",
+                            actionTextColor: "#CFE2FF",
                             onActionClick: () => { window.location.replace(response.url) }
                         });
                     }
@@ -83,7 +83,7 @@
                         Snackbar.show({
                             text: "You did not register any car.",
                             actionText: "ADD CAR",
-                            actionTextColor: "#2B80FD",
+                            actionTextColor: "#CFE2FF",
                             onActionClick: () => { window.location.replace(response.url) }
                         });
                     }

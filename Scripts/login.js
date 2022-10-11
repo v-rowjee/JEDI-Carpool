@@ -17,7 +17,7 @@
             error = error.slice(0, -8) // to remove the last <br><br>
             Snackbar.show({
                 text: error,
-                actionTextColor: "#2B80FD"
+                actionTextColor: "#CFE2FF"
             });
         }
         else {

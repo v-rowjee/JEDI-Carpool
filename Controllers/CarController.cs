@@ -1,4 +1,5 @@
-﻿using JEDI_Carpool.DAL.Common;
+﻿using JEDI_Carpool.BLL;
+using JEDI_Carpool.DAL.Common;
 using JEDI_Carpool.Models;
 using System;
 using System.Collections.Generic;
@@ -19,24 +20,14 @@ namespace JEDI_Carpool.Controllers
                 var accountData = AccountBL.GetAccount(loggeduser);
                 ViewBag.Account = accountData;
 
-                //try
-                //{
-                //    var carData = AccountBL.GetCar(loggeduser);
-                //    accountData.Car = carData;
-                //    return View();
-                //}
-                //catch
-                //{
-                //    return RedirectToAction("Create");
-                //}
-
                 var carData = AccountBL.GetCar(loggeduser);
                 if (carData == null)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Add");
                 }
                 else
                 {
+                    ViewBag.Account.Car = carData;
                     return View();
                 }
 
@@ -44,8 +35,8 @@ namespace JEDI_Carpool.Controllers
             else return Redirect("/");
         }
 
-        // GET: Car/Create
-        public ActionResult Create()
+        // GET: Car/Add
+        public ActionResult Add()
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
             if (loggeduser != null)
@@ -58,10 +49,7 @@ namespace JEDI_Carpool.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                else
-                {
-                    return View();
-                }
+                else return View();
                 
             }
             else return Redirect("/");
@@ -69,9 +57,16 @@ namespace JEDI_Carpool.Controllers
 
         //POST: Car/Add
         [HttpPost]
-        public JsonResult Add()
+        public JsonResult Create(CarModel model)
         {
-            return Json(new { result = false });
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+            var account = AccountBL.GetAccount(loggeduser);
+
+            model.DriverId = account.AccountId;
+
+            var result = CarBL.Create(model);
+
+            return Json(new { result = result, url = Url.Action("Index", "Car") });
         }
 
         // GET: Car/Edit

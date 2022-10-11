@@ -28,7 +28,7 @@ namespace JEDI_Carpool.DAL.Common
             return dt;
         }
 
-        public static void InsertUpdateData(string query, List<SqlParameter> parameters)
+        public static bool InsertUpdateData(string query, List<SqlParameter> parameters)
         {
             DAL dal = new DAL();
             using (SqlCommand cmd = new SqlCommand(query, dal.connection))
@@ -44,6 +44,8 @@ namespace JEDI_Carpool.DAL.Common
                 cmd.ExecuteNonQuery();
             }
             dal.CloseConnection();
+
+            return true;
 
         }
 

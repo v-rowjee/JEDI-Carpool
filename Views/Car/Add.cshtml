@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "Car";
+}
+@section scripts {
+    <script src="~/Scripts/car-create.js"></script>
+}
+
+<div class="container">
+    <div class="row g-5">
+        <div class="col-md-3">
+            @Html.Partial("~/Views/Shared/_SideNav.cshtml")
+        </div>
+        <div class="col-md-9">
+            <h1 class="display-4 fw-bold mb-5">Car Details:</h1>
+            <form id="createCarForm" class="needs-validation" novalidate>
+                <div class="card mb-3">
+                    <div class="card-header pb-4">
+                        <label class="form-label fw-bold">Model</label>
+                        <input type="text" id="model" class="form-control" placeholder="Ex. Toyota Yaris" required />
+                        <div class="invalid-feedback">
+                            Model of your car is required.
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">PlateNumber</label>
+                                <input type="text" id="plateNumber" class="form-control" placeholder="Ex. 1234 AB 99" required />
+                                <div class="invalid-feedback">
+                                    Plate number is required.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Year</label>
+                                <input type="number" id="year" class="form-control" placeholder="Ex. 2020" required />
+                                <div class="invalid-feedback">
+                                    Please provid a valid year.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Color</label>
+                                <input type="text" id="color" class="form-control" placeholder="Ex. White" required />
+                                <div class="invalid-feedback">
+                                    Color of your car is required.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Capacity</label>
+                                <input type="number" id="seat" class="form-control" placeholder="Ex. 3" required />
+                                <div class="invalid-feedback">
+                                    Please specify the number of seats available in your car.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-2 float-end">
+                    <input type="submit" id="create" class="btn btn-sm btn-primary px-5" value="Add Car" />
+                    <input type="reset" id="reset" class="btn btn-sm btn-outline-secondary px-5" value="Reset" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

@@ -36,7 +36,7 @@
             error = error.slice(0, -8) // to remove the last <br><br>
             Snackbar.show({
                 text: error,
-                actionTextColor: "#2B80FD"
+                actionTextColor: "#CFE2FF"
             });
         }
         else {
@@ -62,7 +62,7 @@
                     if (response.result == "Success") {
                         Snackbar.show({
                             text: "Registration successful!",
-                            actionTextColor: "#2B80FD"
+                            actionTextColor: "#CFE2FF"
                         });
                         window.location.replace(response.url);
                     }
@@ -74,14 +74,14 @@
                         Snackbar.show({
                             text: "An account with this email already exist.",
                             actionText: "LOGIN",
-                            actionTextColor: "#2B80FD",
+                            actionTextColor: "#CFE2FF",
                             onActionClick: () => { window.location.replace(response.url) }
                         });
                     }
                     else {
                         Snackbar.show({
                             text: "Unable to register",
-                            actionTextColor: "#2B80FD"
+                            actionTextColor: "#CFE2FF"
                         });
                     }
                 }

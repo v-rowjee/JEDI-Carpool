@@ -34,7 +34,6 @@ namespace JEDI_Carpool.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
-            ViewData.Clear();
             return RedirectToAction("Index");
         }
 

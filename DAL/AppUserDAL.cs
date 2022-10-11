@@ -16,7 +16,7 @@ namespace JEDI_Carpool.DAL
             FROM [dbo].[Account] acc with(nolock) INNER JOIN [dbo].[AppUser] au with(nolock) ON acc.[AccountId]=au.[AccountId] 
             WHERE acc.[Email] = @Email AND au.[Password] = @Password ";
 
-        private const string RegisterUserQuery = @"
+        private const string RegisterUserQueryWithAddress = @"
             DECLARE @LocId INT;
             IF NOT EXISTS (SELECT * FROM [dbo].[Location] WHERE [Address]=@Address AND [City]=@City AND [Country]=@Country)
                 BEGIN
@@ -31,6 +31,13 @@ namespace JEDI_Carpool.DAL
 
             INSERT INTO [dbo].[Account] ([FirstName] ,[LastName] ,[Email] ,[AddressId])
             VALUES (@FirstName ,@LastName ,@Email ,@LocId);
+
+            INSERT INTO [dbo].[AppUser] ([AccountId],[Password])
+            VALUES ( SCOPE_IDENTITY() , @Password)";
+
+        private const string RegisterUserQueryWithoutAddress = @"
+            INSERT INTO [dbo].[Account] ([FirstName] ,[LastName] ,[Email])
+            VALUES (@FirstName ,@LastName ,@Email);
 
             INSERT INTO [dbo].[AppUser] ([AccountId],[Password])
             VALUES ( SCOPE_IDENTITY() , @Password)";
@@ -54,11 +61,14 @@ namespace JEDI_Carpool.DAL
             parameters.Add(new SqlParameter("@Password", model.Password));
             parameters.Add(new SqlParameter("@FirstName", model.FirstName));
             parameters.Add(new SqlParameter("@LastName", model.LastName));
-            parameters.Add(new SqlParameter("@Address", model.Address.Address != null ? model.Address.Address : (object) DBNull.Value));
-            parameters.Add(new SqlParameter("@City", model.Address.City != null ? model.Address.City : (object)DBNull.Value));
-            parameters.Add(new SqlParameter("@Country", model.Address.Country != null ? model.Address.Country : (object) DBNull.Value));
+            parameters.Add(new SqlParameter("@Address", model.Address.Address ?? (object) DBNull.Value));
+            parameters.Add(new SqlParameter("@City", model.Address.City ?? (object)DBNull.Value));
+            parameters.Add(new SqlParameter("@Country", model.Address.Country ?? (object) DBNull.Value));
 
-            DBCommand.InsertUpdateData(RegisterUserQuery, parameters);
+            if (model.Address.Address != null) 
+                DBCommand.InsertUpdateData(RegisterUserQueryWithAddress, parameters);
+
+            else DBCommand.InsertUpdateData(RegisterUserQueryWithoutAddress, parameters);
 
             return "Success";
         }

@@ -17,7 +17,7 @@ namespace JEDI_Carpool.DAL
         private const string GetAccountQuery = @"
             SELECT acc.*, loc.[Address], loc.[City], loc.[Country]
             FROM [dbo].[Account] as acc 
-            INNER JOIN [dbo].[Location] as loc ON acc.[AddressId] = loc.[LocationId]
+            FULL JOIN [dbo].[Location] as loc ON acc.[AddressId] = loc.[LocationId]
             WHERE acc.[Email] = @Email
         ";
         public static AccountModel GetAccount(LoginViewModel model)
@@ -46,20 +46,21 @@ namespace JEDI_Carpool.DAL
         }
 
         private const string GetCarWithEmailQuery = @"
-            SELECT * FROM Car c JOIN Account a ON c.DriverId=a.AccountId
+            SELECT c.* FROM Car c JOIN Account a ON a.AccountId=c.DriverId
             WHERE a.Email = @Email";
 
         public static CarModel GetCar(string email)
         {
             CarModel car = null;
             var parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@Email", email));
+            parameters.Add(new SqlParameter("@Email",email));
 
             var dt = DBCommand.GetDataWithCondition(GetCarWithEmailQuery, parameters);
             foreach (DataRow row in dt.Rows)
             {
                 car = new CarModel();
                 car.CarId = int.Parse(row["CarId"].ToString());
+                car.DriverId = int.Parse(row["DriverId"].ToString());
                 car.PlateNumber = row["PlateNumber"].ToString();
                 car.Model = row["Model"].ToString();
                 car.Year = int.Parse(row["Year"].ToString());

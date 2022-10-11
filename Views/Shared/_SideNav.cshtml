@@ -1,0 +1,16 @@
+﻿<div class="card h-100">
+    <div class="card-body">
+        <ul class="nav nav-pills mb-auto">
+            <li class="nav-item w-100">
+                @Html.ActionLink("Account", "Index", "Profile", null, new { @class = @ViewBag.Title == "Account" ? "nav-link link-light active" : "nav-link link-dark" })
+            </li>
+            <li class="nav-item w-100 mb-3">
+                @Html.ActionLink("Car", "Index", "Car", null, new { @class = @ViewBag.Title == "Car" ? "nav-link link-light active" : "nav-link link-dark" })
+            </li>
+            <li class="nav-item w-100"><hr></li>
+            <li class="nav-item w-100">
+                @Html.ActionLink("Log Out", "Logout", "Home", null, new { @class = "nav-link link-dark" })
+            </li>
+        </ul>
+    </div>
+</div>

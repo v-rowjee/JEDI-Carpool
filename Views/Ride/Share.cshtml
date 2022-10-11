@@ -10,7 +10,7 @@
 <div class="container">
     @if (ViewBag.Message != null)
     {
-        <div class="alert alert-primary" role="alert">
+        <div class="alert alert-primary text-center" role="alert" onload="ShowMessage();">
             <i class="fa-solid fa-triangle-exclamation"></i> @ViewBag.Message
         </div>
     }

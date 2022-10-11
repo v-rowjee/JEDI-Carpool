@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BLL\AppUserBL.cs" />
+    <Compile Include="BLL\CarBL.cs" />
     <Compile Include="BLL\RideBL.cs" />
     <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="DAL\AccountDAL.cs" />
     <Compile Include="DAL\AppUserDAL.cs" />
     <Compile Include="BLL\AccountBL.cs" />
+    <Compile Include="DAL\CarDAL.cs" />
     <Compile Include="DAL\Common\DAL.cs" />
     <Compile Include="DAL\Common\DBCommand.cs" />
     <Compile Include="DAL\RideDAL.cs" />
@@ -218,6 +220,7 @@
     <Content Include="Fonts\fontawesome-webfont.ttf" />
     <Content Include="Fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jQuery\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\car-create.js" />
     <Content Include="Scripts\jQuery\jquery-3.4.1.js" />
     <Content Include="Scripts\jQuery\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jQuery\jquery-3.4.1.slim.js" />
@@ -258,7 +261,8 @@
     <Content Include="Scripts\Moment\moment-with-locales.min.js.map" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Car\Index.cshtml" />
-    <Content Include="Views\Car\Create.cshtml" />
+    <Content Include="Views\Car\Add.cshtml" />
+    <Content Include="Views\Shared\_SideNav.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -294,6 +298,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
+      <UserProperties content_4bootstrap_4bootstrap_1css_1map__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

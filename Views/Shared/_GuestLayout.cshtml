@@ -23,16 +23,16 @@
             <div class="collapse navbar-collapse text-center" id="navbarCollapse">
                 <ul class="navbar-nav mx-auto my-2 my-lg-0">
                     <li class="nav-item mx-2">
-                        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Home", "Index", "Home", null, new { @class = @ViewBag.Title == "Home" ? "nav-link active" : "nav-link" })
                     </li>
                     <li class="nav-item mx-2">
-                        @Html.ActionLink("Pick", "Index", "Ride", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Pick ride", "Index", "Ride", null, new { @class = @ViewBag.Title == "Pick A Ride" ? "nav-link active" : "nav-link" })
                     </li>
                     <li class="nav-item mx-2">
-                        @Html.ActionLink("Share", "Share", "Ride", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Share ride", "Share", "Ride", null, new { @class = @ViewBag.Title == "Share A Ride" ? "nav-link active" : "nav-link" })
                     </li>
                     <li class="nav-item mx-2">
-                        @Html.ActionLink("Tracker", "Index", "Home", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Tracker", "Index", "Home", null, new { @class = @ViewBag.Title == "Tracker" ? "nav-link active" : "nav-link" })
                     </li>
                 </ul>
                 <div>

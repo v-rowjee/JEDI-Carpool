@@ -6,22 +6,7 @@
 <div class="container">
     <div class="row g-5">
         <div class="col-md-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <ul class="nav nav-pills mb-auto">
-                        <li class="nav-item w-100">
-                            @Html.ActionLink("Account", "Index", "Profile", null, new { @class = "nav-link link-dark" })
-                        </li>
-                        <li class="nav-item w-100 mb-3">
-                            @Html.ActionLink("Car", "Index", "Car", null, new { @class = "nav-link link-light active" })
-                        </li>
-                        <li class="nav-item w-100"><hr></li>
-                        <li class="nav-item w-100">
-                            @Html.ActionLink("Log Out", "Logout", "Home",null, new { @class = "nav-link link-dark" })
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            @Html.Partial("~/Views/Shared/_SideNav.cshtml")
         </div>
         <div class="col-md-9">
             <h1 class="display-4 fw-bold mb-5">Car Details:</h1>
@@ -53,10 +38,10 @@
                     </div>
                 </div>
             </div>
-            <form id="carForm" class="my-3">
-                <input type="submit" id="save" class="btn btn-primary px-5 me-2" value="Edit" />
-                <input type="submit" id="cancel" class="btn btn-outline-primary" value="Cancel" />
-            </form>
+            <div class="my-3">
+                @Html.ActionLink("Edit", "Edit", "Car", null, new { @class = "btn btn-primary px-5 me-2" })
+                @Html.ActionLink("Cancel", "Index", "Car", null, new { @class = "btn btn-outline-primary" })
+            </div>
         </div>
     </div>
 </div>
