@@ -19,11 +19,11 @@
             <form id="registerForm" class="my-5 needs-validation" novalidate >
                 <div class="mb-3">
                     <label for="fname" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="fname">
+                    <input type="text" class="form-control" id="fname" required>
                 </div>
                 <div class="mb-3">
                     <label for="lname" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="lname">
+                    <input type="text" class="form-control" id="lname" required>
                 </div>
                 <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
@@ -40,11 +40,17 @@
                 <hr class="py-3"/>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" id="email">
+                    <input type="email" class="form-control" id="email" required>
+                    <div id="email-feedback" class="invalid-feedback">
+                        Please provide a valid email.
+                    </div>
                 </div>
                 <div class="mb-5">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password">
+                    <input type="password" class="form-control" id="password" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid password.
+                    </div>
                 </div>
                 <button type="submit" id="register" class="btn btn-primary w-100">Register</button>
             </form>

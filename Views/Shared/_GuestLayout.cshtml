@@ -20,29 +20,33 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="collapse navbar-collapse text-center" id="navbarCollapse">
                 <ul class="navbar-nav mx-auto my-2 my-lg-0">
                     <li class="nav-item mx-2">
                         @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item mx-2">
-                        @Html.ActionLink("Pick ride", "Index", "Ride", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Pick", "Index", "Ride", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item mx-2">
-                        @Html.ActionLink("Share ride", "Share", "Ride", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Share", "Share", "Ride", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item mx-2">
                         @Html.ActionLink("Tracker", "Index", "Home", null, new { @class = "nav-link" })
                     </li>
                 </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item me-2">
+                <div>
+                    @Html.ActionLink("Login", "Index", "Login", null, new { @class = "btn btn-outline-primary me-2" })
+                    @Html.ActionLink("Register", "Index", "Register", null, new { @class = "btn btn-primary" })
+                </div>
+                @*<ul class="navbar-nav">
+                    <li class="nav-item me-2 mb-2 mb-lg-0">
                         @Html.ActionLink("Login", "Index", "Login", null, new { @class = "btn btn-outline-primary" })
                     </li>
                     <li class="nav-item">
                         @Html.ActionLink("Register", "Index", "Register", null, new { @class = "btn btn-primary" })
                     </li>
-                </ul>
+                </ul>*@
             </div>
         </div>
     </nav>
