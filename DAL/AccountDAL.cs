@@ -45,58 +45,6 @@ namespace JEDI_Carpool.DAL
 
         }
 
-        private const string GetCarWithEmailQuery = @"
-            SELECT c.* FROM Car c JOIN Account a ON a.AccountId=c.DriverId
-            WHERE a.Email = @Email";
-
-        public static CarModel GetCar(string email)
-        {
-            CarModel car = null;
-            var parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@Email",email));
-
-            var dt = DBCommand.GetDataWithCondition(GetCarWithEmailQuery, parameters);
-            foreach (DataRow row in dt.Rows)
-            {
-                car = new CarModel();
-                car.CarId = int.Parse(row["CarId"].ToString());
-                car.DriverId = int.Parse(row["DriverId"].ToString());
-                car.PlateNumber = row["PlateNumber"].ToString();
-                car.Model = row["Model"].ToString();
-                car.Year = int.Parse(row["Year"].ToString());
-                car.Color = row["Color"].ToString();
-                car.Seat = int.Parse(row["Seat"].ToString());
-            }
-
-            return car;
-        }
-
-        private const string GetCarWithDriverIdQuery = @"
-            SELECT * FROM Car
-            WHERE DriverId = @DriverId";
-
-        public static CarModel GetCar(int DriverId)
-        {
-            CarModel car = null;
-            var parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@DriverId", DriverId));
-
-            var dt = DBCommand.GetDataWithCondition(GetCarWithDriverIdQuery, parameters);
-            foreach (DataRow row in dt.Rows)
-            {
-                car = new CarModel();
-                car.CarId = int.Parse(row["CarId"].ToString());
-                car.PlateNumber = row["PlateNumber"].ToString();
-                car.Model = row["Model"].ToString();
-                car.Year = int.Parse(row["Year"].ToString());
-                car.Color = row["Color"].ToString();
-                car.Seat = int.Parse(row["Seat"].ToString());
-            }
-
-            return car;
-        }
-
-
         private const string GetAllAccountsQuery = @"
             SELECT a.*, l.Address, l.City, l.Country 
             FROM Account a JOIN Location l ON a.AddressId=l.LocationId";
@@ -124,6 +72,40 @@ namespace JEDI_Carpool.DAL
             }
 
             return accounts;
+        }
+
+
+        private const string UpdateAccountQuery = @"
+            BEGIN TRANSACTION
+
+            IF NOT EXIST ( SELECT a.AddressId FROM Location L INNER JOIN Account a ON a.AddressId=l.LocationId WHERE a.AccountId=@AccountId )
+                BEGIN
+                    INSERT INTO Location (Address, City, Country) VALUES (@Address, @City, @Country);
+                    UPDATE Account 
+                    SET FirstName=@FirstName, LastName=@LastName, Email=@Email, AddressId=SCOPE_IDENTITY()
+                    WHERE AccountId=@AccountId;
+                END
+            ELSE
+                BEGIN
+                    UPDATE Account
+                    SET FirstName=@FirstName, LastName=@LastName, Email=@Email, AddressId= ( SELECT LocationId FROM Location WHERE Address=@Address AND City=@City AND Country=@Country )
+                    WHERE AccountId=@AccountId;
+                END
+
+            COMMIT;";
+
+        public static bool UpdateAccount(AccountModel model)
+        {
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@AccountId", model.AccountId));
+            parameters.Add(new SqlParameter("@Email", model.Email));
+            parameters.Add(new SqlParameter("@FirstName", model.FirstName));
+            parameters.Add(new SqlParameter("@LastName", model.LastName));
+            parameters.Add(new SqlParameter("@Address", model.Address.Address ?? (object)DBNull.Value));
+            parameters.Add(new SqlParameter("@City", model.Address.City ?? (object)DBNull.Value));
+            parameters.Add(new SqlParameter("@Country", model.Address.Country ?? (object)DBNull.Value));
+
+            return DBCommand.InsertUpdateData(UpdateAccountQuery, parameters);
         }
 
     }

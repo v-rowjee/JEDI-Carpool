@@ -13,16 +13,15 @@ namespace JEDI_Carpool.DAL.Common
             return AccountDAL.GetAccount(model);
         }
 
-        public static CarModel GetCar(LoginViewModel model)
-        {
-            return AccountDAL.GetCar(model.Email);
-        }
-
         public static List<AccountModel> GetAllAccounts()
         {
             return AccountDAL.GetAllAccounts();
         }
 
+        public static bool UpdateAccount(AccountModel model)
+        {
+            return AccountDAL.UpdateAccount(model);
+        }
 
     }
 }

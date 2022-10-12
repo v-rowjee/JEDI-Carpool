@@ -220,7 +220,7 @@
     <Content Include="Fonts\fontawesome-webfont.ttf" />
     <Content Include="Fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jQuery\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\car-create.js" />
+    <Content Include="Scripts\car.js" />
     <Content Include="Scripts\jQuery\jquery-3.4.1.js" />
     <Content Include="Scripts\jQuery\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jQuery\jquery-3.4.1.slim.js" />
@@ -263,6 +263,7 @@
     <Content Include="Views\Car\Index.cshtml" />
     <Content Include="Views\Car\Add.cshtml" />
     <Content Include="Views\Shared\_SideNav.cshtml" />
+    <Content Include="Views\Car\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

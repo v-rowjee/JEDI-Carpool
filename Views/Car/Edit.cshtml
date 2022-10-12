@@ -1,0 +1,56 @@
+﻿
+
+@{
+    ViewBag.Title = "Car";
+}
+@section scripts {
+    <script src="~/Scripts/car.js"></script>
+}
+
+<div class="container">
+    <div class="row g-5">
+        <div class="col-md-3">
+            @Html.Partial("~/Views/Shared/_SideNav.cshtml")
+        </div>
+        <div class="col-md-9">
+            <h1 class="display-4 fw-bold mb-5">Car Details:</h1>
+            <form id="editcarForm">
+                <div class="card mb-3">
+                    <div class="card-body p-0">
+                        <div class="card-header">
+                            <label class="form-label fw-bold">Model</label>
+                            <input type="text" id="model" class="form-control mb-3" value="@ViewBag.Account.Car.Model" required/>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">PlateNumber</label>
+                                    <input type="text" id="plateNumber" class="form-control" value="@ViewBag.Account.Car.PlateNumber" required/>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Year</label>
+                                    <input type="number" id="year" class="form-control" value="@ViewBag.Account.Car.Year" pattern="^[0-9]{4}$" maxlength="4" min=1000 max=9999 required/>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Color</label>
+                                    <input type="text" id="color" class="form-control" value="@ViewBag.Account.Car.Color" required/>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Capacity</label>
+                                    <input type="number" id="seat" class="form-control" value="@ViewBag.Account.Car.Seat" required/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-2 float-end">
+                    <input type="submit" id="edit" class="btn btn-sm btn-primary me-2 px-5" value="Save Changes" />
+                    @Html.ActionLink("Cancel", "Index", "Car", null, new { @class = "btn btn-sm btn-secondary px-5" })
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

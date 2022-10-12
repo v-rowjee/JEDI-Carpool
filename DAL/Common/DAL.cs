@@ -10,11 +10,11 @@ namespace JEDI_Carpool.DAL.Common
     {
         public const string connectionString = @"server=L-PC197T2Z;database=CarpoolManagement;uid=wbpoc;pwd=sql@tfs2008";
 
-        public SqlConnection connection;
+        public SqlConnection Connection;
 
         public DAL()
         {
-            connection = new SqlConnection(connectionString);
+            Connection = new SqlConnection(connectionString);
             OpenConnection();
         }
 
@@ -22,12 +22,12 @@ namespace JEDI_Carpool.DAL.Common
         {
             try
             {
-                if (connection.State == System.Data.ConnectionState.Open)
+                if (Connection.State == System.Data.ConnectionState.Open)
                 {
-                    connection.Close();
+                    Connection.Close();
                 }
 
-                connection.Open();
+                Connection.Open();
             }
             catch (SqlException ex)
             {
@@ -37,10 +37,10 @@ namespace JEDI_Carpool.DAL.Common
 
         public void CloseConnection()
         {
-            if (connection != null && connection.State == System.Data.ConnectionState.Open)
+            if (Connection != null && Connection.State == System.Data.ConnectionState.Open)
             {
-                connection.Close();
-                connection.Dispose();
+                Connection.Close();
+                Connection.Dispose();
             }
         }
     }

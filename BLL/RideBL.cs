@@ -21,7 +21,7 @@ namespace JEDI_Carpool.BLL
 
         private static bool HasCar(int DriverId)
         {
-            var car = AccountDAL.GetCar(DriverId);
+            var car = CarDAL.GetCar(DriverId);
             return car != null;
         }
 

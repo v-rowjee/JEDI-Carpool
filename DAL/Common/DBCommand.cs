@@ -14,7 +14,7 @@ namespace JEDI_Carpool.DAL.Common
             DAL dal = new DAL();
             DataTable dt = new DataTable();
 
-            using (SqlCommand cmd = new SqlCommand(query, dal.connection))
+            using (SqlCommand cmd = new SqlCommand(query, dal.Connection))
             {
                 cmd.CommandType = CommandType.Text;
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
@@ -30,22 +30,31 @@ namespace JEDI_Carpool.DAL.Common
 
         public static bool InsertUpdateData(string query, List<SqlParameter> parameters)
         {
-            DAL dal = new DAL();
-            using (SqlCommand cmd = new SqlCommand(query, dal.connection))
+            try
             {
-                cmd.CommandType = CommandType.Text;
-                if (parameters != null)
-                {
-                    parameters.ForEach(parameter =>
-                    {
-                        cmd.Parameters.AddWithValue(parameter.ParameterName, parameter.Value);
-                    });
-                }
-                cmd.ExecuteNonQuery();
-            }
-            dal.CloseConnection();
+                DAL dal = new DAL();
+                int rowsAffected = 0;
 
-            return true;
+                using (SqlCommand cmd = new SqlCommand(query, dal.Connection))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    if (parameters != null)
+                    {
+                        parameters.ForEach(parameter =>
+                        {
+                            cmd.Parameters.AddWithValue(parameter.ParameterName, parameter.Value);
+                        });
+                    }
+                    rowsAffected = cmd.ExecuteNonQuery();
+                }
+                dal.CloseConnection();
+
+                return rowsAffected > 0;
+            }
+            catch
+            {
+                return false;
+            }
 
         }
 
@@ -54,10 +63,9 @@ namespace JEDI_Carpool.DAL.Common
             DAL dal = new DAL();
             DataTable dt = new DataTable();
 
-            using (SqlCommand cmd = new SqlCommand(query, dal.connection))
+            using (SqlCommand cmd = new SqlCommand(query, dal.Connection))
             {
                 cmd.CommandType = CommandType.Text;
-
                 if (parameters != null)
                 {
                     parameters.ForEach(parameter =>
@@ -76,5 +84,31 @@ namespace JEDI_Carpool.DAL.Common
 
             return dt;
         }
+
+        public static bool DeleteData(string query, SqlParameter parameter)
+        {
+            try
+            {
+                DAL dal = new DAL();
+                int rowsAffected = 0;
+
+                using (SqlCommand cmd = new SqlCommand(query, dal.Connection))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    if (parameter != null)
+                    {
+                        cmd.Parameters.AddWithValue(parameter.ParameterName, parameter.Value);
+                    }
+                    rowsAffected = cmd.ExecuteNonQuery();
+                }
+                dal.CloseConnection();
+                return rowsAffected > 0;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
     }
 }

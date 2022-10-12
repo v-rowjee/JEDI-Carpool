@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "Car";
 }
+@section scripts {
+    <script src="~/Scripts/car.js"></script>
+}
 
 <div class="container">
     <div class="row g-5">
@@ -14,33 +17,33 @@
                 <div class="card-body p-0">
                     <div class="card-header">
                         <label class="form-label fw-bold">Model</label>
-                        <input type="text" class="form-control mb-3" value="@ViewBag.Account.Car.Model" />
+                        <input type="text" class="form-control mb-3" value="@ViewBag.Account.Car.Model" readonly />
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">PlateNumber</label>
-                                <input type="text" class="form-control" value="@ViewBag.Account.Car.PlateNumber" />
+                                <input type="text" class="form-control" value="@ViewBag.Account.Car.PlateNumber" readonly />
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Year</label>
-                                <input type="number" class="form-control" value="@ViewBag.Account.Car.Year" />
+                                <input type="number" class="form-control" value="@ViewBag.Account.Car.Year" pattern="^[0-9]{4}$" maxlength="4" min=1000 max=9999 required />
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Color</label>
-                                <input type="text" class="form-control" value="@ViewBag.Account.Car.Color" />
+                                <input type="text" class="form-control" value="@ViewBag.Account.Car.Color" readonly />
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Capacity</label>
-                                <input type="number" class="form-control" value="@ViewBag.Account.Car.Seat" />
+                                <input type="number" class="form-control" value="@ViewBag.Account.Car.Seat" readonly />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="my-3">
-                @Html.ActionLink("Edit", "Edit", "Car", null, new { @class = "btn btn-primary px-5 me-2" })
-                @Html.ActionLink("Cancel", "Index", "Car", null, new { @class = "btn btn-outline-primary" })
+            <div class="my-2 float-end">
+                @Html.ActionLink("Edit", "Edit", "Car", null, new { @class = "btn btn-sm btn-secondary px-5 me-2" })
+                <input type="button" id="delete" class="btn btn-sm btn-danger px-5" value="Remove" />
             </div>
         </div>
     </div>

@@ -53,7 +53,7 @@ namespace JEDI_Carpool.Controllers
             if (loggeduser != null)
             {
                 var account = AccountBL.GetAccount(loggeduser);
-                var car = AccountBL.GetCar(loggeduser);
+                var car = CarBL.GetCar(account.AccountId);
                 ViewBag.Account = account;
                 ViewBag.Account.Car = car;
 

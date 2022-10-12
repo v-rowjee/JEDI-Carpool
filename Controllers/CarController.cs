@@ -17,17 +17,17 @@ namespace JEDI_Carpool.Controllers
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
             if (loggeduser != null)
             {
-                var accountData = AccountBL.GetAccount(loggeduser);
-                ViewBag.Account = accountData;
+                var account = AccountBL.GetAccount(loggeduser);
+                ViewBag.Account = account;
 
-                var carData = AccountBL.GetCar(loggeduser);
-                if (carData == null)
+                var car = CarBL.GetCar(account.AccountId);
+                if (car == null)
                 {
                     return RedirectToAction("Add");
                 }
                 else
                 {
-                    ViewBag.Account.Car = carData;
+                    ViewBag.Account.Car = car;
                     return View();
                 }
 
@@ -41,11 +41,11 @@ namespace JEDI_Carpool.Controllers
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
             if (loggeduser != null)
             {
-                var accountData = AccountBL.GetAccount(loggeduser);
-                ViewBag.Account = accountData;
+                var account = AccountBL.GetAccount(loggeduser);
+                ViewBag.Account = account;
 
-                var carData = AccountBL.GetCar(loggeduser);
-                if (carData != null)
+                var car = CarBL.GetCar(account.AccountId);
+                if (car != null)
                 {
                     return RedirectToAction("Index");
                 }
@@ -55,32 +55,70 @@ namespace JEDI_Carpool.Controllers
             else return Redirect("/");
         }
 
-        //POST: Car/Add
+        //POST: Car/Create
         [HttpPost]
-        public JsonResult Create(CarModel model)
+        public JsonResult Create(CarModel carModel) // Cannot assign object name to model as ther already is a property in class CarModel called Model => conflict
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
             var account = AccountBL.GetAccount(loggeduser);
 
-            model.DriverId = account.AccountId;
+            carModel.DriverId = account.AccountId;
 
-            var result = CarBL.Create(model);
+            var result = CarBL.Create(carModel);
 
             return Json(new { result = result, url = Url.Action("Index", "Car") });
         }
 
         // GET: Car/Edit
-        public ViewResult Edit()
+        public ActionResult Edit()
         {
-            return View();
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+            if (loggeduser != null)
+            {
+                var account = AccountBL.GetAccount(loggeduser);
+                ViewBag.Account = account;
+
+                var car = CarBL.GetCar(account.AccountId);
+                if (car == null)
+                {
+                    return RedirectToAction("Add");
+                }
+                else
+                {
+                    ViewBag.Account.Car = car;
+                    return View();
+                }
+
+            }
+            else return Redirect("/");
         }
 
-        //POST: Car/Modify
+        //POST: Car/Edit
         [HttpPost]
-        public JsonResult Modify()
+        public JsonResult Edit(CarModel carModel)
         {
-            return Json(new { result = false });
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+            var account = AccountBL.GetAccount(loggeduser);
+
+            carModel.DriverId = account.AccountId;
+
+            var result = CarBL.Edit(carModel);
+
+            return Json(new { result = result, url = Url.Action("Index", "Car") });
         }
+
+
+        [HttpPost]
+        public JsonResult Delete()
+        {
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+            var account = AccountBL.GetAccount(loggeduser);
+
+            var result = CarBL.Delete(account.AccountId);
+
+            return Json(new { result = result, url = Url.Action("Add", "Car") });
+        }
+
 
     }
 }
