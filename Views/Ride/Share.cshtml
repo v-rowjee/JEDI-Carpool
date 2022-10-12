@@ -129,11 +129,32 @@
             </div>
         </div>
 
+
         <div class="row align-items-center">
             <div class="col-md-6 order-md-2">
-                <img src="~/Content//Images/confirm.png" class="img-fluid px-5" alt="Confirm" />
+                <img src="~/Content//Images/car2.png" class="img-fluid px-5" alt="Car" />
             </div>
             <div class="col-md-6 order-md-1">
+                <h3 class="fw-bold"><i class="fa-solid fa-circle-check me-3"></i>My Car Details</h3>
+                <p class="mb-5">
+                    Make any changes before publishing your ride. Click
+                    @Html.ActionLink("here", "Index", "Car", null, new { @class = "text-decoration-none link-primary" }) to view car details.
+                </p>
+                <div class="mb-3">
+                    <label for="changes" class="form-label">Total number of seats available</label>
+                    <input type="number" class="form-control" value="@if(ViewBag.Car != null) { @ViewBag.Car.Seat }" readonly placeholder="Add Car details" />
+                    <div class="invalid-feedback">
+                        Please enter a fare.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <img src="~/Content//Images/confirm.png" class="img-fluid px-5" alt="Confirm" />
+            </div>
+            <div class="col-md-6">
                 <h3 class="fw-bold"><i class="fa-solid fa-circle-check me-3"></i>Confirm Ride</h3>
                 <p class="text-muted my-4">
                     By clicking on the button below, I agree to these rules, to the Driver Cancellation Policy, Terms of Service and the Privacy Policy.
