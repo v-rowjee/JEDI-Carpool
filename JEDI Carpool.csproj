@@ -236,6 +236,7 @@
     <Content Include="Scripts\Moment\moment-with-locales.min.js" />
     <Content Include="Scripts\Moment\moment.js" />
     <Content Include="Scripts\Moment\moment.min.js" />
+    <Content Include="Scripts\profile.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\search.js" />
     <Content Include="Scripts\share.js" />
@@ -264,6 +265,7 @@
     <Content Include="Views\Car\Add.cshtml" />
     <Content Include="Views\Shared\_SideNav.cshtml" />
     <Content Include="Views\Car\Edit.cshtml" />
+    <Content Include="Views\Profile\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

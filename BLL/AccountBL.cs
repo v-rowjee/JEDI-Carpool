@@ -18,9 +18,22 @@ namespace JEDI_Carpool.DAL.Common
             return AccountDAL.GetAllAccounts();
         }
 
-        public static bool UpdateAccount(AccountModel model)
+        public static string UpdateAccount(AccountModel model)
         {
-            return AccountDAL.UpdateAccount(model);
+            if (ValidateDuplicatedEmail(model))
+            {
+                return AccountDAL.UpdateAccount(model);
+            }
+            return "DuplicatedEmail";
+        }
+
+        private static bool ValidateDuplicatedEmail(AccountModel model)
+        {
+            var accounts = AccountDAL.GetAllAccounts()
+                .Where(x => x.Email.Equals(model.Email))
+                .FirstOrDefault(a => a.AccountId != model.AccountId);
+
+            return accounts == null;
         }
 
     }

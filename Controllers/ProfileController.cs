@@ -48,7 +48,19 @@ namespace JEDI_Carpool.Controllers
 
             var result = AccountBL.UpdateAccount(model);
 
-            return Json(new { result = result, url = Url.Action("Index", "Profile") });
+            if (result == "Success")
+            {
+                return Json(new { result = result, url = Url.Action("Index", "Profile") });
+            }
+            else if (result == "DuplicatedEmail")
+            {
+                return Json(new { result = result });
+            }
+            else
+            {
+                return Json(new { result = "NoUpdate" });
+            }
+
         }
 
     }
