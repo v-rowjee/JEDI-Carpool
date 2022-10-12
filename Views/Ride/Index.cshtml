@@ -15,54 +15,57 @@
     <div class="card shadow my-5 p-3 rounded-4">
         <div class="card-body">
             <form id="searchForm">
-                <div class="row align-items-center">
+                <div class="row g-3 p-3 align-items-center">
+
                     <div class="col-lg-3">
                         <div class="accordion">
                             <div class="accordion-item">
                                 <div class="accordion-header">
-                                    <button class="accordion-button py-2" type="button" data-bs-toggle="collapse" data-bs-target=".accordion-collapse">
-                                        <i class="fa-solid fa-location-dot me-2"></i> Origin
+                                    <button class="accordion-button py-2" type="button" data-bs-toggle="collapse" data-bs-target=".locations">
+                                        <i class="fa-solid fa-location-dot me-2"></i>
+                                        <p class="m-0">Origin</p>
                                     </button>
                                 </div>
-                                <div class="accordion-collapse collapse p-3">
+                                <div class="accordion-collapse collapse locations p-3">
                                     <input type="text" class="form-control my-2" placeholder="Address">
                                     <input type="text" class="form-control mb-2" placeholder="City">
-                                    <input type="text" id="oCountry" class="form-control mb-2" placeholder="Country">
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-1 align-self-center justify-content-center">
-                        <div class="my-3 text-center">
-                            <div class="btn btn-light w-100">
-                                <i class="fa-solid fa-right-left text-dark" title="Swap"></i>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="accordion p-0">
+                        <div class="accordion">
                             <div class="accordion-item">
                                 <div class="accordion-header">
-                                    <button class="accordion-button py-2" type="button" data-bs-toggle="collapse" data-bs-target=".accordion-collapse">
-                                        <i class="fa-solid fa-location-dot me-2"></i> Destination
+                                    <button class="accordion-button py-2" type="button" data-bs-toggle="collapse" data-bs-target=".locations">
+                                        <i class="fa-solid fa-location-dot me-2"></i>
+                                        <p class="m-0">Destination</p>
                                     </button>
                                 </div>
-                                <div class="accordion-collapse collapse p-3">
+                                <div class="accordion-collapse collapse locations p-3">
                                     <input type="text" class="form-control my-2" placeholder="Address">
                                     <input type="text" class="form-control mb-2" placeholder="City">
-                                    <input type="text" class="form-control mb-2" placeholder="Country">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="input-group my-3">
-                            <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
-                            <input type="date" class="form-control" placeholder="Date">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-globe"></i></span>
+                            <input type="text" class="form-control" placeholder="Country" value="
+                                   @if (ViewBag.Account != null) { @ViewBag.Account.Address.Country; }">
                         </div>
                     </div>
                     <div class="col-lg-2">
-                        <input type="submit" id="search" class="btn btn-primary my-3 w-100" />
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                            <input type="number" class="form-control" min="1" value="1">
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <button id="search" class="btn btn-primary w-100">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -70,11 +73,66 @@
     </div>
 </div>
 
-<div class="container py-4">
-    <hr class="my-5" />
-</div>
-
 <div class="container">
-    <div id="rides" class="row">
+    <div class="row">
+        <div class="col-lg-4">
+            @* FILTER SEARCH HERE *@
+        </div>
+        <div class="col-lg-6 offset-1">
+            @foreach (var Ride in ViewBag.Rides)
+            {
+                if (ViewBag.PreviousDate != @Ride.DateTime.ToString("ddd, dd MMMM yyyy"))
+                {
+                    ViewBag.PreviousDate = @Ride.DateTime.ToString("ddd, dd MMMM yyyy");
+                    <h4 class="fw-bold text-muted mb-4">
+                        <i class="fa-solid fa-calendar-days me-2"></i>
+                        @Ride.DateTime.ToString("ddd, dd MMM")
+                    </h4>
+                }
+                <div class="card shadow-sm mb-5">
+                    <div class="card-header">
+                        <div class="row pt-2 align-items-center">
+                            <div class="col">
+                                <h5 class="fw-bold">
+                                    <i class="fa-solid fa-clock"></i>
+                                    @Ride.DateTime.ToString("hh:mm tt")
+                                </h5>
+                            </div>
+                            <div class="col text-end">
+                                <h5 class="fw-bold">
+                                    <i class="fa-solid fa-circle-dollar-to-slot me-2"></i>
+                                    Rs @Ride.Fare
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body row">
+                        <div class="col-6">
+                            <p>
+                                <i class="fa-solid fa-location-dot me-2"></i>
+                                @Ride.Origin.Address , @Ride.Origin.City
+                            </p>
+                            <p>
+                                <i class="fa-solid fa-arrow-down"></i>
+                            </p>
+                            <p>
+                                <i class="fa-solid fa-location-dot me-2"></i>
+                                @Ride.Destination.Address, @Ride.Destination.City
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <p>
+                                <i class="fa-solid fa-user me-2"></i>
+                                @Ride.Driver.FirstName @Ride.Driver.LastName
+                            </p>
+                            <p>
+                                <i class="fa-solid fa-car-side me-2"></i>
+                                @Ride.Car.Model (@Ride.Car.Year)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 </div>

@@ -127,15 +127,17 @@ namespace JEDI_Carpool.DAL
 
 
         private const string GetAllRidesQuery = @"
-            SELECT acc.FirstName, acc.LastName, acc.Email, car.Model, car.PlateNumber, car.Seat, car.Year, car.Color,
-            rid.DateTime, rid.Comment, rid.Fare, org.Address as OAddress, org.City as OCity, org.Country as OCountry,
-            dest.Address as DAddress, dest.City as DCity, dest.Country as DCountry
+            SELECT rid.RideId, rid.Fare, rid.DateTime, rid.Comment,
+                acc.FirstName, acc.LastName, acc.Email, 
+                car.Model, car.PlateNumber, car.Seat, car.Year, car.Color,
+                org.Address as OAddress, org.City as OCity, org.Country as OCountry,
+                dest.Address as DAddress, dest.City as DCity, dest.Country as DCountry
             FROM Account acc
             INNER JOIN Car car ON car.DriverId=acc.AccountId
             INNER JOIN Ride rid ON rid.DriverId=acc.AccountId
             INNER JOIN Location org ON org.LocationId=rid.OriginId
             INNER JOIN Location dest ON dest.LocationId=rid.DestinationId
-            WHERE car.Seat >= (SELECT SUM(Seat) FROM Riders GROUP BY RideId)
+            -- WHERE car.Seat >= (SELECT SUM(Seat) FROM Riders GROUP BY RideId)
 ";
 
         public static List<RideViewModel> GetAllRides()
@@ -168,6 +170,7 @@ namespace JEDI_Carpool.DAL
                 destination.City = row["DCity"].ToString();
                 destination.Country = row["DCountry"].ToString();
 
+                ride.RideId = int.Parse(row["RideId"].ToString());
                 ride.Driver = driver;
                 ride.Car = car;
                 ride.Fare = Convert.ToInt32(row["Fare"]);

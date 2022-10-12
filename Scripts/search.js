@@ -35,54 +35,16 @@
             dataType: "json",
             success: (response) => {
                 if (response.result) {
-                    $("#rides").html('');
-                    $.each(response.data, function (i, ride) {
-                        var datetime = moment(new Date(parseInt(ride.DateTime.substr(6))), "DD MM YYYY");
-                        $("#rides").append(`
-                            <div class="col-md-6">
-                                <div class="card shadow-sm mb-5">
-                                    <div class="card-body p-0">
-                                        <div class="card-header">
-                                            <div class="row pt-2">
-                                                <div class="col">
-                                                    <h5 class="fw-bold">
-                                                        <i class="fa-solid fa-user me-2"></i>
-                                                        ${ride.Driver.FirstName} ${ride.Driver.LastName}
-                                                    </h5>
-                                                </div>
-                                                <div class="col text-end">
-                                                    <h5 class="fw-bold">
-                                                        <i class="fa-solid fa-circle-dollar-to-slot me-2"></i>
-                                                        ${ride.Fare}
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <p>
-                                                <i class="fa-solid fa-car-side me-2"></i>
-                                                ${ride.Car.Model} (${ride.Car.Year})
-                                            </p>
-                                            <p>
-                                                <i class="fa-solid fa-location-dot me-2"></i>
-                                                ${ride.Origin.Address}, ${ride.Origin.City}
-                                                <i class="fa-solid fa-arrow-right mx-3"></i>
-                                                ${ride.Destination.Address}, ${ride.Destination.City}
-                                            </p>
-                                            <p>
-                                                <i class="fa-solid fa-calendar-days me-2"></i>
-                                                ${ datetime.format("DD MMM YYYY") }
-                                                <i class="fa-solid fa-clock ms-4 me-2"></i>
-                                                ${ datetime.format("HH:SS") }
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`)
-                    })
+                    Snackbar.show({
+                        text: response.count + "Rides Found",
+                        actionTextColor: "#CFE2FF"
+                    });
                 }
                 else {
-                    Snackbar.show({ text: "No Rides found" });
+                    Snackbar.show({
+                        text: "No Rides Found",
+                        actionTextColor: "#CFE2FF"
+                    });
                 }
             }
         })

@@ -16,6 +16,9 @@ namespace JEDI_Carpool.Controllers
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
             var view = View();
 
+            var rides = RideBL.GetAllRides();
+            ViewBag.Rides = rides;
+
             if (loggeduser != null)
             {
                 var data = AccountBL.GetAccount(loggeduser);
@@ -31,19 +34,24 @@ namespace JEDI_Carpool.Controllers
             return view;
         }
 
-        [HttpPost]
-        public JsonResult Search(SearchRideViewModel model)
-        {
-            var rides = RideBL.GetAllRides();
-            if (rides != null)
-            {
-                return Json(new { result = true, data = rides });
-            }
-            else
-            {
-                return Json(new { result = false });
-            }
-        }
+        //[HttpPost]
+        //public JsonResult Search(SearchRideViewModel model)
+        //{
+        //    var rides = RideBL.GetAllRides();
+
+        //    // use of linq to filter
+
+        //    ViewBag.Rides = rides;
+
+        //    if (rides != null || rides.Count > 0)
+        //    {
+        //        return Json(new { result = true, count = rides.Count });
+        //    }
+        //    else
+        //    {
+        //        return Json(new { result = false });
+        //    }
+        //}
 
         public ViewResult Share()
         {
