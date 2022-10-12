@@ -76,7 +76,7 @@ namespace JEDI_Carpool.DAL
 
 
         private const string UpdateAccountQuery = @"
-            IF NOT EXISTS ( SELECT a.AddressId FROM Location L INNER JOIN Account a ON a.AddressId=l.LocationId WHERE a.AccountId=@AccountId )
+            IF NOT EXISTS ( SELECT * FROM Location WHERE Address=@Address AND City=@City AND Country=@Country )
                 BEGIN
                     INSERT INTO Location (Address, City, Country) VALUES (@Address, @City, @Country);
                     UPDATE Account 
