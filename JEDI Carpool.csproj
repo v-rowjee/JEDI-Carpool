@@ -267,6 +267,7 @@
     <Content Include="Views\Shared\_SideNav.cshtml" />
     <Content Include="Views\Car\Edit.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\Ride\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

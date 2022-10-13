@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace JEDI_Carpool.DAL
@@ -56,7 +57,6 @@ namespace JEDI_Carpool.DAL
         }
 
 
-
         private const string SearchRidesQuery = @"
             SELECT acc.FirstName, acc.LastName, acc.Email,rid.Fare, rid.Comment, car.PlateNumber, car.Model, car.Year, car.Seat, car.Color
             FROM Account acc 
@@ -68,7 +68,6 @@ namespace JEDI_Carpool.DAL
             AND DAY(DateTime) >= DAY(@DateTime)
             AND car.Seat >= (SELECT SUM(Seat) FROM Riders GROUP BY RideId)
 ";
-
         public static List<RideViewModel> GetRidesWithCondition(SearchRideViewModel model)
         {
             var rides = new List<RideViewModel>();
@@ -137,9 +136,9 @@ namespace JEDI_Carpool.DAL
             INNER JOIN Ride rid ON rid.DriverId=acc.AccountId
             INNER JOIN Location org ON org.LocationId=rid.OriginId
             INNER JOIN Location dest ON dest.LocationId=rid.DestinationId
+            WHERE DateTime > GETDATE()
             -- WHERE car.Seat >= (SELECT SUM(Seat) FROM Riders GROUP BY RideId)
 ";
-
         public static List<RideViewModel> GetAllRides()
         {
             var rides = new List<RideViewModel>();
@@ -155,6 +154,7 @@ namespace JEDI_Carpool.DAL
                 driver.LastName = row["LastName"].ToString();
 
                 var car = new CarModel();
+                car.PlateNumber = row["PlateNumber"].ToString();
                 car.Model = row["Model"].ToString();
                 car.Year = int.Parse(row["Year"].ToString());
                 car.Seat = int.Parse(row["Seat"].ToString());
@@ -182,6 +182,64 @@ namespace JEDI_Carpool.DAL
             }
 
             return rides;
+        }
+
+
+        private const string GetRideQuery = @"
+            SELECT rid.RideId, rid.Fare, rid.DateTime, rid.Comment,
+                acc.FirstName, acc.LastName, acc.Email, 
+                car.Model, car.PlateNumber, car.Seat, car.Year, car.Color,
+                org.Address as OAddress, org.City as OCity, org.Country as OCountry,
+                dest.Address as DAddress, dest.City as DCity, dest.Country as DCountry
+            FROM Account acc
+            INNER JOIN Car car ON car.DriverId=acc.AccountId
+            INNER JOIN Ride rid ON rid.DriverId=acc.AccountId
+            INNER JOIN Location org ON org.LocationId=rid.OriginId
+            INNER JOIN Location dest ON dest.LocationId=rid.DestinationId
+            WHERE rid.RideId = @RideId";
+        public static RideViewModel GetRide(int? id)
+        {
+            RideViewModel ride = null;
+
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@RideId", id));
+
+            var dt = DBCommand.GetDataWithCondition(GetRideQuery,parameters);
+            foreach (DataRow row in dt.Rows)
+            {
+                ride = new RideViewModel();
+
+                var driver = new AccountModel();
+                driver.FirstName = row["FirstName"].ToString();
+                driver.LastName = row["LastName"].ToString();
+
+                var car = new CarModel();
+                car.PlateNumber = row["PlateNumber"].ToString();
+                car.Model = row["Model"].ToString();
+                car.Year = int.Parse(row["Year"].ToString());
+                car.Seat = int.Parse(row["Seat"].ToString());
+                car.Color = row["Color"].ToString();
+
+                var origin = new LocationModel();
+                origin.Address = row["OAddress"].ToString();
+                origin.City = row["OCity"].ToString();
+                origin.Country = row["OCountry"].ToString();
+
+                var destination = new LocationModel();
+                destination.Address = row["DAddress"].ToString();
+                destination.City = row["DCity"].ToString();
+                destination.Country = row["DCountry"].ToString();
+
+                ride.RideId = int.Parse(row["RideId"].ToString());
+                ride.Driver = driver;
+                ride.Car = car;
+                ride.Fare = Convert.ToInt32(row["Fare"]);
+                ride.DateTime = DateTime.Parse(row["DateTime"].ToString());
+                ride.Origin = origin;
+                ride.Destination = destination;
+
+            }
+            return ride;
         }
 
     }

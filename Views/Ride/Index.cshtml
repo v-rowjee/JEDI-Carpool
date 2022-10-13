@@ -75,10 +75,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             @* FILTER SEARCH HERE *@
         </div>
-        <div class="col-lg-6 offset-1">
+        <div class="col-lg-6">
             @foreach (var Ride in ViewBag.Rides)
             {
                 if (ViewBag.PreviousDate != @Ride.DateTime.ToString("ddd, dd MMMM yyyy"))
@@ -86,49 +86,59 @@
                     ViewBag.PreviousDate = @Ride.DateTime.ToString("ddd, dd MMMM yyyy");
                     <h4 class="fw-bold text-muted mb-4">
                         <i class="fa-solid fa-calendar-days me-2"></i>
-                        @Ride.DateTime.ToString("ddd, dd MMM")
+                        @if (@Ride.DateTime.ToString("ddd, dd MMM") == DateTime.Now.ToString("ddd, dd MMM"))
+                        {
+                            <span>Today</span>
+                        }
+                        else
+                        {
+                            @Ride.DateTime.ToString("ddd, dd MMM")
+                        }
                     </h4>
                 }
                 <div class="card shadow-sm mb-5">
                     <div class="card-header">
                         <div class="row pt-2 align-items-center">
                             <div class="col">
-                                <h5 class="fw-bold">
+                                <h5 class="card-title fw-bold">
                                     <i class="fa-solid fa-clock"></i>
                                     @Ride.DateTime.ToString("hh:mm tt")
                                 </h5>
                             </div>
                             <div class="col text-end">
-                                <h5 class="fw-bold">
-                                    <i class="fa-solid fa-circle-dollar-to-slot me-2"></i>
-                                    Rs @Ride.Fare
-                                </h5>
+                                <h6 class="card-title fw-bold">
+                                    <i class="fa-solid fa-circle-dollar-to-slot"></i>
+                                    Rs @Ride.Fare.ToString("0.00")
+                                </h6>
                             </div>
                         </div>
                     </div>
-                    <div class="card-body row">
-                        <div class="col-6">
-                            <p>
+                    <div class="card-body row align-items-center p-4">
+                        <div class="col-sm-6">
+                            <div class="card-text">
                                 <i class="fa-solid fa-location-dot me-2"></i>
                                 @Ride.Origin.Address , @Ride.Origin.City
-                            </p>
-                            <p>
+                            </div>
+                            <div class="card-text">
                                 <i class="fa-solid fa-arrow-down"></i>
-                            </p>
-                            <p>
-                                <i class="fa-solid fa-location-dot me-2"></i>
+                            </div>
+                            <div class="card-text">
+                                <i class="fa-solid fa-location-dot me-2 mb-3 mb-sm-0"></i>
                                 @Ride.Destination.Address, @Ride.Destination.City
-                            </p>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <p>
+                        <div class="col-sm-6">
+                            <div class="card-text mb-3 mb-sm-4">
                                 <i class="fa-solid fa-user me-2"></i>
                                 @Ride.Driver.FirstName @Ride.Driver.LastName
-                            </p>
-                            <p>
+                            </div>
+                            <div class="card-text">
                                 <i class="fa-solid fa-car-side me-2"></i>
                                 @Ride.Car.Model (@Ride.Car.Year)
-                            </p>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            @Html.ActionLink("View Carpool", "View", "Ride", new { @id = Ride.RideId }, new { @class = "btn btn-sm btn-outline-primary w-100 stretched-link" })
                         </div>
                     </div>
                 </div>

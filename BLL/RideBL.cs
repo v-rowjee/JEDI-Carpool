@@ -10,6 +10,14 @@ namespace JEDI_Carpool.BLL
 {
     public class RideBL
     {
+        public static RideViewModel GetRide(int? id)
+        {
+            return id != null ? RideDAL.GetRide(id) : null;
+        }
+        public static List<RideViewModel> GetAllRides()
+        {
+            return RideDAL.GetAllRides();
+        }
         public static string Share(ShareRideViewModel model)
         {
             if (HasCar(model.DriverId))
@@ -28,11 +36,6 @@ namespace JEDI_Carpool.BLL
         public static List<RideViewModel> Search(SearchRideViewModel model)
         {
             return RideDAL.GetRidesWithCondition(model);
-        }
-
-        public static List<RideViewModel> GetAllRides()
-        {
-            return RideDAL.GetAllRides();
         }
 
     }

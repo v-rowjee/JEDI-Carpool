@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace JEDI_Carpool.Controllers
 {
     public class RideController : Controller
     {
+        // GET: Ride/
         public ActionResult Index()
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
@@ -32,6 +34,29 @@ namespace JEDI_Carpool.Controllers
             }
 
             return view;
+        }
+
+        // GET: Ride/View/#
+        public ActionResult View(int? id)
+        {
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+            var view = View();
+
+            view.MasterName = loggeduser != null
+                ? "~/Views/Shared/_Layout.cshtml"
+                : "~/Views/Shared/_GuestLayout.cshtml";
+
+            if (id != null)
+            {
+                var ride = RideBL.GetRide(id);
+                if (ride != null)
+                {
+                    ViewBag.Ride = ride;
+                    return view;
+                }
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
         }
 
         //[HttpPost]
@@ -63,7 +88,7 @@ namespace JEDI_Carpool.Controllers
                 var account = AccountBL.GetAccount(loggeduser);
                 var car = CarBL.GetCar(account.AccountId);
                 ViewBag.Account = account;
-                ViewBag.Account.Car = car;
+                ViewBag.Car = car;
 
                 if(car == null)
                 {

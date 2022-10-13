@@ -136,17 +136,48 @@
             </div>
             <div class="col-md-6 order-md-1">
                 <h3 class="fw-bold"><i class="fa-solid fa-circle-check me-3"></i>My Car Details</h3>
-                <p class="mb-5">
-                    Make any changes before publishing your ride. Click
-                    @Html.ActionLink("here", "Index", "Car", null, new { @class = "text-decoration-none link-primary" }) to view car details.
-                </p>
-                <div class="mb-3">
-                    <label for="changes" class="form-label">Total number of seats available</label>
-                    <input type="number" class="form-control" value="@if(ViewBag.Car != null) { @ViewBag.Car.Seat }" readonly placeholder="Add Car details" />
-                    <div class="invalid-feedback">
-                        Please enter a fare.
+                @if (ViewBag.Car != null)
+                {
+                    <p class="mb-5">
+                        Make any changes before publishing your ride. Click
+                        @Html.ActionLink("here", "Index", "Car", null, new { @class = "text-decoration-none link-primary" }) to view car details.
+                    </p>
+                    <div class="card m-3 shadow-sm">
+                        <div class="card-header">
+                            <div class="card-text fw-bold">
+                                <i class="fa-solid fa-car-side me-2"></i>
+                                @ViewBag.Car.Model
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text mb-2">
+                                <i class="fa-solid fa-users me-2"></i>Number of seats available:
+                                @ViewBag.Car.Seat
+                            </div>
+                            <div class="card-text mb-2">
+                                <i class="fa-solid fa-hashtag me-2"></i>Plate Number:
+                                @ViewBag.Car.PlateNumber
+                            </div>
+                            <div class="card-text mb-2">
+                                <i class="fa-solid fa-calendar-days me-2"></i>Year:
+                                @ViewBag.Car.Year
+                            </div>
+                            <div class="card-text mb-2">
+                                <i class="fa-solid fa-palette me-2"></i>Color:
+                                @ViewBag.Car.Color
+                            </div>
+                            @Html.ActionLink("View", "Index", "Car", null, new { @class = "btn btn-sm btn-primary w-100 stretched-link mt-3" })
+                        </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <p class="mb-4">
+                        Add car details before publishing your ride. Click
+                        @Html.ActionLink("here", "Add", "Car", null, new { @class = "text-decoration-none link-primary" }) to add car informations.
+                    </p>
+                    @Html.ActionLink("Add Car", "Add", "Car", null, new { @class = "btn btn-primary px-5" })
+                }
             </div>
         </div>
 

@@ -27,7 +27,7 @@ namespace JEDI_Carpool.Controllers
                 }
                 else
                 {
-                    ViewBag.Account.Car = car;
+                    ViewBag.Car = car;
                     return View();
                 }
 
@@ -52,7 +52,7 @@ namespace JEDI_Carpool.Controllers
                 else return View();
                 
             }
-            else return Redirect("/");
+            else return Redirect("/Login/Index");
         }
 
         //POST: Car/Create
@@ -85,7 +85,7 @@ namespace JEDI_Carpool.Controllers
                 }
                 else
                 {
-                    ViewBag.Account.Car = car;
+                    ViewBag.Car = car;
                     return View();
                 }
 
