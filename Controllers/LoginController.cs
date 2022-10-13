@@ -11,6 +11,20 @@ namespace JEDI_Carpool.Controllers
 {
     public class LoginController : Controller
     {
+        public IAppUserBL AppUserBL;
+
+        public LoginController(IAppUserBL AppUserBL)
+        {
+            this.AppUserBL = AppUserBL;
+        }
+
+        public LoginController()
+        {
+            this.AppUserBL = new AppUserBL();
+        }
+
+
+        // GET: Login
         public ActionResult Index()
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
@@ -21,6 +35,7 @@ namespace JEDI_Carpool.Controllers
             return View();
         }
 
+        // POST: Login/Authenticate
         [HttpPost]
         public JsonResult Authenticate(LoginViewModel model)
         {
