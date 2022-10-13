@@ -106,8 +106,7 @@
                                 </h5>
                             </div>
                             <div class="col text-end">
-                                <h6 class="card-title fw-bold">
-                                    <i class="fa-solid fa-circle-dollar-to-slot"></i>
+                                <h6 class="card-title fw-bold text-muted">
                                     Rs @Ride.Fare.ToString("0.00")
                                 </h6>
                             </div>
@@ -128,13 +127,17 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="card-text mb-3 mb-sm-4">
-                                <i class="fa-solid fa-user me-2"></i>
+                            <div class="card-text">
+                                <i class="fa-solid fa-user me-2 ms-1"></i>
                                 @Ride.Driver.FirstName @Ride.Driver.LastName
                             </div>
                             <div class="card-text">
                                 <i class="fa-solid fa-car-side me-2"></i>
                                 @Ride.Car.Model (@Ride.Car.Year)
+                            </div>
+                            <div class="card-text">
+                                <i class="fa-solid fa-users me-2"></i>
+                                @Ride.Car.Seat Seats
                             </div>
                         </div>
                         <div class="text-center mt-4">
