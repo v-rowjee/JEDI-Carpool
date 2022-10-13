@@ -7,23 +7,43 @@ using System.Web;
 
 namespace JEDI_Carpool.BLL
 {
-    public class CarBL
+    public interface ICarBL
     {
-        public static CarModel GetCar(int DriverId)
+        CarModel GetCar(int DriverId);
+        bool Create(CarModel model);
+        bool Edit(CarModel model);
+        bool Delete(int DriverId);
+    }
+    public class CarBL : ICarBL
+    {
+        public ICarDAL CarDAL;
+        public CarBL(ICarDAL CarDAL)
+        {
+            this.CarDAL = CarDAL;
+        }
+        public CarBL()
+        {
+            this.CarDAL = new CarDAL();
+        }
+
+
+
+        public CarModel GetCar(int DriverId)
         {
             return CarDAL.GetCar(DriverId);
         }
-        public static bool Create(CarModel model)
+
+        public bool Create(CarModel model)
         {
             return CarDAL.Create(model);
         } 
 
-        public static bool Edit(CarModel model)
+        public bool Edit(CarModel model)
         {
             return CarDAL.Edit(model);
         }
 
-        public static bool Delete(int DriverId)
+        public bool Delete(int DriverId)
         {
             return CarDAL.Delete(DriverId);
         }

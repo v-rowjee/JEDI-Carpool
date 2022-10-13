@@ -10,13 +10,19 @@ using System.Web;
 
 namespace JEDI_Carpool.DAL
 {
-    public class CarDAL
+    public interface ICarDAL
+    {
+        CarModel GetCar(int DriverId);
+        bool Create(CarModel model);
+        bool Edit(CarModel model);
+        bool Delete(int DriverId);
+    }
+    public class CarDAL : ICarDAL
     {
         private const string GetCarQuery = @"
             SELECT * FROM Car
             WHERE DriverId = @DriverId";
-
-        public static CarModel GetCar(int DriverId)
+        public CarModel GetCar(int DriverId)
         {
             CarModel car = null;
             var parameters = new List<SqlParameter>();
@@ -42,7 +48,7 @@ namespace JEDI_Carpool.DAL
             INSERT INTO Car (DriverId, PlateNumber, Model, Year, Color, Seat) 
             VALUES (@DriverId, @PlateNumber, @Model, @Year, @Color, @Seat)
         ";
-        public static bool Create(CarModel model)
+        public bool Create(CarModel model)
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@DriverId", model.DriverId));
@@ -65,7 +71,7 @@ namespace JEDI_Carpool.DAL
             Color = @Color,
             Seat = @Seat
             WHERE DriverId = @DriverId";
-        public static bool Edit(CarModel model)
+        public bool Edit(CarModel model)
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@DriverId", model.DriverId));
@@ -81,7 +87,7 @@ namespace JEDI_Carpool.DAL
 
         private const string DeleteCarQuery = @"
             DELETE FROM Car WHERE DriverId = @DriverId";
-        public static bool Delete(int DriverId)
+        public bool Delete(int DriverId)
         {
             var parameter = new SqlParameter("@DriverId", DriverId);
 

@@ -14,7 +14,7 @@ namespace JEDI_Carpool.BLL
         string RegisterUser(RegisterViewModel model);
     }
 
-    public class AppUserBL
+    public class AppUserBL : IAppUserBL
     {
         public IAppUserDAL AppUserDAL;
         public IAccountDAL AccountDAL;
