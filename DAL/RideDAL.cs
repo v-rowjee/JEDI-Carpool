@@ -10,7 +10,14 @@ using System.Web;
 
 namespace JEDI_Carpool.DAL
 {
-    public class RideDAL
+    public interface IRideDAL
+    {
+        string Share(ShareRideViewModel model);
+        List<RideViewModel> GetRidesWithCondition(SearchRideViewModel model);
+        List<RideViewModel> GetAllRides();
+        RideViewModel GetRide(int? id);
+    }
+    public class RideDAL : IRideDAL
     {
         private const string CreateRideQuery = @"
             DECLARE @OrgId INT;
@@ -35,7 +42,7 @@ namespace JEDI_Carpool.DAL
             INSERT INTO Ride (DriverId, OriginId, DestinationId, DateTime, Fare, Comment) VALUES (@DriverId, @OrgId, @DestId, @DateTime, @Fare, @Comment)
 
 ";
-        public static string Share(ShareRideViewModel model)
+        public string Share(ShareRideViewModel model)
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@DriverId", model.DriverId));
@@ -68,7 +75,7 @@ namespace JEDI_Carpool.DAL
             AND DAY(DateTime) >= DAY(@DateTime)
             AND car.Seat >= (SELECT SUM(Seat) FROM Riders GROUP BY RideId)
 ";
-        public static List<RideViewModel> GetRidesWithCondition(SearchRideViewModel model)
+        public List<RideViewModel> GetRidesWithCondition(SearchRideViewModel model)
         {
             var rides = new List<RideViewModel>();
             RideViewModel ride;
@@ -139,7 +146,7 @@ namespace JEDI_Carpool.DAL
             WHERE DateTime > GETDATE()
             -- WHERE car.Seat >= (SELECT SUM(Seat) FROM Riders GROUP BY RideId)
 ";
-        public static List<RideViewModel> GetAllRides()
+        public List<RideViewModel> GetAllRides()
         {
             var rides = new List<RideViewModel>();
             RideViewModel ride;
@@ -197,7 +204,7 @@ namespace JEDI_Carpool.DAL
             INNER JOIN Location org ON org.LocationId=rid.OriginId
             INNER JOIN Location dest ON dest.LocationId=rid.DestinationId
             WHERE rid.RideId = @RideId";
-        public static RideViewModel GetRide(int? id)
+        public RideViewModel GetRide(int? id)
         {
             RideViewModel ride = null;
 

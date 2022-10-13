@@ -8,17 +8,41 @@ using System.Web.Helpers;
 
 namespace JEDI_Carpool.BLL
 {
-    public class RideBL
+    public interface IRideBL
     {
-        public static RideViewModel GetRide(int? id)
+        RideViewModel GetRide(int? id);
+        List<RideViewModel> GetAllRides();
+        string Share(ShareRideViewModel model);
+        List<RideViewModel> Search(SearchRideViewModel model);
+    }
+    public class RideBL : IRideBL
+    {
+        public IRideDAL RideDAL;
+        public ICarDAL CarDAL;
+        
+        public RideBL(IRideDAL RideDAL, ICarDAL CarDAL)
+        {
+            this.RideDAL = RideDAL;
+            this.CarDAL = CarDAL;
+        }
+
+        public RideBL()
+        {
+            this.RideDAL = new RideDAL();
+            this.CarDAL = new CarDAL();
+        }
+
+
+
+        public RideViewModel GetRide(int? id)
         {
             return id != null ? RideDAL.GetRide(id) : null;
         }
-        public static List<RideViewModel> GetAllRides()
+        public List<RideViewModel> GetAllRides()
         {
             return RideDAL.GetAllRides();
         }
-        public static string Share(ShareRideViewModel model)
+        public string Share(ShareRideViewModel model)
         {
             if (HasCar(model.DriverId))
             {
@@ -27,13 +51,13 @@ namespace JEDI_Carpool.BLL
             return "NoCar";
         }
 
-        private static bool HasCar(int DriverId)
+        private bool HasCar(int DriverId)
         {
             var car = CarDAL.GetCar(DriverId);
             return car != null;
         }
 
-        public static List<RideViewModel> Search(SearchRideViewModel model)
+        public List<RideViewModel> Search(SearchRideViewModel model)
         {
             return RideDAL.GetRidesWithCondition(model);
         }

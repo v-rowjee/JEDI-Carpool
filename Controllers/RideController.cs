@@ -13,13 +13,19 @@ namespace JEDI_Carpool.Controllers
     public class RideController : Controller
     {
         public IAccountBL AccountBL;
-        public RideController(IAccountBL AccountBL)
+        public IRideBL RideBL;
+        public ICarBL CarBL;
+        public RideController(IAccountBL AccountBL, IRideBL RideBL, ICarBL CarBL)
         {
             this.AccountBL = AccountBL;
+            this.RideBL = RideBL;
+            this.CarBL = CarBL;
         }
         public RideController()
         {
             this.AccountBL = new AccountBL();
+            this.RideBL = new RideBL();
+            this.CarBL = new CarBL();
         }
 
 
