@@ -12,7 +12,19 @@ namespace JEDI_Carpool.Controllers
 {
     public class RideController : Controller
     {
-        // GET: Ride/
+        public IAccountBL AccountBL;
+        public RideController(IAccountBL AccountBL)
+        {
+            this.AccountBL = AccountBL;
+        }
+        public RideController()
+        {
+            this.AccountBL = new AccountBL();
+        }
+
+
+
+        // GET: Ride
         public ActionResult Index()
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;

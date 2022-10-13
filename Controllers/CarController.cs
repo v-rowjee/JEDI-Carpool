@@ -11,6 +11,18 @@ namespace JEDI_Carpool.Controllers
 {
     public class CarController : Controller
     {
+        public IAccountBL AccountBL;
+        public CarController(IAccountBL AccountBL)
+        {
+            this.AccountBL = AccountBL;
+        }
+        public CarController()
+        {
+            this.AccountBL = new AccountBL();
+        }
+
+
+
         // GET: Car
         public ActionResult Index()
         {
@@ -55,7 +67,7 @@ namespace JEDI_Carpool.Controllers
             else return Redirect("/Login/Index");
         }
 
-        //POST: Car/Create
+        // POST: Car/Create
         [HttpPost]
         public JsonResult Create(CarModel carModel) // Cannot assign object name to model as ther already is a property in class CarModel called Model => conflict
         {
@@ -93,7 +105,7 @@ namespace JEDI_Carpool.Controllers
             else return Redirect("/");
         }
 
-        //POST: Car/Edit
+        // POST: Car/Edit
         [HttpPost]
         public JsonResult Edit(CarModel carModel)
         {
@@ -107,7 +119,7 @@ namespace JEDI_Carpool.Controllers
             return Json(new { result = result, url = Url.Action("Index", "Car") });
         }
 
-
+        // POST: Car/Delete
         [HttpPost]
         public JsonResult Delete()
         {

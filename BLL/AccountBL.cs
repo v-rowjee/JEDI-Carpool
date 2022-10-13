@@ -6,30 +6,47 @@ using System.Web;
 
 namespace JEDI_Carpool.DAL.Common
 {
-    public class AccountBL
+    public interface IAccountBL
     {
-        public static AccountModel GetAccount(LoginViewModel model)
+        AccountModel GetAccount(LoginViewModel model);
+        List<AccountModel> GetAllAccounts();
+        string UpdateAccount(AccountModel model);
+    }
+    public class AccountBL : IAccountBL
+    {
+        public IAccountDAL accountDAL;
+        public AccountBL(IAccountDAL accountDAL)
         {
-            return AccountDAL.GetAccount(model);
+            this.accountDAL = accountDAL;
+        }
+        public AccountBL()
+        {
+            this.accountDAL = new AccountDAL();
         }
 
-        public static List<AccountModel> GetAllAccounts()
+
+        public AccountModel GetAccount(LoginViewModel model)
         {
-            return AccountDAL.GetAllAccounts();
+            return accountDAL.GetAccount(model);
         }
 
-        public static string UpdateAccount(AccountModel model)
+        public List<AccountModel> GetAllAccounts()
+        {
+            return accountDAL.GetAllAccounts();
+        }
+
+        public string UpdateAccount(AccountModel model)
         {
             if (ValidateDuplicatedEmail(model))
             {
-                return AccountDAL.UpdateAccount(model);
+                return accountDAL.UpdateAccount(model);
             }
             return "DuplicatedEmail";
         }
 
-        private static bool ValidateDuplicatedEmail(AccountModel model)
+        private bool ValidateDuplicatedEmail(AccountModel model)
         {
-            var accounts = AccountDAL.GetAllAccounts()
+            var accounts = accountDAL.GetAllAccounts()
                 .Where(x => x.Email.Equals(model.Email))
                 .FirstOrDefault(a => a.AccountId != model.AccountId);
 

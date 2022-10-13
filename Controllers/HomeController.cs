@@ -11,6 +11,18 @@ namespace JEDI_Carpool.Controllers
 {
     public class HomeController : Controller
     {
+        public IAccountBL AccountBL;
+        public HomeController(IAccountBL AccountBL)
+        {
+            this.AccountBL = AccountBL;
+        }
+        public HomeController()
+        {
+            this.AccountBL = new AccountBL();
+        }
+
+
+        // GET: Home
         public ActionResult Index()
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
@@ -31,6 +43,7 @@ namespace JEDI_Carpool.Controllers
             return view;
         }
 
+        // GET: Home/Logout
         public ActionResult Logout()
         {
             Session.Clear();

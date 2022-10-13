@@ -11,16 +11,44 @@ using System.Security.Principal;
 
 namespace JEDI_Carpool.DAL
 {
-    public class AccountDAL
+    public interface IAccountDAL
     {
-
+        AccountModel GetAccount(LoginViewModel model);
+        List<AccountModel> GetAllAccounts();
+        string UpdateAccount(AccountModel model);
+    }
+    public class AccountDAL : IAccountDAL
+    {
         private const string GetAccountQuery = @"
             SELECT acc.*, loc.[Address], loc.[City], loc.[Country]
             FROM [dbo].[Account] as acc 
             FULL JOIN [dbo].[Location] as loc ON acc.[AddressId] = loc.[LocationId]
             WHERE acc.[Email] = @Email
         ";
-        public static AccountModel GetAccount(LoginViewModel model)
+        private const string GetAllAccountsQuery = @"
+            SELECT a.*, l.Address, l.City, l.Country 
+            FROM Account a JOIN Location l ON a.AddressId=l.LocationId";
+        private const string UpdateAccountQuery = @"
+            IF NOT EXISTS ( SELECT * FROM Location WHERE Address=@Address AND City=@City AND Country=@Country )
+                BEGIN
+                    INSERT INTO Location (Address, City, Country) VALUES (@Address, @City, @Country);
+                    UPDATE Account 
+                    SET FirstName=@FirstName, LastName=@LastName, Email=@Email, AddressId=SCOPE_IDENTITY()
+                    WHERE AccountId=@AccountId;
+                END
+            ELSE
+                BEGIN
+                    UPDATE Account
+                    SET FirstName=@FirstName, LastName=@LastName, Email=@Email, AddressId= ( SELECT LocationId FROM Location WHERE Address=@Address AND City=@City AND Country=@Country )
+                    WHERE AccountId=@AccountId;
+                END
+            ";
+        private const string UpdateAccountQueryWithoutAddress = @"
+            UPDATE Account
+            SET FirstName=@FirstName, LastName=@LastName, Email=@Email
+            WHERE AccountId=@AccountId";
+
+        public AccountModel GetAccount(LoginViewModel model)
         {
             var account = new AccountModel();
             var parameters = new List<SqlParameter>();
@@ -45,10 +73,7 @@ namespace JEDI_Carpool.DAL
 
         }
 
-        private const string GetAllAccountsQuery = @"
-            SELECT a.*, l.Address, l.City, l.Country 
-            FROM Account a JOIN Location l ON a.AddressId=l.LocationId";
-        public static List<AccountModel> GetAllAccounts()
+        public List<AccountModel> GetAllAccounts()
         {
             var accounts = new List<AccountModel>();
             AccountModel account;
@@ -74,29 +99,7 @@ namespace JEDI_Carpool.DAL
             return accounts;
         }
 
-
-        private const string UpdateAccountQuery = @"
-            IF NOT EXISTS ( SELECT * FROM Location WHERE Address=@Address AND City=@City AND Country=@Country )
-                BEGIN
-                    INSERT INTO Location (Address, City, Country) VALUES (@Address, @City, @Country);
-                    UPDATE Account 
-                    SET FirstName=@FirstName, LastName=@LastName, Email=@Email, AddressId=SCOPE_IDENTITY()
-                    WHERE AccountId=@AccountId;
-                END
-            ELSE
-                BEGIN
-                    UPDATE Account
-                    SET FirstName=@FirstName, LastName=@LastName, Email=@Email, AddressId= ( SELECT LocationId FROM Location WHERE Address=@Address AND City=@City AND Country=@Country )
-                    WHERE AccountId=@AccountId;
-                END
-            ";
-
-        private const string UpdateAccountQueryWithoutAddress = @"
-            UPDATE Account
-            SET FirstName=@FirstName, LastName=@LastName, Email=@Email
-            WHERE AccountId=@AccountId";
-
-        public static string UpdateAccount(AccountModel model)
+        public string UpdateAccount(AccountModel model)
         {
             var isValid = false;
             var parameters = new List<SqlParameter>();

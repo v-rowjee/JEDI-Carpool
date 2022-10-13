@@ -9,13 +9,17 @@ using System.Web;
 
 namespace JEDI_Carpool.DAL
 {
-    public class AppUserDAL
+    public interface IAppUserDAL
+    {
+        bool AuthenticateUser(LoginViewModel model);
+        string RegisterUser(RegisterViewModel model);
+    }
+    public class AppUserDAL : IAppUserDAL
     {
         private const string AuthenticateUserQuery = @"
             SELECT acc.*
             FROM [dbo].[Account] acc with(nolock) INNER JOIN [dbo].[AppUser] au with(nolock) ON acc.[AccountId]=au.[AccountId] 
             WHERE acc.[Email] = @Email AND au.[Password] = @Password ";
-
         private const string RegisterUserQueryWithAddress = @"
             DECLARE @LocId INT;
             IF NOT EXISTS (SELECT * FROM [dbo].[Location] WHERE [Address]=@Address AND [City]=@City AND [Country]=@Country)
@@ -34,7 +38,6 @@ namespace JEDI_Carpool.DAL
 
             INSERT INTO [dbo].[AppUser] ([AccountId],[Password])
             VALUES ( SCOPE_IDENTITY() , @Password)";
-
         private const string RegisterUserQueryWithoutAddress = @"
             INSERT INTO [dbo].[Account] ([FirstName] ,[LastName] ,[Email])
             VALUES (@FirstName ,@LastName ,@Email);
@@ -42,8 +45,7 @@ namespace JEDI_Carpool.DAL
             INSERT INTO [dbo].[AppUser] ([AccountId],[Password])
             VALUES ( SCOPE_IDENTITY() , @Password)";
 
-
-        public static bool AuthenticateUser(LoginViewModel model)
+        public bool AuthenticateUser(LoginViewModel model)
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@Email", model.Email));
@@ -54,7 +56,7 @@ namespace JEDI_Carpool.DAL
             return dt.Rows.Count > 0;
         }
 
-        public static string RegisterUser(RegisterViewModel model)
+        public string RegisterUser(RegisterViewModel model)
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@Email", model.Email));
