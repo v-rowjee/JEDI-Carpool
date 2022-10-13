@@ -20,180 +20,271 @@
     </div>
 
     <form id="shareForm" class="needs-validation" novalidate>
-        <div class="row align-items-center">
-            <div class="col-md-6 order-md-2">
-                <img src="~/Content/Images/map.png" class="img-fluid px-5" alt="map" />
-            </div>
-            <div class="col-md-6 order-md-1">
-                <h3 class="fw-bold">
-                    <i class="fa-solid fa-location-dot me-2"></i>
-                    Itinerary
-                </h3>
-                <p class="mb-5">Your origin, destination, and stops you're willing to make along the way.</p>
-                <div class="row mb-4">
-                    <div class="col-md-4">
-                        <label for="origin" class="form-label">Origin</label>
-                    </div>
-                    <div class="col-md-8">
-                        <input type="text" id="oAddress" class="form-control" placeholder="Address" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Address }" required>
-                        <div class="invalid-feedback">
-                            Please enter an address of origin.
-                        </div>
-                        <input type="text" id="oCity" class="form-control mt-3" placeholder="City" value="@if (@ViewBag.Account != null) { @ViewBag.Account.Address.City }" required>
-                        <div class="invalid-feedback">
-                            Please enter a city of origin.
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-md-4">
-                        <label for="destination" class="form-label">Destination</label>
-                    </div>
-                    <div class="col-md-8">
-                        <input type="text" id="dAddress" class="form-control" placeholder="Address" required>
-                        <div class="invalid-feedback">
-                            Please enter an address of destination.
-                        </div>
-                        <input type="text" id="dCity" class="form-control mt-3" placeholder="City" required>
-                        <div class="invalid-feedback">
-                            Please enter a city of destination.
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <label for="country" class="form-label">Country</label>
-                    </div>
-                    <div class="col-md-8">
-                        <input type="text" id="country" class="form-control" placeholder="Country" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Country }" required>
-                        <div class="invalid-feedback">
-                            Please enter your country.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card shadow-sm rounded-4 mb-5">
+                    <div class="card-body">
+                        <ul class="nav nav-pills nav-fill nav-justified gap-4" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="pills-itinerary-tab" data-bs-toggle="pill" data-bs-target="#pills-itinerary" type="button" role="tab" aria-controls="pills-itinerary" aria-selected="true">Itinerary</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-schedule-tab" data-bs-toggle="pill" data-bs-target="#pills-schedule" type="button" role="tab" aria-controls="pills-schedule" aria-selected="false">Schedule</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-price-tab" data-bs-toggle="pill" data-bs-target="#pills-price" type="button" role="tab" aria-controls="pills-price" aria-selected="false">Price</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-comment-tab" data-bs-toggle="pill" data-bs-target="#pills-comment" type="button" role="tab" aria-controls="pills-comment" aria-selected="false">Comment</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-car-tab" data-bs-toggle="pill" data-bs-target="#pills-car" type="button" role="tab" aria-controls="pills-car" aria-selected="false">Car</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-confirm-tab" data-bs-toggle="pill" data-bs-target="#pills-confirm" type="button" role="tab" aria-controls="pills-confirm" aria-selected="false">Confirm</button>
+                            </li>
+                        </ul>
 
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <img src="~/Content/Images/calendar.png" class="img-fluid px-5" alt="" />
-            </div>
-            <div class="col-md-6">
-                <h3 class="fw-bold"><i class="fa-solid fa-clock me-3"></i>Ride Schedule</h3>
-                <p class="mb-5">Enter the precise date and time leaving your Origin mentioned above</p>
-                <div class="mb-3">
-                    <label for="date" class="form-label">Date</label>
-                    <input type="date" id="date" class="form-control" required />
-                    <div class="invalid-feedback">
-                        Please enter a valid date.
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="time" class="form-label">Time</label>
-                    <input type="time" id="time" class="form-control" required />
-                    <div class="invalid-feedback">
-                        Please enter a valid time.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row align-items-center">
-            <div class="col-md-6 order-md-2">
-                <img src="~/Content//Images/wallet.png" class="img-fluid px-5" alt="Wallet" />
-            </div>
-            <div class="col-md-6 order-md-1">
-                <h3 class="fw-bold"><i class="fa-solid fa-money-check-dollar me-3"></i>Price per Seat</h3>
-                <p class="mb-5">We suggest prices based on similar trips. Note all prices are in MUR</p>
-                <div class="mb-3">
-                    <label for="fare" class="form-label">Fare</label>
-                    <input type="number" id="fare" class="form-control" placeholder="Rs" required />
-                    <div class="invalid-feedback">
-                        Please enter a fare.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <img src="~/Content//Images/notes.png" class="img-fluid px-5" alt="Notes" />
-            </div>
-            <div class="col-md-6">
-                <h3 class="fw-bold"><i class="fa-solid fa-circle-info me-3"></i>Additional Details</h3>
-                <p class="mb-5">Add any details relevant to your trip for passengers before they book.</p>
-                <div class="mb-3">
-                    <label for="comment" class="form-label">Comment</label>
-                    <textarea class="form-control" rows="5" id="comment" placeholder="Comment"></textarea>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row align-items-center">
-            <div class="col-md-6 order-md-2">
-                <img src="~/Content//Images/car2.png" class="img-fluid px-5" alt="Car" />
-            </div>
-            <div class="col-md-6 order-md-1">
-                <h3 class="fw-bold"><i class="fa-solid fa-car-side me-3"></i>My Car Details</h3>
-                @if (ViewBag.Car != null)
-                {
-                    <p class="mb-5">
-                        Make any changes before publishing your ride. Click
-                        @Html.ActionLink("here", "Index", "Car", null, new { @class = "text-decoration-none link-primary" }) to view car details.
-                    </p>
-                    <div class="card m-3 shadow-sm">
-                        <div class="card-header">
-                            <div class="card-text fw-bold">
-                                <i class="fa-solid fa-car-side me-2"></i>
-                                @ViewBag.Car.Model
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-itinerary" role="tabpanel" aria-labelledby="pills-itinerary-tab" tabindex="0">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 order-md-2">
+                                <img src="~/Content/Images/map.png" class="img-fluid px-5" alt="map" />
+                            </div>
+                            <div class="col-md-6 order-md-1">
+                                <h3 class="fw-bold">
+                                    <i class="fa-solid fa-location-dot me-2"></i>
+                                    Itinerary
+                                </h3>
+                                <p class="mb-5">Your origin, destination, and stops you're willing to make along the way.</p>
+                                <div class="row mb-4">
+                                    <div class="col-md-4">
+                                        <label for="origin" class="form-label mt-1">Origin</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" id="oAddress" class="form-control mt-1" placeholder="Address" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Address }" required>
+                                        <div class="invalid-feedback">
+                                            Please enter an address of origin.
+                                        </div>
+                                        <input type="text" id="oCity" class="form-control mt-3" placeholder="City" value="@if (@ViewBag.Account != null) { @ViewBag.Account.Address.City }" required>
+                                        <div class="invalid-feedback">
+                                            Please enter a city of origin.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-4">
+                                        <label for="destination" class="form-label mt-1">Destination</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" id="dAddress" class="form-control" placeholder="Address" required>
+                                        <div class="invalid-feedback">
+                                            Please enter an address of destination.
+                                        </div>
+                                        <input type="text" id="dCity" class="form-control mt-3" placeholder="City" required>
+                                        <div class="invalid-feedback">
+                                            Please enter a city of destination.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="country" class="form-label mt-1">Country</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" id="country" class="form-control" placeholder="Country" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Country }" required>
+                                        <div class="invalid-feedback">
+                                            Please enter your country.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row my-5">
+                                    <div class="col-12">
+                                        <button type="button" class="btn btn-primary w-100 btn-next" data-to="#pills-schedule-tab">Next</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div class="card-text mb-2">
-                                <i class="fa-solid fa-users me-2"></i>Number of seats available:
-                                @ViewBag.Car.Seat
+                    </div>
+                    <div class="tab-pane fade" id="pills-schedule" role="tabpanel" aria-labelledby="pills-schedule-tab" tabindex="0">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <img src="~/Content/Images/calendar.png" class="img-fluid px-5" alt="" />
                             </div>
-                            <div class="card-text mb-2">
-                                <i class="fa-solid fa-hashtag me-2"></i>Plate Number:
-                                @ViewBag.Car.PlateNumber
+                            <div class="col-md-6">
+                                <h3 class="fw-bold"><i class="fa-solid fa-clock me-3"></i>Ride Schedule</h3>
+                                <p class="mb-5">Enter the precise date and time leaving your Origin mentioned above</p>
+                                <div class="mb-3">
+                                    <label for="date" class="form-label">Date</label>
+                                    <input type="date" id="date" class="form-control" required />
+                                    <div class="invalid-feedback">
+                                        Please enter a valid date.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="time" class="form-label">Time</label>
+                                    <input type="time" id="time" class="form-control" required />
+                                    <div class="invalid-feedback">
+                                        Please enter a valid time.
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-outline-primary w-100 btn-prev" data-to="#pills-itinerary-tab">Back</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-primary w-100 btn-next" data-to="#pills-price-tab">Next</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-text mb-2">
-                                <i class="fa-solid fa-calendar-days me-2"></i>Year:
-                                @ViewBag.Car.Year
-                            </div>
-                            <div class="card-text mb-2">
-                                <i class="fa-solid fa-palette me-2"></i>Color:
-                                @ViewBag.Car.Color
-                            </div>
-                            @Html.ActionLink("View", "Index", "Car", null, new { @class = "btn btn-sm btn-primary w-100 stretched-link mt-3" })
                         </div>
                     </div>
-                }
-                else
-                {
-                    <p class="mb-4">
-                        Add car details before publishing your ride. Click
-                        @Html.ActionLink("here", "Add", "Car", null, new { @class = "text-decoration-none link-primary" }) to add car informations.
-                    </p>
-                    @Html.ActionLink("Add Car", "Add", "Car", null, new { @class = "btn btn-primary px-5" })
-                }
-            </div>
-        </div>
+                    <div class="tab-pane fade" id="pills-price" role="tabpanel" aria-labelledby="pills-price-tab" tabindex="0">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 order-md-2">
+                                <img src="~/Content//Images/wallet.png" class="img-fluid px-5" alt="Wallet" />
+                            </div>
+                            <div class="col-md-6 order-md-1">
+                                <h3 class="fw-bold"><i class="fa-solid fa-money-check-dollar me-3"></i>Price per Seat</h3>
+                                <p class="mb-5">We suggest prices based on similar trips. Note all prices are in MUR</p>
+                                <div class="mb-3">
+                                    <label for="fare" class="form-label">Fare</label>
+                                    <input type="number" id="fare" class="form-control" placeholder="Rs" required />
+                                    <div class="invalid-feedback">
+                                        Please enter a fare.
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-outline-primary w-100 btn-prev" data-to="#pills-schedule-tab">Back</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-primary w-100 btn-next" data-to="#pills-comment-tab">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-comment" role="tabpanel" aria-labelledby="pills-comment-tab" tabindex="0">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <img src="~/Content//Images/notes.png" class="img-fluid px-5" alt="Notes" />
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="fw-bold"><i class="fa-solid fa-circle-info me-3"></i>Additional Details</h3>
+                                <p class="mb-5">Add any details relevant to your trip for passengers before they book.</p>
+                                <div class="mb-3">
+                                    <label for="comment" class="form-label">Comment</label>
+                                    <textarea class="form-control" rows="5" id="comment" placeholder="Comment"></textarea>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-outline-primary w-100 btn-prev" data-to="#pills-price-tab">Back</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-primary w-100 btn-next" data-to="#pills-car-tab">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-car" role="tabpanel" aria-labelledby="pills-car-tab" tabindex="0">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 order-md-2">
+                                <img src="~/Content//Images/car2.png" class="img-fluid px-5" alt="Car" />
+                            </div>
+                            <div class="col-md-6 order-md-1">
+                                <h3 class="fw-bold"><i class="fa-solid fa-car-side me-3"></i>My Car Details</h3>
+                                @if (ViewBag.Car != null)
+                                {
+                                    <p class="mb-5">
+                                        Make any changes before publishing your ride. Click
+                                        @Html.ActionLink("here", "Index", "Car", null, new { @class = "text-decoration-none link-primary" }) to view car details.
+                                    </p>
+                                    <div class="card m-3 shadow-sm">
+                                        <div class="card-header">
+                                            <div class="card-text fw-bold">
+                                                <i class="fa-solid fa-car-side me-2"></i>
+                                                @ViewBag.Car.Model
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="card-text mb-2">
+                                                <i class="fa-solid fa-users me-2"></i>Number of seats available:
+                                                @ViewBag.Car.Seat
+                                            </div>
+                                            <div class="card-text mb-2">
+                                                <i class="fa-solid fa-hashtag me-2"></i>Plate Number:
+                                                @ViewBag.Car.PlateNumber
+                                            </div>
+                                            <div class="card-text mb-2">
+                                                <i class="fa-solid fa-calendar-days me-2"></i>Year:
+                                                @ViewBag.Car.Year
+                                            </div>
+                                            <div class="card-text mb-2">
+                                                <i class="fa-solid fa-palette me-2"></i>Color:
+                                                @ViewBag.Car.Color
+                                            </div>
+                                            @Html.ActionLink("View", "Index", "Car", null, new { @class = "btn btn-sm btn-primary w-100 stretched-link mt-3" })
+                                        </div>
+                                    </div>
 
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <img src="~/Content//Images/confirm.png" class="img-fluid px-5" alt="Confirm" />
-            </div>
-            <div class="col-md-6">
-                <h3 class="fw-bold"><i class="fa-solid fa-circle-check me-3"></i>Confirm Ride</h3>
-                <p class="text-muted my-4">
-                    By clicking on the button below, I agree to these rules, to the Driver Cancellation Policy, Terms of Service and the Privacy Policy.
-                </p>
-                <input type="submit" id="share" class="btn btn-primary px-5" value="Share Ride" />
+                                    <div class="row mt-5">
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-outline-primary w-100 btn-prev" data-to="#pills-comment-tab">Back</button>
+                                        </div>
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-primary w-100 btn-next" data-to="#pills-confirm-tab">Next</button>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p class="mb-4">
+                                        Add car details before publishing your ride. Click
+                                        @Html.ActionLink("here", "Add", "Car", null, new { @class = "text-decoration-none link-primary" }) to add car informations.
+                                    </p>
+                                    <div class="row mt-5">
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-outline-primary w-100 btn-prev" data-to="#pills-comment-tab">Back</button>
+                                        </div>
+                                        <div class="col-6">
+                                            @Html.ActionLink("Add Car", "Add", "Car", null, new { @class = "btn btn-primary w-100" })
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-confirm" role="tabpanel" aria-labelledby="pills-confirm-tab" tabindex="0">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <img src="~/Content//Images/confirm.png" class="img-fluid px-5" alt="Confirm" />
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="fw-bold"><i class="fa-solid fa-circle-check me-3"></i>Confirm Ride</h3>
+                                <p class="text-muted my-4">
+                                    By clicking on the button below, I agree to these rules, to the Driver Cancellation Policy, Terms of Service and the Privacy Policy.
+                                </p>
+                                <div class="row mt-5">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-outline-primary w-100 btn-prev" data-to="#pills-itinerary-tab">Back</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="submit" id="share" class="btn btn-primary w-100">Share Ride</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </form>
+
 </div>
 
 
