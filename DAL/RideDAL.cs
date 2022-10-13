@@ -145,7 +145,7 @@ namespace JEDI_Carpool.DAL
             INNER JOIN Location dest ON dest.LocationId=rid.DestinationId
             WHERE DateTime > GETDATE()
             -- WHERE car.Seat >= (SELECT SUM(Seat) FROM Riders GROUP BY RideId)
-";
+            ORDER BY DateTime";
         public List<RideViewModel> GetAllRides()
         {
             var rides = new List<RideViewModel>();

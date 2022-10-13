@@ -20,15 +20,6 @@
         if (password === '') error += "Password required<br><br>"
         if (fname === '') error += "First Name required<br><br>"
         if (lname === '') error += "Last Name required<br><br>"
-        //if (address === '') {
-        //    error += "Address required<br><br>"
-        //}
-        //if (city === '') {
-        //    error += "City required<br><br>"
-        //}
-        //if (country === '') {
-        //    error += "Country required<br><br>"
-        //}
 
         $("#email-feedback").html("Please provide a valid email.");
 
