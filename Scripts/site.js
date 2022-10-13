@@ -17,13 +17,3 @@
         }, false)
     })
 })()
-
-// ShowMessage function (not working)
-function ShowMessage() {
-    var msg = this.html()
-
-    Snackbar.show({
-        text: "hi",
-        actionTextColor: "#CFE2FF",
-    });
-}
