@@ -140,7 +140,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
-    <Compile Include="Models\BookingViewModel.cs" />
+    <Compile Include="Models\BookingModel.cs" />
     <Compile Include="Models\CarModel.cs" />
     <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />

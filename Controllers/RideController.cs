@@ -40,8 +40,11 @@ namespace JEDI_Carpool.Controllers
             var rides = RideBL.GetAllRides();
             ViewBag.Rides = rides;
 
+            //var seatsTaken = 2;
+            //rides.Where(r => r.Car.Seat > )
+
             // FILTER RIDES
-            //rides.Where(r => r.)
+
 
             if (loggeduser != null)
             {
@@ -89,7 +92,7 @@ namespace JEDI_Carpool.Controllers
         }
 
         // POST: Ride/Book
-        public JsonResult Book(BookingViewModel model)
+        public JsonResult Book(BookingModel model)
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
 
@@ -98,12 +101,12 @@ namespace JEDI_Carpool.Controllers
                 var account = AccountBL.GetAccount(loggeduser);
                 var ride = RideBL.GetRide(model.Ride.RideId);
 
-                model.Account = account;
+                model.Passenger = account;
                 model.Ride = ride;
 
                 var result = RideBL.BookRide(model);
 
-                return Json(new { result = result, url = Url.Action("Index", "Home") });
+                return Json(new { result = "Success", url = Url.Action("Index", "Home") });
             }
             else return Json(new { result = "NoUser", url = Url.Action("Index", "Login") });
             

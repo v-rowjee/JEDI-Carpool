@@ -17,6 +17,7 @@ namespace JEDI_Carpool.DAL
         List<RideViewModel> GetAllRides();
         RideViewModel GetRide(int? id);
         List<PassengerModel> GetPassengers(int? id);
+        bool BookRide(BookingModel model);
     }
     public class RideDAL : IRideDAL
     {
@@ -285,10 +286,16 @@ namespace JEDI_Carpool.DAL
         }
 
 
-        private const string BookRideQuery = @"";
-        public bool BookRide(BookingViewModel model)
+        private const string BookRideQuery = @"
+            INSERT INTO Riders VALUES (@RideId, @PassengerId, @Seat)";
+        public bool BookRide(BookingModel model)
         {
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@RideId", model.Ride.RideId));
+            parameters.Add(new SqlParameter("@PassengerId", model.Passenger.AccountId));
+            parameters.Add(new SqlParameter("@Seat", model.Seat));
 
+            return DBCommand.InsertUpdateData(BookRideQuery, parameters);
         }
 
     }

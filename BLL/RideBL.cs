@@ -15,7 +15,7 @@ namespace JEDI_Carpool.BLL
         string Share(ShareRideViewModel model);
         List<RideViewModel> Search(SearchRideViewModel model);
         List<PassengerModel> GetPassengers(int? id);
-        bool BookRide(BookingViewModel model);
+        bool BookRide(BookingModel model);
     }
     public class RideBL : IRideBL
     {
@@ -71,7 +71,7 @@ namespace JEDI_Carpool.BLL
             return RideDAL.GetRidesWithCondition(model);
         }
 
-        public bool BookRide(BookingViewModel model)
+        public bool BookRide(BookingModel model)
         {
             return RideDAL.BookRide(model);
         }

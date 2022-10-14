@@ -134,7 +134,6 @@
         <div class="col-md-6">
             <form id="bookRideForm" class="my-5">
                 <input type="hidden" id="rideId" value="@ViewBag.Ride.RideId" />
-                @if(ViewBag.Account != null) { <input type="hidden" id="passengerId" value="@ViewBag.Account.AccountId" /> }
                 <input type="submit" id="book" class="btn btn-primary w-100 @(ViewBag.Ride.DateTime < DateTime.Now ? "disabled" : "")" value="Book Ride" />
             </form>
         </div>

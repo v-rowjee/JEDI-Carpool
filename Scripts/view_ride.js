@@ -27,15 +27,16 @@
 
     })
 
-    $('#bookCarForm').submit((e) => {
+    $('#bookRideForm').submit((e) => {
         e.preventDefault();
         return false;
     })
 
     $('#book').click(() => {
         var seat = $("#seat").val()
+        var rideId = $("#rideId").val()
 
-        if (!oAddress) {
+        if (!seat) {
             error = "Please provide the number of seat to book."
             Snackbar.show({
                 text: error,
@@ -43,10 +44,18 @@
             });
         }
         else {
+
+            var BookingModelObj = {
+                Seat: seat,
+                Ride: {
+                    RideId: rideId
+                }
+            }
+
             $.ajax({
                 type: "POST",
                 url: "/Ride/Book",
-                data: ShareRideViewModelObj,
+                data: BookingModelObj,
                 dataType: "json",
                 success: (response) => {
                     if (response.result == "Success") {
@@ -61,7 +70,7 @@
                             text: "You are not currently signed in!",
                             actionText: "LOGIN",
                             actionTextColor: "#CFE2FF",
-                            onActionClick: () => window.location.replace(response.url);
+                            onActionClick: () => { window.location.replace(response.url) }
                         });
                     }
                     else {
