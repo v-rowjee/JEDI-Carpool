@@ -9,25 +9,23 @@
             <div class="display-6 fw-bold text-center">@ViewBag.Ride.DateTime.ToString("ddd, dd MMMM")</div>
 
             <div class="card shadow-sm mt-5">
-                <div class="card-body p-0">
-                    <div class="card-header">
-                        <div class="card-text fw-bold text-muted">
-                            <i class="fa-solid fa-clock ms-3 me-2"></i>
-                            @ViewBag.Ride.DateTime.ToString("h:mm tt")
-                        </div>
+                <div class="card-header">
+                    <div class="card-text fw-bold text-muted">
+                        <i class="fa-solid fa-clock ms-3 me-2"></i>
+                        @ViewBag.Ride.DateTime.ToString("h:mm tt")
                     </div>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item pb-3">
-                                <i class="fa-solid fa-location-dot me-2"></i>
-                                @ViewBag.Ride.Origin.Address, @ViewBag.Ride.Origin.City
-                            </li>
-                            <li class="list-group-item pt-3">
-                                <i class="fa-solid fa-location-dot me-2"></i>
-                                @ViewBag.Ride.Destination.Address, @ViewBag.Ride.Destination.City
-                            </li>
-                        </ul>
-                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item pb-3">
+                            <i class="fa-solid fa-location-dot me-2"></i>
+                            @ViewBag.Ride.Origin.Address, @ViewBag.Ride.Origin.City
+                        </li>
+                        <li class="list-group-item pt-3">
+                            <i class="fa-solid fa-location-dot me-2"></i>
+                            @ViewBag.Ride.Destination.Address, @ViewBag.Ride.Destination.City
+                        </li>
+                    </ul>
                 </div>
             </div>
 

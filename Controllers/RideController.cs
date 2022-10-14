@@ -1,4 +1,5 @@
 ﻿using JEDI_Carpool.BLL;
+using JEDI_Carpool.DAL;
 using JEDI_Carpool.DAL.Common;
 using JEDI_Carpool.Models;
 using System;
@@ -60,9 +61,12 @@ namespace JEDI_Carpool.Controllers
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
             var view = View();
 
-            view.MasterName = loggeduser != null
-                ? "~/Views/Shared/_Layout.cshtml"
-                : "~/Views/Shared/_GuestLayout.cshtml";
+            if(loggeduser != null)
+            {
+                ViewBag.Account = AccountBL.GetAccount(loggeduser);
+                view.MasterName = "~/Views/Shared/_Layout.cshtml";
+            }
+            else view.MasterName = "~/Views/Shared/_GuestLayout.cshtml";
 
             if (id != null)
             {
