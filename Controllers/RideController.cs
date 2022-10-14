@@ -40,6 +40,9 @@ namespace JEDI_Carpool.Controllers
             var rides = RideBL.GetAllRides();
             ViewBag.Rides = rides;
 
+            // FILTER RIDES
+            //rides.Where(r => r.)
+
             if (loggeduser != null)
             {
                 var data = AccountBL.GetAccount(loggeduser);
@@ -74,11 +77,36 @@ namespace JEDI_Carpool.Controllers
                 if (ride != null)
                 {
                     ViewBag.Ride = ride;
+
+                    var passengers = RideBL.GetPassengers(id);
+                    ViewBag.Passengers = passengers;
+
                     return view;
                 }
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
+        }
+
+        // POST: Ride/Book
+        public JsonResult Book(BookingViewModel model)
+        {
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+
+            if(loggeduser != null)
+            {
+                var account = AccountBL.GetAccount(loggeduser);
+                var ride = RideBL.GetRide(model.Ride.RideId);
+
+                model.Account = account;
+                model.Ride = ride;
+
+                var result = RideBL.BookRide(model);
+
+                return Json(new { result = result, url = Url.Action("Index", "Home") });
+            }
+            else return Json(new { result = "NoUser", url = Url.Action("Index", "Login") });
+            
         }
 
         //[HttpPost]
@@ -100,6 +128,8 @@ namespace JEDI_Carpool.Controllers
         //    }
         //}
 
+
+        // GET: Ride/Share
         public ViewResult Share()
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
@@ -128,6 +158,8 @@ namespace JEDI_Carpool.Controllers
             return view;
         }
 
+
+        // POST: Ride/Share
         [HttpPost]
         public JsonResult Share(ShareRideViewModel model)
         {

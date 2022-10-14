@@ -140,9 +140,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\BookingViewModel.cs" />
     <Compile Include="Models\CarModel.cs" />
     <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\PassengerModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\RideViewModel.cs" />
     <Compile Include="Models\SearchRideViewModel.cs" />
@@ -242,6 +244,7 @@
     <Content Include="Scripts\search.js" />
     <Content Include="Scripts\share.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\view_ride.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

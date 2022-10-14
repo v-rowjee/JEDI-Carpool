@@ -16,6 +16,7 @@ namespace JEDI_Carpool.DAL
         List<RideViewModel> GetRidesWithCondition(SearchRideViewModel model);
         List<RideViewModel> GetAllRides();
         RideViewModel GetRide(int? id);
+        List<PassengerModel> GetPassengers(int? id);
     }
     public class RideDAL : IRideDAL
     {
@@ -194,7 +195,7 @@ namespace JEDI_Carpool.DAL
 
         private const string GetRideQuery = @"
             SELECT rid.RideId, rid.Fare, rid.DateTime, rid.Comment,
-                acc.FirstName, acc.LastName, acc.Email, 
+                acc.FirstName, acc.LastName, acc.Email, acc.Phone,
                 car.Model, car.PlateNumber, car.Seat, car.Year, car.Color,
                 org.Address as OAddress, org.City as OCity, org.Country as OCountry,
                 dest.Address as DAddress, dest.City as DCity, dest.Country as DCountry
@@ -219,6 +220,8 @@ namespace JEDI_Carpool.DAL
                 var driver = new AccountModel();
                 driver.FirstName = row["FirstName"].ToString();
                 driver.LastName = row["LastName"].ToString();
+                driver.Email = row["Email"].ToString();
+                driver.Phone = row["Phone"].ToString();
 
                 var car = new CarModel();
                 car.PlateNumber = row["PlateNumber"].ToString();
@@ -247,6 +250,45 @@ namespace JEDI_Carpool.DAL
 
             }
             return ride;
+        }
+
+        private const string GetPassengersQuery = @"
+            SELECT a.*, r.Seat 
+            FROM Riders r JOIN Account a ON r.PassengerId=a.AccountId 
+            WHERE RideId = @RideId";
+        public List<PassengerModel> GetPassengers(int? id)
+        {
+            List<PassengerModel> passengers = new List<PassengerModel>();
+            PassengerModel passenger;
+
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@RideId", id));
+
+            var dt = DBCommand.GetDataWithCondition(GetPassengersQuery, parameters);
+            foreach (DataRow row in dt.Rows)
+            {
+                passenger = new PassengerModel();
+
+                var account = new AccountModel();
+                account.AccountId = int.Parse(row["AccountId"].ToString());
+                account.FirstName = row["FirstName"].ToString();
+                account.LastName = row["LastName"].ToString();
+                account.Email = row["Email"].ToString();
+                account.Phone = row["Phone"].ToString();
+                passenger.Account = account;
+
+                passenger.Seat = int.Parse(row["Seat"].ToString());
+
+                passengers.Add(passenger);
+            }
+            return passengers;
+        }
+
+
+        private const string BookRideQuery = @"";
+        public bool BookRide(BookingViewModel model)
+        {
+
         }
 
     }

@@ -88,7 +88,10 @@
                         });
                     }
                     else {
-                        Snackbar.show({ text: "An error occured!" });
+                        Snackbar.show({
+                            text: "An error occured!",
+                            actionTextColor: "#CFE2FF"
+                        });
                     }
                 }
             })

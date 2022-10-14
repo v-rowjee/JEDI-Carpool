@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace JEDI_Carpool.Models
+{
+    public class BookingViewModel
+    {
+        public int BookingId { get; set; }
+        public RideViewModel Ride { get; set; }
+        public AccountModel Account { get; set; }
+        public int Seat { get; set; }
+    }
+}
