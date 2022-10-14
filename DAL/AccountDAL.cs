@@ -33,19 +33,19 @@ namespace JEDI_Carpool.DAL
                 BEGIN
                     INSERT INTO Location (Address, City, Country) VALUES (@Address, @City, @Country);
                     UPDATE Account 
-                    SET FirstName=@FirstName, LastName=@LastName, Email=@Email, AddressId=SCOPE_IDENTITY()
+                    SET FirstName=@FirstName, LastName=@LastName, Phone=@Phone, Email=@Email, AddressId=SCOPE_IDENTITY()
                     WHERE AccountId=@AccountId;
                 END
             ELSE
                 BEGIN
                     UPDATE Account
-                    SET FirstName=@FirstName, LastName=@LastName, Email=@Email, AddressId= ( SELECT LocationId FROM Location WHERE Address=@Address AND City=@City AND Country=@Country )
+                    SET FirstName=@FirstName, LastName=@LastName, Phone=@Phone, Email=@Email, AddressId= ( SELECT LocationId FROM Location WHERE Address=@Address AND City=@City AND Country=@Country )
                     WHERE AccountId=@AccountId;
                 END
             ";
         private const string UpdateAccountQueryWithoutAddress = @"
             UPDATE Account
-            SET FirstName=@FirstName, LastName=@LastName, Email=@Email
+            SET FirstName=@FirstName, LastName=@LastName, Phone=@Phone, Email=@Email
             WHERE AccountId=@AccountId";
 
         public AccountModel GetAccount(LoginViewModel model)
@@ -61,6 +61,7 @@ namespace JEDI_Carpool.DAL
                 account.Email = row["Email"].ToString().Trim();
                 account.FirstName = row["FirstName"].ToString();
                 account.LastName = row["LastName"].ToString();
+                account.Phone = row["Phone"].ToString();
 
                 var address = new LocationModel();
                 address.Address = row["Address"].ToString();
@@ -86,6 +87,7 @@ namespace JEDI_Carpool.DAL
                 account.Email = row["Email"].ToString().Trim();
                 account.FirstName = row["FirstName"].ToString();
                 account.LastName = row["LastName"].ToString();
+                account.Phone = row["Phone"].ToString();
 
                 var address = new LocationModel();
                 address.Address = row["Address"].ToString();
@@ -107,6 +109,7 @@ namespace JEDI_Carpool.DAL
             parameters.Add(new SqlParameter("@Email", model.Email));
             parameters.Add(new SqlParameter("@FirstName", model.FirstName));
             parameters.Add(new SqlParameter("@LastName", model.LastName));
+            parameters.Add(new SqlParameter("@Phone", model.Phone));
 
             if (model.Address != null)
             {

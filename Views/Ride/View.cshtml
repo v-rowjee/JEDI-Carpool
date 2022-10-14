@@ -1,7 +1,63 @@
 ﻿
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = "Pick A Ride";
 }
 
-<h2>@ViewBag.Ride.RideId</h2>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="display-6 fw-bold text-center">@ViewBag.Ride.DateTime.ToString("ddd, dd MMMM")</div>
+
+            <div class="card shadow-sm mt-5">
+                <div class="card-body p-0">
+                    <div class="card-header">
+                        <div class="card-text fw-bold text-muted">
+                            <i class="fa-solid fa-clock ms-3 me-2"></i>
+                            @ViewBag.Ride.DateTime.ToString("h:mm tt")
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item pb-3">
+                                <i class="fa-solid fa-location-dot me-2"></i>
+                                @ViewBag.Ride.Origin.Address, @ViewBag.Ride.Origin.City
+                            </li>
+                            <li class="list-group-item pt-3">
+                                <i class="fa-solid fa-location-dot me-2"></i>
+                                @ViewBag.Ride.Destination.Address, @ViewBag.Ride.Destination.City
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-5">
+                <div class="card-body">
+                    <div class="card-text float-start text-muted">Total price for 1 passenger</div>
+                    <div class="card-text float-end fw-bold">Rs @ViewBag.Ride.Fare.ToString("0.00")</div>
+                </div>
+            </div>
+
+            <div class="card mt-5">
+                <div class="card-header">
+                    <i class="fa-solid fa-user me-2"></i>
+                    @ViewBag.Ride.Driver.FirstName @ViewBag.Ride.Driver.LastName
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item pb-3">
+                            <i class="fa-solid fa-location-dot me-2"></i>
+                            @ViewBag.Ride.Driver.Email
+                        </li>
+                        <li class="list-group-item pt-3">
+                            <i class="fa-solid fa-location-dot me-2"></i>
+                            @ViewBag.Ride.Driver.Phone
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
