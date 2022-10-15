@@ -71,11 +71,11 @@ namespace JEDI_Carpool.DAL
             FROM Account acc 
             INNER JOIN Ride rid ON rid.DriverId=acc.AccountId 
             INNER JOIN Car car ON car.DriverId=acc.AccountId
-            INNER JOIN Riders grp ON grp.RideId=rid.RideId
+            INNER JOIN Booking grp ON grp.RideId=rid.RideId
             WHERE OriginId IN (SELECT LocationId FROM Location WHERE City=@OCity AND Country=@OCountry)
             AND DestinationId IN (SELECT LocationId FROM Location WHERE City=@DCity AND Country=@DCountry)
             AND DAY(DateTime) >= DAY(@DateTime)
-            AND car.Seat >= (SELECT SUM(Seat) FROM Riders GROUP BY RideId)
+            AND car.Seat >= (SELECT SUM(Seat) FROM Booking GROUP BY RideId)
 ";
         public List<RideViewModel> GetRidesWithCondition(SearchRideViewModel model)
         {
@@ -126,6 +126,7 @@ namespace JEDI_Carpool.DAL
                 ride.DateTime = DateTime.Parse(row["DateTime"].ToString());
                 ride.Origin = origin;
                 ride.Destination = destination;
+                ride.Comment = row["Comment"].ToString();
 
                 rides.Add(ride);
             }
@@ -146,7 +147,7 @@ namespace JEDI_Carpool.DAL
             INNER JOIN Location org ON org.LocationId=rid.OriginId
             INNER JOIN Location dest ON dest.LocationId=rid.DestinationId
             WHERE DateTime > GETDATE()
-            -- WHERE car.Seat >= (SELECT SUM(Seat) FROM Riders GROUP BY RideId)
+            -- WHERE car.Seat >= (SELECT SUM(Seat) FROM Booking GROUP BY RideId)
             ORDER BY DateTime";
         public List<RideViewModel> GetAllRides()
         {
@@ -186,6 +187,7 @@ namespace JEDI_Carpool.DAL
                 ride.DateTime = DateTime.Parse(row["DateTime"].ToString());
                 ride.Origin = origin;
                 ride.Destination = destination;
+                ride.Comment = row["Comment"].ToString();
 
                 rides.Add(ride);
             }
@@ -248,14 +250,15 @@ namespace JEDI_Carpool.DAL
                 ride.DateTime = DateTime.Parse(row["DateTime"].ToString());
                 ride.Origin = origin;
                 ride.Destination = destination;
+                ride.Comment = row["Comment"].ToString();
 
             }
             return ride;
         }
 
         private const string GetPassengersQuery = @"
-            SELECT a.*, r.Seat 
-            FROM Riders r JOIN Account a ON r.PassengerId=a.AccountId 
+            SELECT a.*, b.Seat 
+            FROM Booking b JOIN Account a ON b.PassengerId=a.AccountId 
             WHERE RideId = @RideId";
         public List<PassengerModel> GetPassengers(int? id)
         {
@@ -287,7 +290,7 @@ namespace JEDI_Carpool.DAL
 
 
         private const string BookRideQuery = @"
-            INSERT INTO Riders VALUES (@RideId, @PassengerId, @Seat)";
+            INSERT INTO Booking VALUES (@RideId, @PassengerId, @Seat)";
         public bool BookRide(BookingModel model)
         {
             var parameters = new List<SqlParameter>();

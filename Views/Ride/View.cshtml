@@ -37,9 +37,9 @@
         </div>
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row g-5 my-4">
         <div class="col-md-6">
-            <div class="card mt-5">
+            <div class="card mb-4">
                 <div class="card-header fw-bold text-muted">
                     <i class="fa-solid fa-car-side me-2"></i>
                     @ViewBag.Ride.Car.Model (@ViewBag.Ride.Car.Year)
@@ -55,14 +55,14 @@
                             @ViewBag.Ride.Car.PlateNumber
                         </li>
                         <li class="list-group-item pt-3">
-                            <i class="fa-solid fa-circle me-2"></i>
+                            <i class="fa-solid fa-palette me-2"></i>
                             @ViewBag.Ride.Car.Color
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="card mt-4">
+            <div class="card mb-4">
                 <div class="card-header fw-bold text-muted">
                     <i class="fa-solid fa-user me-2"></i>
                     @ViewBag.Ride.Driver.FirstName @ViewBag.Ride.Driver.LastName
@@ -81,9 +81,26 @@
                 </div>
             </div>
 
-            <div class="card mt-4">
+            @if (ViewBag.Ride.Comment != null)
+            {
+                <div class="card mb-4">
+                    <div class="card-header fw-bold text-muted">
+                        <i class="fa-solid fa-info-circle me-2"></i>
+                        Additional Information
+                    </div>
+                    <div class="card-body">
+                        @ViewBag.Ride.Comment
+                    </div>
+                </div>
+            }
+
+
+        </div>
+        <div class="col-md-6">
+
+            <div class="card mt-5">
                 <div class="card-header fw-bold text-muted">
-                    <i class="fa-solid fa-users ms-3 me-2"></i>
+                    <i class="fa-solid fa-users me-2"></i>
                     Passengers
                 </div>
                 <div class="card-body">
@@ -117,6 +134,9 @@
                         <input type="number" id="seat" class="form-control mx-4 no-arrow" min="1" max="@ViewBag.Ride.Car.Seat" value="1" />
                         <div id="plus" class="btn btn-secondary">+</div>
                     </div>
+                    <div id="seat-feedback" class="text-danger mt-2 hidden">
+                        Please provide a valid city.
+                    </div>
                 </div>
             </div>
 
@@ -127,15 +147,13 @@
                 </div>
             </div>
 
-        </div>
-    </div>
+            <div class="mt-5">
+                <form id="bookRideForm" class="my-5">
+                    <input type="hidden" id="rideId" value="@ViewBag.Ride.RideId" />
+                    <input type="submit" id="book" class="btn btn-primary w-100 @(ViewBag.Ride.DateTime < DateTime.Now ? "disabled" : "")" value="Book Ride" />
+                </form>
+            </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form id="bookRideForm" class="my-5">
-                <input type="hidden" id="rideId" value="@ViewBag.Ride.RideId" />
-                <input type="submit" id="book" class="btn btn-primary w-100 @(ViewBag.Ride.DateTime < DateTime.Now ? "disabled" : "")" value="Book Ride" />
-            </form>
         </div>
     </div>
 </div>
