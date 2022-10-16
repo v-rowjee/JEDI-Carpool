@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BLL\AppUserBL.cs" />
+    <Compile Include="BLL\BookingBL.cs" />
     <Compile Include="BLL\CarBL.cs" />
     <Compile Include="BLL\RideBL.cs" />
     <Compile Include="Controllers\CarController.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="DAL\AccountDAL.cs" />
     <Compile Include="DAL\AppUserDAL.cs" />
     <Compile Include="BLL\AccountBL.cs" />
+    <Compile Include="DAL\BookingDAL.cs" />
     <Compile Include="DAL\CarDAL.cs" />
     <Compile Include="DAL\Common\DAL.cs" />
     <Compile Include="DAL\Common\DBCommand.cs" />
@@ -140,6 +142,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\BookingModel.cs" />
     <Compile Include="Models\CarModel.cs" />
     <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
@@ -242,6 +245,7 @@
     <Content Include="Scripts\search.js" />
     <Content Include="Scripts\share.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\view_ride.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -47,9 +47,9 @@ namespace JEDI_Carpool.BLL
 
         private bool ValidateDuplicatedEmail(string email)
         {
-            var accounts = AccountDAL.GetAllAccounts().FirstOrDefault(x => x.Email.Equals(email));
+            var accountsWithSameEmail = AccountDAL.GetAllAccounts().Where(x => x.Email.Equals(email.Trim()));
 
-            return accounts == null;
+            return accountsWithSameEmail.Count() == 0;
         }
     }
 }

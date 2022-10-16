@@ -10,6 +10,7 @@
         var password = $('#password').val()
         var fname = $('#fname').val()
         var lname = $('#lname').val()
+        var phone = $('#phone').val()
         var address = $('#address').val()
         var city = $('#city').val()
         var country = $('#country').val()
@@ -20,6 +21,7 @@
         if (password === '') error += "Password required<br><br>"
         if (fname === '') error += "First Name required<br><br>"
         if (lname === '') error += "Last Name required<br><br>"
+        if (phone === '') error += "Phone number required<br><br>"
 
         $("#email-feedback").html("Please provide a valid email.");
 
@@ -32,15 +34,27 @@
         }
         else {
 
-            var RegisterViewModelObj = {
-                Email: email,
-                Password: password,
-                FirstName: fname,
-                LastName: lname,
-                Address: {
-                    Address: address,
-                    City: city,
-                    Country: country
+            if (!address || !city || !country) {
+                var RegisterViewModelObj = {
+                    Email: email,
+                    Password: password,
+                    FirstName: fname,
+                    LastName: lname,
+                    Phone: phone
+                }
+            }
+            else {
+                var RegisterViewModelObj = {
+                    Email: email,
+                    Password: password,
+                    FirstName: fname,
+                    LastName: lname,
+                    Phone: phone,
+                    Address: {
+                        Address: address,
+                        City: city,
+                        Country: country
+                    }
                 }
             }
 

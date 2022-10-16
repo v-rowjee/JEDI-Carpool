@@ -16,6 +16,8 @@ namespace JEDI_Carpool.DAL
         List<RideViewModel> GetRidesWithCondition(SearchRideViewModel model);
         List<RideViewModel> GetAllRides();
         RideViewModel GetRide(int? id);
+        string BookRide(BookingModel model);
+        List<BookingModel> GetBookings(int? RideId);
     }
     public class RideDAL : IRideDAL
     {
@@ -69,11 +71,11 @@ namespace JEDI_Carpool.DAL
             FROM Account acc 
             INNER JOIN Ride rid ON rid.DriverId=acc.AccountId 
             INNER JOIN Car car ON car.DriverId=acc.AccountId
-            INNER JOIN Riders grp ON grp.RideId=rid.RideId
+            INNER JOIN Booking grp ON grp.RideId=rid.RideId
             WHERE OriginId IN (SELECT LocationId FROM Location WHERE City=@OCity AND Country=@OCountry)
             AND DestinationId IN (SELECT LocationId FROM Location WHERE City=@DCity AND Country=@DCountry)
             AND DAY(DateTime) >= DAY(@DateTime)
-            AND car.Seat >= (SELECT SUM(Seat) FROM Riders GROUP BY RideId)
+            AND car.Seat >= (SELECT SUM(Seat) FROM Booking GROUP BY RideId)
 ";
         public List<RideViewModel> GetRidesWithCondition(SearchRideViewModel model)
         {
@@ -124,6 +126,7 @@ namespace JEDI_Carpool.DAL
                 ride.DateTime = DateTime.Parse(row["DateTime"].ToString());
                 ride.Origin = origin;
                 ride.Destination = destination;
+                ride.Comment = row["Comment"].ToString();
 
                 rides.Add(ride);
             }
@@ -144,7 +147,7 @@ namespace JEDI_Carpool.DAL
             INNER JOIN Location org ON org.LocationId=rid.OriginId
             INNER JOIN Location dest ON dest.LocationId=rid.DestinationId
             WHERE DateTime > GETDATE()
-            -- WHERE car.Seat >= (SELECT SUM(Seat) FROM Riders GROUP BY RideId)
+            -- WHERE car.Seat >= (SELECT SUM(Seat) FROM Booking GROUP BY RideId)
             ORDER BY DateTime";
         public List<RideViewModel> GetAllRides()
         {
@@ -184,6 +187,7 @@ namespace JEDI_Carpool.DAL
                 ride.DateTime = DateTime.Parse(row["DateTime"].ToString());
                 ride.Origin = origin;
                 ride.Destination = destination;
+                ride.Comment = row["Comment"].ToString();
 
                 rides.Add(ride);
             }
@@ -194,7 +198,7 @@ namespace JEDI_Carpool.DAL
 
         private const string GetRideQuery = @"
             SELECT rid.RideId, rid.Fare, rid.DateTime, rid.Comment,
-                acc.FirstName, acc.LastName, acc.Email, 
+                acc.FirstName, acc.LastName, acc.Email, acc.Phone,
                 car.Model, car.PlateNumber, car.Seat, car.Year, car.Color,
                 org.Address as OAddress, org.City as OCity, org.Country as OCountry,
                 dest.Address as DAddress, dest.City as DCity, dest.Country as DCountry
@@ -219,6 +223,8 @@ namespace JEDI_Carpool.DAL
                 var driver = new AccountModel();
                 driver.FirstName = row["FirstName"].ToString();
                 driver.LastName = row["LastName"].ToString();
+                driver.Email = row["Email"].ToString();
+                driver.Phone = row["Phone"].ToString();
 
                 var car = new CarModel();
                 car.PlateNumber = row["PlateNumber"].ToString();
@@ -244,9 +250,63 @@ namespace JEDI_Carpool.DAL
                 ride.DateTime = DateTime.Parse(row["DateTime"].ToString());
                 ride.Origin = origin;
                 ride.Destination = destination;
+                ride.Comment = row["Comment"].ToString();
 
             }
             return ride;
+        }
+
+
+        private const string BookRideQuery = @"
+            INSERT INTO Booking VALUES (@RideId, @PassengerId, @Seat)";
+        public string BookRide(BookingModel model)
+        {
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@RideId", model.Ride.RideId));
+            parameters.Add(new SqlParameter("@PassengerId", model.Passenger.AccountId));
+            parameters.Add(new SqlParameter("@Seat", model.Seat));
+
+            var result = DBCommand.InsertUpdateData(BookRideQuery, parameters);
+
+            return result ? "Success" : "Error";
+        }
+
+
+        private const string GetBookingsQuery = @"
+            SELECT b.BookingId, b.Seat, a.AccountId, a.Email, a.FirstName, a.LastName, a.Phone  
+            FROM Booking b INNER JOIN Account a ON b.PassengerId=a.AccountId
+            INNER JOIN Ride r ON r.RideId=b.RideId
+            WHERE b.RideId=@RideId";
+        public List<BookingModel> GetBookings(int? RideId)
+        {
+            List<BookingModel> bookings = new List<BookingModel>();
+            BookingModel booking;
+
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@RideId", RideId));
+
+            var dt = DBCommand.GetDataWithCondition(GetBookingsQuery,parameters);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                booking = new BookingModel();
+
+                booking.BookingId = int.Parse(row["BookingId"].ToString());
+
+                booking.Ride = GetRide(RideId);
+
+                var passenger = new AccountModel();
+                passenger.FirstName = row["FirstName"].ToString();
+                passenger.LastName = row["LastName"].ToString();
+                passenger.Email = row["Email"].ToString();
+                passenger.Phone = row["Phone"].ToString();
+                booking.Passenger = passenger;
+
+                booking.Seat = int.Parse(row["Seat"].ToString());
+
+                bookings.Add(booking);
+            }
+            return bookings;
         }
 
     }

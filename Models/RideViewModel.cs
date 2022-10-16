@@ -17,5 +17,7 @@ namespace JEDI_Carpool.Models
         public int Year { get; set; }
         public string Comment { get; set; }
         public int Fare {get; set; }
+
+        public int SeatsLeft { get; set; }
     }
 }
