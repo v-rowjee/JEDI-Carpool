@@ -104,15 +104,15 @@
                     Passengers
                 </div>
                 <div class="card-body">
-                    @if (ViewBag.Passengers.Count > 0)
+                    @if (ViewBag.Bookings.Count > 0)
                     {
                         <ul class="list-group list-group-flush">
-                            @foreach (var Passenger in ViewBag.Passengers)
+                            @foreach (var Booking in ViewBag.Bookings)
                             {
                                 <li class="list-group-item pb-3">
                                     <i class="fa-solid fa-envelope me-2"></i>
-                                    @Passenger.FirstName @Passenger.LastName
-                                    <div class="card-text">@Passenger.Seat Seats Taken</div>
+                                    @Booking.Passenger.FirstName @Booking.Passenger.LastName
+                                    <div class="card-text">@Booking.Seat Seats Taken</div>
                                 </li>
                             }
                         </ul>
@@ -134,8 +134,8 @@
                         <input type="number" id="seat" class="form-control mx-4 no-arrow" min="1" max="@ViewBag.Ride.Car.Seat" value="1" />
                         <div id="plus" class="btn btn-secondary">+</div>
                     </div>
-                    <div id="seat-feedback" class="text-danger mt-2 hidden">
-                        Please provide a valid city.
+                    <div id="seat-feedback" class="text-danger mt-2">
+                        Not enough seats available.
                     </div>
                 </div>
             </div>

@@ -32,6 +32,8 @@
         return false;
     })
 
+    $("#seat-feedback").hide()
+
     $('#book').click(() => {
         var seat = $("#seat").val()
         var rideId = $("#rideId").val()
@@ -71,6 +73,20 @@
                             actionText: "LOGIN",
                             actionTextColor: "#CFE2FF",
                             onActionClick: () => { window.location.replace(response.url) }
+                        });
+                    }
+                    else if (response.result == "LessSeat") {
+                        $("#seat-feedback").show()
+                        $("#seat").addClass("is-invalid")
+                        Snackbar.show({
+                            text: "Seats limited. Not enough seats left.",
+                            actionTextColor: "#CFE2FF",
+                        });
+                    }
+                    else if (response.result == "NoSeat") {
+                        Snackbar.show({
+                            text: "No seats left in this carpool!",
+                            actionTextColor: "#CFE2FF",
                         });
                     }
                     else {

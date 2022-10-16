@@ -14,8 +14,10 @@ namespace JEDI_Carpool.BLL
         List<RideViewModel> GetAllRides();
         string Share(ShareRideViewModel model);
         List<RideViewModel> Search(SearchRideViewModel model);
-        List<PassengerModel> GetPassengers(int? id);
-        bool BookRide(BookingModel model);
+        List<BookingModel> GetBookings(int? id);
+        string BookRide(BookingModel model);
+        bool ValidateRideSeats(RideViewModel model);
+        bool ValidateBookingSeats(BookingModel model);
     }
     public class RideBL : IRideBL
     {
@@ -43,12 +45,22 @@ namespace JEDI_Carpool.BLL
 
         public List<RideViewModel> GetAllRides()
         {
-            return RideDAL.GetAllRides();
+            var rides = RideDAL.GetAllRides();
+
+            // remove all rides that have no seats remaining
+            foreach (var ride in rides.ToList())
+            {
+                if (!ValidateRideSeats(ride))
+                {
+                    rides.RemoveAll(r => r.RideId.Equals(ride.RideId));
+                }
+            }
+            return rides;
         }
 
-        public List<PassengerModel> GetPassengers(int? id)
+        public List<BookingModel> GetBookings(int? id)
         {
-            return RideDAL.GetPassengers(id);
+            return RideDAL.GetBookings(id);
         }
 
         public string Share(ShareRideViewModel model)
@@ -71,9 +83,45 @@ namespace JEDI_Carpool.BLL
             return RideDAL.GetRidesWithCondition(model);
         }
 
-        public bool BookRide(BookingModel model)
+        public string BookRide(BookingModel model)
         {
+            
+            if (!ValidateRideSeats(model.Ride)){
+                return "NoSeat";
+            }
+            else if (!ValidateBookingSeats(model))
+            {
+                return "LessSeat";
+            }
             return RideDAL.BookRide(model);
+        }
+
+        public bool ValidateRideSeats(RideViewModel model)
+        {
+            var maxSeats = model.Car.Seat;
+            var bookings = RideDAL.GetBookings(model.RideId);
+
+            int seatsTaken = 0;
+            foreach (var booking in bookings)
+            {
+                seatsTaken += booking.Seat;
+            }
+            return seatsTaken < maxSeats;
+        }
+
+        public bool ValidateBookingSeats(BookingModel model)
+        {
+            var seatsWanted = model.Seat;
+            var seatsTotal = model.Ride.Car.Seat;
+
+            int seatsTaken = 0;
+            var bookings = RideDAL.GetBookings(model.Ride.RideId);
+            foreach (var booking in bookings)
+            {
+                seatsTaken += booking.Seat;
+            }
+            var seatsAvailable = seatsTotal - seatsTaken;
+            return seatsAvailable >= seatsWanted;
         }
 
     }

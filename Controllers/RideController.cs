@@ -40,9 +40,6 @@ namespace JEDI_Carpool.Controllers
             var rides = RideBL.GetAllRides();
             ViewBag.Rides = rides;
 
-            //var seatsTaken = 2;
-            //rides.Where(r => r.Car.Seat > )
-
             // FILTER RIDES
 
 
@@ -81,8 +78,8 @@ namespace JEDI_Carpool.Controllers
                 {
                     ViewBag.Ride = ride;
 
-                    var passengers = RideBL.GetPassengers(id);
-                    ViewBag.Passengers = passengers;
+                    var bookings = RideBL.GetBookings(id);
+                    ViewBag.Bookings = bookings;
 
                     return view;
                 }
@@ -106,7 +103,19 @@ namespace JEDI_Carpool.Controllers
 
                 var result = RideBL.BookRide(model);
 
-                return Json(new { result = "Success", url = Url.Action("Index", "Home") });
+                if(result == "Success")
+                {
+                    return Json(new { result = result, url = Url.Action("Index", "Home") });
+                }
+                else if(result == "NoSeat")
+                {
+                    return Json(new { result = result });
+                }
+                else if(result == "LessSeat")
+                {
+                    return Json(new { result = result });
+                }
+                else return Json(new { result = "Error" });
             }
             else return Json(new { result = "NoUser", url = Url.Action("Index", "Login") });
             

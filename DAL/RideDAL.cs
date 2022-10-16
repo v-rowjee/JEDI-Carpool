@@ -16,8 +16,8 @@ namespace JEDI_Carpool.DAL
         List<RideViewModel> GetRidesWithCondition(SearchRideViewModel model);
         List<RideViewModel> GetAllRides();
         RideViewModel GetRide(int? id);
-        List<PassengerModel> GetPassengers(int? id);
-        bool BookRide(BookingModel model);
+        string BookRide(BookingModel model);
+        List<BookingModel> GetBookings(int? RideId);
     }
     public class RideDAL : IRideDAL
     {
@@ -256,49 +256,57 @@ namespace JEDI_Carpool.DAL
             return ride;
         }
 
-        private const string GetPassengersQuery = @"
-            SELECT a.*, b.Seat 
-            FROM Booking b JOIN Account a ON b.PassengerId=a.AccountId 
-            WHERE RideId = @RideId";
-        public List<PassengerModel> GetPassengers(int? id)
-        {
-            List<PassengerModel> passengers = new List<PassengerModel>();
-            PassengerModel passenger;
-
-            var parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@RideId", id));
-
-            var dt = DBCommand.GetDataWithCondition(GetPassengersQuery, parameters);
-            foreach (DataRow row in dt.Rows)
-            {
-                passenger = new PassengerModel();
-
-                var account = new AccountModel();
-                account.AccountId = int.Parse(row["AccountId"].ToString());
-                account.FirstName = row["FirstName"].ToString();
-                account.LastName = row["LastName"].ToString();
-                account.Email = row["Email"].ToString();
-                account.Phone = row["Phone"].ToString();
-                passenger.Account = account;
-
-                passenger.Seat = int.Parse(row["Seat"].ToString());
-
-                passengers.Add(passenger);
-            }
-            return passengers;
-        }
-
 
         private const string BookRideQuery = @"
             INSERT INTO Booking VALUES (@RideId, @PassengerId, @Seat)";
-        public bool BookRide(BookingModel model)
+        public string BookRide(BookingModel model)
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@RideId", model.Ride.RideId));
             parameters.Add(new SqlParameter("@PassengerId", model.Passenger.AccountId));
             parameters.Add(new SqlParameter("@Seat", model.Seat));
 
-            return DBCommand.InsertUpdateData(BookRideQuery, parameters);
+            var result = DBCommand.InsertUpdateData(BookRideQuery, parameters);
+
+            return result ? "Success" : "Error";
+        }
+
+
+        private const string GetBookingsQuery = @"
+            SELECT b.BookingId, b.Seat, a.AccountId, a.Email, a.FirstName, a.LastName, a.Phone  
+            FROM Booking b INNER JOIN Account a ON b.PassengerId=a.AccountId
+            INNER JOIN Ride r ON r.RideId=b.RideId
+            WHERE b.RideId=@RideId";
+        public List<BookingModel> GetBookings(int? RideId)
+        {
+            List<BookingModel> bookings = new List<BookingModel>();
+            BookingModel booking;
+
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@RideId", RideId));
+
+            var dt = DBCommand.GetDataWithCondition(GetBookingsQuery,parameters);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                booking = new BookingModel();
+
+                booking.BookingId = int.Parse(row["BookingId"].ToString());
+
+                booking.Ride = GetRide(RideId);
+
+                var passenger = new AccountModel();
+                passenger.FirstName = row["FirstName"].ToString();
+                passenger.LastName = row["LastName"].ToString();
+                passenger.Email = row["Email"].ToString();
+                passenger.Phone = row["Phone"].ToString();
+                booking.Passenger = passenger;
+
+                booking.Seat = int.Parse(row["Seat"].ToString());
+
+                bookings.Add(booking);
+            }
+            return bookings;
         }
 
     }
