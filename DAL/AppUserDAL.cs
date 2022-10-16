@@ -58,22 +58,26 @@ namespace JEDI_Carpool.DAL
 
         public string RegisterUser(RegisterViewModel model)
         {
+            var result = false;
+
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@Email", model.Email));
             parameters.Add(new SqlParameter("@Password", model.Password));
             parameters.Add(new SqlParameter("@FirstName", model.FirstName));
             parameters.Add(new SqlParameter("@LastName", model.LastName));
             parameters.Add(new SqlParameter("@Phone", model.Phone));
-            parameters.Add(new SqlParameter("@Address", model.Address != null ? model.Address.Address : (object)DBNull.Value));
-            parameters.Add(new SqlParameter("@City", model.Address != null ? model.Address.City : (object)DBNull.Value));
-            parameters.Add(new SqlParameter("@Country", model.Address != null ? model.Address.Country : (object)DBNull.Value));
+            
+            if (model.Address != null && model.Address.City != null && model.Address.Country != null)
+            {
+                parameters.Add(new SqlParameter("@Address", model.Address.Address));
+                parameters.Add(new SqlParameter("@City", model.Address.City));
+                parameters.Add(new SqlParameter("@Country", model.Address.Country));
 
-            if (model.Address.Address != null) 
-                DBCommand.InsertUpdateData(RegisterUserQueryWithAddress, parameters);
+                result = DBCommand.InsertUpdateData(RegisterUserQueryWithAddress, parameters);
+            }
+            else result = DBCommand.InsertUpdateData(RegisterUserQueryWithoutAddress, parameters);
 
-            else DBCommand.InsertUpdateData(RegisterUserQueryWithoutAddress, parameters);
-
-            return "Success";
+            return result ? "Success" : "Error";
         }
 
     }

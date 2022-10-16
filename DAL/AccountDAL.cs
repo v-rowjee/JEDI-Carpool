@@ -27,7 +27,7 @@ namespace JEDI_Carpool.DAL
         ";
         private const string GetAllAccountsQuery = @"
             SELECT a.*, l.Address, l.City, l.Country 
-            FROM Account a JOIN Location l ON a.AddressId=l.LocationId";
+            FROM Account a LEFT JOIN Location l ON a.AddressId=l.LocationId";
         private const string UpdateAccountQuery = @"
             IF NOT EXISTS ( SELECT * FROM Location WHERE Address=@Address AND City=@City AND Country=@Country )
                 BEGIN

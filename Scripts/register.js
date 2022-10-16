@@ -34,16 +34,27 @@
         }
         else {
 
-            var RegisterViewModelObj = {
-                Email: email,
-                Password: password,
-                FirstName: fname,
-                LastName: lname,
-                Phone: phone,
-                Address: {
-                    Address: address,
-                    City: city,
-                    Country: country
+            if (!address || !city || !country) {
+                var RegisterViewModelObj = {
+                    Email: email,
+                    Password: password,
+                    FirstName: fname,
+                    LastName: lname,
+                    Phone: phone
+                }
+            }
+            else {
+                var RegisterViewModelObj = {
+                    Email: email,
+                    Password: password,
+                    FirstName: fname,
+                    LastName: lname,
+                    Phone: phone,
+                    Address: {
+                        Address: address,
+                        City: city,
+                        Country: country
+                    }
                 }
             }
 
