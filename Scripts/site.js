@@ -35,3 +35,11 @@ $(document).ready(function () {
         $(n).trigger('click');
     });
 });
+
+// add shadow to all cards when hover
+//(() => {
+//    $(".card").hover(
+//        function () { $(this).addClass('shadow-sm') },
+//        function () { $(this).removeClass('shadow-sm') }
+//    )
+//})()

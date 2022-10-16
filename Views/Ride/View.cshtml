@@ -6,7 +6,7 @@
     <script src="~/Scripts/view_ride.js"></script>
 }
 <div class="container">
-    <div class="row align-items-center py-5">
+    <div class="row align-items-center g-5 py-5">
         <div class="col-md-6 ps-5 border-start">
             <div class="display-5 fw-bold">@ViewBag.Ride.DateTime.ToString("dddd,")</div>
             <div class="display-5 fw-bold">@ViewBag.Ride.DateTime.ToString("dd MMMM")</div>
@@ -34,6 +34,14 @@
                     <div id="fare" class="card-text float-end fw-bold">Rs @ViewBag.Ride.Fare.ToString("0.00")</div>
                 </div>
             </div>
+
+            <div class="card mt-4">
+                <div class="card-body mx-3">
+                    <div class="card-text float-start text-muted">Seats Left</div>
+                    <div id="fare" class="card-text float-end fw-bold">@ViewBag.Ride.SeatsLeft</div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -98,10 +106,10 @@
         </div>
         <div class="col-md-6">
 
-            <div class="card mt-5">
+            <div class="card">
                 <div class="card-header fw-bold text-muted">
                     <i class="fa-solid fa-users me-2"></i>
-                    Passengers
+                    Other Passengers
                 </div>
                 <div class="card-body">
                     @if (ViewBag.Bookings.Count > 0)
@@ -110,9 +118,9 @@
                             @foreach (var Booking in ViewBag.Bookings)
                             {
                                 <li class="list-group-item pb-3">
-                                    <i class="fa-solid fa-envelope me-2"></i>
+                                    <i class="fa-solid fa-user me-2"></i>
                                     @Booking.Passenger.FirstName @Booking.Passenger.LastName
-                                    <div class="card-text">@Booking.Seat Seats Taken</div>
+                                    <span class="card-text">(@Booking.Seat Seats Taken)</span>
                                 </li>
                             }
                         </ul>
@@ -131,7 +139,7 @@
                 <div class="card-body">
                     <div class="d-flex">
                         <div id="minus" class="btn btn-secondary">-</div>
-                        <input type="number" id="seat" class="form-control mx-4 no-arrow" min="1" max="@ViewBag.Ride.Car.Seat" value="1" />
+                        <input type="number" id="seat" class="form-control mx-4 no-arrow" min="1" max="@ViewBag.Ride.SeatsLeft" value="1" />
                         <div id="plus" class="btn btn-secondary">+</div>
                     </div>
                     <div id="seat-feedback" class="text-danger mt-2">

@@ -38,10 +38,20 @@ namespace JEDI_Carpool.Controllers
             var view = View();
 
             var rides = RideBL.GetAllRides();
-            ViewBag.Rides = rides;
 
             // FILTER RIDES
+            foreach (var ride in rides.ToList())
+            {
+                var seatsLeft = RideBL.GetSeatsLeft(ride);
+                ride.SeatsLeft = seatsLeft;
+                if (seatsLeft < 1)
+                {
+                    rides.RemoveAll(r => r.RideId.Equals(ride.RideId));
+                }
+            }
 
+            // Store filtered rides in viewbag
+            ViewBag.Rides = rides;
 
             if (loggeduser != null)
             {
@@ -76,6 +86,7 @@ namespace JEDI_Carpool.Controllers
                 var ride = RideBL.GetRide(id);
                 if (ride != null)
                 {
+                    ride.SeatsLeft = RideBL.GetSeatsLeft(ride);
                     ViewBag.Ride = ride;
 
                     var bookings = RideBL.GetBookings(id);
