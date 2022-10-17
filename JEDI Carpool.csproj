@@ -276,6 +276,7 @@
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Ride\View.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
+    <Content Include="Views\Ride\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

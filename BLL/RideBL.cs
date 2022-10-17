@@ -16,6 +16,7 @@ namespace JEDI_Carpool.BLL
         string Share(ShareRideViewModel model);
         List<RideViewModel> Search(SearchRideViewModel model);
         int GetSeatsLeft(RideViewModel model);
+        List<RideViewModel> GetRidesByPassengerId(int id);
     }
     public class RideBL : IRideBL
     {
@@ -79,6 +80,12 @@ namespace JEDI_Carpool.BLL
         {
             return RideDAL.SearchRide(model);
         }
+
+        public List<RideViewModel> GetRidesByPassengerId(int id)
+        {
+            return RideDAL.GetRidesByPassengerId(id);
+        }
+
 
         public int GetSeatsLeft(RideViewModel ride)
         {

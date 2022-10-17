@@ -102,58 +102,6 @@ namespace JEDI_Carpool.Controllers
             return RedirectToAction("Index");
         }
 
-        // POST: Ride/Book
-        public JsonResult Book(BookingModel model)
-        {
-            var loggeduser = Session["CurrentUser"] as LoginViewModel;
-
-            if(loggeduser != null)
-            {
-                var account = AccountBL.GetAccount(loggeduser);
-                var ride = RideBL.GetRide(model.Ride.RideId);
-
-                model.Passenger = account;
-                model.Ride = ride;
-
-                var result = BookingBL.BookRide(model);
-
-                if(result == "Success")
-                {
-                    return Json(new { result = result, url = Url.Action("Index", "Home") });
-                }
-                else if(result == "NoSeat")
-                {
-                    return Json(new { result = result });
-                }
-                else if(result == "LessSeat")
-                {
-                    return Json(new { result = result });
-                }
-                else return Json(new { result = "Error" });
-            }
-            else return Json(new { result = "NoUser", url = Url.Action("Index", "Login") });
-            
-        }
-
-        //[HttpPost]
-        //public JsonResult Search(SearchRideViewModel model)
-        //{
-        //    var rides = RideBL.GetAllRides();
-
-        //    // use of linq to filter
-
-        //    ViewBag.Rides = rides;
-
-        //    if (rides != null || rides.Count > 0)
-        //    {
-        //        return Json(new { result = true, count = rides.Count });
-        //    }
-        //    else
-        //    {
-        //        return Json(new { result = false });
-        //    }
-        //}
-
 
         // GET: Ride/Share
         public ViewResult Share()
@@ -211,6 +159,27 @@ namespace JEDI_Carpool.Controllers
             {
                 return Json(new { result = "NoUser", url = Url.Action("Index", "Login") });
             }
+        }
+
+
+        // GET: Ride/Edit
+        public ActionResult Edit(int id)
+        {
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+
+            if (loggeduser != null)
+            {
+                var account = AccountBL.GetAccount(loggeduser);
+                var ride = RideBL.GetRide(id);
+
+                if(account.AccountId == ride.Driver.AccountId)
+                {
+                    ViewBag.Account = account;
+                    ViewBag.Ride = ride;
+                }
+                else RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
         }
 
     }

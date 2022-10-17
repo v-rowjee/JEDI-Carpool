@@ -56,7 +56,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/Ride/Book",
+                url: "/Booking/Create",
                 data: BookingModelObj,
                 dataType: "json",
                 success: (response) => {

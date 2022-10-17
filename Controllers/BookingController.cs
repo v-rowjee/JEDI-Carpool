@@ -40,15 +40,48 @@ namespace JEDI_Carpool.Controllers
                 var account = AccountBL.GetAccount(loggeduser);
                 ViewBag.Account = account;
 
-                var driverRides = RideBL.GetAllRides().Where(r => r.Driver.AccountId.Equals(account.AccountId)).ToList();
-                ViewBag.Rides = driverRides;
+                var driverRides = RideBL.GetAllRides().Where(r => r.Driver.AccountId == account.AccountId);
+                ViewBag.DriverRides = driverRides;
 
-                //var passengerRides = RideBL.GetAllRides().Where(r => );
-                //ViewBag.Bookings = passengerRides;
+                var passengerRides = RideBL.GetRidesByPassengerId(account.AccountId);
+                ViewBag.PassengerRides = passengerRides;
 
                 return View();
             }
             return Redirect("/");
+
+        }
+
+        // POST: Booking/Create
+        public JsonResult Create(BookingModel model)
+        {
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+
+            if (loggeduser != null)
+            {
+                var account = AccountBL.GetAccount(loggeduser);
+                var ride = RideBL.GetRide(model.Ride.RideId);
+
+                model.Passenger = account;
+                model.Ride = ride;
+
+                var result = BookingBL.BookRide(model);
+
+                if (result == "Success")
+                {
+                    return Json(new { result = result, url = Url.Action("Index", "Home") });
+                }
+                else if (result == "NoSeat")
+                {
+                    return Json(new { result = result });
+                }
+                else if (result == "LessSeat")
+                {
+                    return Json(new { result = result });
+                }
+                else return Json(new { result = "Error" });
+            }
+            else return Json(new { result = "NoUser", url = Url.Action("Index", "Login") });
 
         }
     }

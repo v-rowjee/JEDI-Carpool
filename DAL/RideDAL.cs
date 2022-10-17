@@ -16,6 +16,7 @@ namespace JEDI_Carpool.DAL
         List<RideViewModel> SearchRide(SearchRideViewModel model);
         List<RideViewModel> GetAllRides();
         RideViewModel GetRide(int? id);
+        List<RideViewModel> GetRidesByPassengerId(int id);
     }
     public class RideDAL : IRideDAL
     {
@@ -130,7 +131,7 @@ namespace JEDI_Carpool.DAL
 
         private const string GetAllRidesQuery = @"
             SELECT rid.RideId, rid.Fare, rid.DateTime, rid.Comment,
-                acc.FirstName, acc.LastName, acc.Email, 
+                acc.AccountId, acc.FirstName, acc.LastName, acc.Email, acc.Phone,
                 car.Model, car.PlateNumber, car.Seat, car.Year, car.Color,
                 org.Address as OAddress, org.City as OCity, org.Country as OCountry,
                 dest.Address as DAddress, dest.City as DCity, dest.Country as DCountry
@@ -151,17 +152,21 @@ namespace JEDI_Carpool.DAL
             foreach (DataRow row in dt.Rows)
             {
                 ride = new RideViewModel();
-
-                var driver = new AccountModel();
-                driver.FirstName = row["FirstName"].ToString();
-                driver.LastName = row["LastName"].ToString();
-
+            
                 var car = new CarModel();
                 car.PlateNumber = row["PlateNumber"].ToString();
                 car.Model = row["Model"].ToString();
                 car.Year = int.Parse(row["Year"].ToString());
                 car.Seat = int.Parse(row["Seat"].ToString());
                 car.Color = row["Color"].ToString();
+
+                var driver = new AccountModel();
+                driver.AccountId = int.Parse(row["AccountId"].ToString());
+                driver.FirstName = row["FirstName"].ToString();
+                driver.LastName = row["LastName"].ToString();
+                driver.Email = row["Email"].ToString();
+                driver.Phone = row["Phone"].ToString();
+                driver.Car = car;
 
                 var origin = new LocationModel();
                 origin.Address = row["OAddress"].ToString();
@@ -191,7 +196,7 @@ namespace JEDI_Carpool.DAL
 
         private const string GetRideQuery = @"
             SELECT rid.RideId, rid.Fare, rid.DateTime, rid.Comment,
-                acc.FirstName, acc.LastName, acc.Email, acc.Phone,
+                acc.AccountId, acc.FirstName, acc.LastName, acc.Email, acc.Phone,
                 car.Model, car.PlateNumber, car.Seat, car.Year, car.Color,
                 org.Address as OAddress, org.City as OCity, org.Country as OCountry,
                 dest.Address as DAddress, dest.City as DCity, dest.Country as DCountry
@@ -213,18 +218,20 @@ namespace JEDI_Carpool.DAL
             {
                 ride = new RideViewModel();
 
-                var driver = new AccountModel();
-                driver.FirstName = row["FirstName"].ToString();
-                driver.LastName = row["LastName"].ToString();
-                driver.Email = row["Email"].ToString();
-                driver.Phone = row["Phone"].ToString();
-
                 var car = new CarModel();
                 car.PlateNumber = row["PlateNumber"].ToString();
                 car.Model = row["Model"].ToString();
                 car.Year = int.Parse(row["Year"].ToString());
                 car.Seat = int.Parse(row["Seat"].ToString());
                 car.Color = row["Color"].ToString();
+
+                var driver = new AccountModel();
+                driver.AccountId = int.Parse(row["AccountId"].ToString());
+                driver.FirstName = row["FirstName"].ToString();
+                driver.LastName = row["LastName"].ToString();
+                driver.Email = row["Email"].ToString();
+                driver.Phone = row["Phone"].ToString();
+                driver.Car = car;
 
                 var origin = new LocationModel();
                 origin.Address = row["OAddress"].ToString();
@@ -247,6 +254,76 @@ namespace JEDI_Carpool.DAL
 
             }
             return ride;
+        }
+
+
+        private const string GetRidesByPassegerIdQuery = @"
+            SELECT rid.RideId, rid.Fare, rid.DateTime, rid.Comment,
+                acc.AccountId, acc.FirstName, acc.LastName, acc.Email, acc.Phone,
+                car.Model, car.PlateNumber, car.Seat, car.Year, car.Color,
+                org.Address as OAddress, org.City as OCity, org.Country as OCountry,
+                dest.Address as DAddress, dest.City as DCity, dest.Country as DCountry
+            FROM Account acc
+            INNER JOIN Car car ON car.DriverId=acc.AccountId
+            INNER JOIN Ride rid ON rid.DriverId=acc.AccountId
+            INNER JOIN Location org ON org.LocationId=rid.OriginId
+            INNER JOIN Location dest ON dest.LocationId=rid.DestinationId
+            INNER JOIN Booking b ON b.RideId=rid.RideId
+            WHERE DateTime > GETDATE()
+            AND b.PassengerId=@PassengerId
+            ORDER BY DateTime";
+        public List<RideViewModel> GetRidesByPassengerId(int id)
+        {
+            var rides = new List<RideViewModel>();
+            RideViewModel ride;
+
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@PassengerId", id));
+
+            var dt = DBCommand.GetDataWithCondition(GetRidesByPassegerIdQuery,parameters);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                ride = new RideViewModel();
+
+                var car = new CarModel();
+                car.PlateNumber = row["PlateNumber"].ToString();
+                car.Model = row["Model"].ToString();
+                car.Year = int.Parse(row["Year"].ToString());
+                car.Seat = int.Parse(row["Seat"].ToString());
+                car.Color = row["Color"].ToString();
+
+                var driver = new AccountModel();
+                driver.AccountId = int.Parse(row["AccountId"].ToString());
+                driver.FirstName = row["FirstName"].ToString();
+                driver.LastName = row["LastName"].ToString();
+                driver.Email = row["Email"].ToString();
+                driver.Phone = row["Phone"].ToString();
+                driver.Car = car;
+
+                var origin = new LocationModel();
+                origin.Address = row["OAddress"].ToString();
+                origin.City = row["OCity"].ToString();
+                origin.Country = row["OCountry"].ToString();
+
+                var destination = new LocationModel();
+                destination.Address = row["DAddress"].ToString();
+                destination.City = row["DCity"].ToString();
+                destination.Country = row["DCountry"].ToString();
+
+                ride.RideId = int.Parse(row["RideId"].ToString());
+                ride.Driver = driver;
+                ride.Car = car;
+                ride.Fare = Convert.ToInt32(row["Fare"]);
+                ride.DateTime = DateTime.Parse(row["DateTime"].ToString());
+                ride.Origin = origin;
+                ride.Destination = destination;
+                ride.Comment = row["Comment"].ToString();
+
+                rides.Add(ride);
+            }
+
+            return rides;
         }
 
     }

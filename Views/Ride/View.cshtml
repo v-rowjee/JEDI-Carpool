@@ -109,7 +109,7 @@
             <div class="card">
                 <div class="card-header fw-bold text-muted">
                     <i class="fa-solid fa-users me-2"></i>
-                    Other Passengers
+                    Passengers
                 </div>
                 <div class="card-body">
                     @if (ViewBag.Bookings.Count > 0)
@@ -158,7 +158,22 @@
             <div class="mt-5">
                 <form id="bookRideForm" class="my-5">
                     <input type="hidden" id="rideId" value="@ViewBag.Ride.RideId" />
-                    <input type="submit" id="book" class="btn btn-primary w-100 @(ViewBag.Ride.DateTime < DateTime.Now ? "disabled" : "")" value="Book Ride" />
+
+                    @if (ViewBag.Account != null)
+                    {
+                        if (ViewBag.Ride.Driver.AccountId == ViewBag.Account.AccountId)
+                        {
+                            @Html.ActionLink("Edit Ride", "Edit", "Ride", new { @id = ViewBag.Ride.RideId }, new { @class = "btn btn-primary w-100" })
+                        }
+                        else
+                        {
+                            <input type="submit" id="book" class="btn btn-primary w-100 @(ViewBag.Ride.DateTime < DateTime.Now ? "disabled" : "")" value="Book Ride" />
+                        }
+                    }
+                    else
+                    {
+                        <input type="submit" id="book" class="btn btn-primary w-100 @(ViewBag.Ride.DateTime < DateTime.Now ? "disabled" : "")" value="Book Ride" />
+                    }
                 </form>
             </div>
 
