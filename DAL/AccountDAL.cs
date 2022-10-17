@@ -111,7 +111,7 @@ namespace JEDI_Carpool.DAL
             parameters.Add(new SqlParameter("@LastName", model.LastName));
             parameters.Add(new SqlParameter("@Phone", model.Phone));
 
-            if (model.Address != null)
+            if (model.Address.Address != null || model.Address.City != null || model.Address.Country != null)
             {
                 parameters.Add(new SqlParameter("@Address", model.Address.Address));
                 parameters.Add(new SqlParameter("@City", model.Address.City));

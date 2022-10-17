@@ -30,7 +30,7 @@ namespace JEDI_Carpool.Controllers
             if (loggeduser != null)
             {
                 var data = AccountBL.GetAccount(loggeduser);
-                ViewBag.account = data;
+                ViewBag.Account = data;
                 return View();
             }
             else return Redirect("/");
@@ -43,7 +43,7 @@ namespace JEDI_Carpool.Controllers
             if (loggeduser != null)
             {
                 var data = AccountBL.GetAccount(loggeduser);
-                ViewBag.account = data;
+                ViewBag.Account = data;
                 return View();
             }
             else return Redirect("/");
@@ -62,6 +62,11 @@ namespace JEDI_Carpool.Controllers
 
             if (result == "Success")
             {
+                var newloggeduser = new LoginViewModel();
+                newloggeduser.Email = model.Email;  // new email
+                newloggeduser.Password = loggeduser.Password;   // old password
+                this.Session["CurrentUser"] = newloggeduser;
+
                 return Json(new { result = result, url = Url.Action("Index", "Profile") });
             }
             else if (result == "DuplicatedEmail")
