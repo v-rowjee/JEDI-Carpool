@@ -176,6 +176,7 @@
     <Content Include="Content\Images\car2.png" />
     <Content Include="Content\Images\confirm.png" />
     <Content Include="Content\Images\map.png" />
+    <Content Include="Content\Images\mobile.gif" />
     <Content Include="Content\Images\notes.png" />
     <Content Include="Content\Images\register.png" />
     <Content Include="Content\Images\login.png" />

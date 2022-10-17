@@ -23,6 +23,7 @@ namespace JEDI_Carpool.BLL
     {
         public IRideDAL RideDAL;
         public ICarDAL CarDAL;
+        public IBookingDAL BookingDAL;
         
         public RideBL(IRideDAL RideDAL, ICarDAL CarDAL)
         {
@@ -80,7 +81,7 @@ namespace JEDI_Carpool.BLL
 
         public List<BookingModel> GetBookings(int? id)
         {
-            return RideDAL.GetBookings(id);
+            return BookingDAL.GetBookings(id);
         }
 
         public string BookRide(BookingModel model)
@@ -92,13 +93,13 @@ namespace JEDI_Carpool.BLL
             {
                 return "LessSeat";
             }
-            return RideDAL.BookRide(model);
+            return BookingDAL.BookRide(model);
         }
 
         public int GetSeatsLeft(RideViewModel ride)
         {
             var seatsMax = ride.Car.Seat;
-            var bookings = RideDAL.GetBookings(ride.RideId);
+            var bookings = BookingDAL.GetBookings(ride.RideId);
             int seatsTaken = 0;
             foreach (var booking in bookings)
             {
