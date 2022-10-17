@@ -14,7 +14,7 @@ namespace JEDI_Carpool.DAL
         string BookRide(BookingModel model);
         List<BookingModel> GetBookings(int? RideId);
     }
-    public class BookingDAL
+    public class BookingDAL: IBookingDAL
     {
         private const string BookRideQuery = @"
             INSERT INTO Booking VALUES (@RideId, @PassengerId, @Seat)";

@@ -25,16 +25,18 @@ namespace JEDI_Carpool.BLL
         public ICarDAL CarDAL;
         public IBookingDAL BookingDAL;
         
-        public RideBL(IRideDAL RideDAL, ICarDAL CarDAL)
+        public RideBL(IRideDAL RideDAL, ICarDAL CarDAL, IBookingDAL BookingDAL)
         {
             this.RideDAL = RideDAL;
             this.CarDAL = CarDAL;
+            this.BookingDAL = BookingDAL;
         }
 
         public RideBL()
         {
             this.RideDAL = new RideDAL();
             this.CarDAL = new CarDAL();
+            this.BookingDAL = new BookingDAL();
         }
 
 
