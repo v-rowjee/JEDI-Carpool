@@ -131,7 +131,18 @@ namespace JEDI_Carpool.Controllers
 
             var result = CarBL.Delete(account.AccountId);
 
-            return Json(new { result = result, url = Url.Action("Add", "Car") });
+            if( result == "Success")
+            {
+                return Json(new { result = result, url = Url.Action("Add", "Car") });
+            }
+            else if ( result == "HasRide")
+            {
+                return Json(new { result = result, url = Url.Action("Ride", "Booking") });
+            }
+            else
+            {
+                return Json(new { result = "Error" });
+            }
         }
 
 

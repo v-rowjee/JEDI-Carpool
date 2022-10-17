@@ -151,6 +151,14 @@
                     });
                     window.location.replace(response.url);
                 }
+                else if (reponse.result == "HasRide") {
+                    Snackbar.show({
+                        text: "You have an active ride. Cannot delete car.",
+                        actionTextColor: "#CFE2FF",
+                        actionText: "VIEW",
+                        onActionClick: () => window.location.replace(response.url)
+                    });
+                }
                 else {
                     Snackbar.show({
                         text: "Unable to remove car details",

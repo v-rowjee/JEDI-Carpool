@@ -12,18 +12,25 @@ namespace JEDI_Carpool.BLL
         CarModel GetCar(int DriverId);
         bool Create(CarModel model);
         bool Edit(CarModel model);
-        bool Delete(int DriverId);
+        string Delete(int DriverId);
     }
     public class CarBL : ICarBL
     {
         public ICarDAL CarDAL;
-        public CarBL(ICarDAL CarDAL)
+        public IRideDAL RideDAL;
+        public IBookingDAL BookingDAL;
+
+        public CarBL(ICarDAL CarDAL, IRideDAL RideDAL, IBookingDAL BookingDAL)
         {
             this.CarDAL = CarDAL;
+            this.RideDAL = RideDAL;
+            this.BookingDAL = BookingDAL;
         }
         public CarBL()
         {
             this.CarDAL = new CarDAL();
+            this.RideDAL = new RideDAL();
+            this.BookingDAL = new BookingDAL();
         }
 
 
@@ -43,9 +50,21 @@ namespace JEDI_Carpool.BLL
             return CarDAL.Edit(model);
         }
 
-        public bool Delete(int DriverId)
+        public string Delete(int DriverId)
         {
-            return CarDAL.Delete(DriverId);
+            if (ValidateDeleteCar(DriverId))
+            {
+                CarDAL.Delete(DriverId);
+                return "Success";
+            }
+            return "HasRide";
+        }
+
+        private bool ValidateDeleteCar(int DriverId)
+        {
+            var ridesByCarOwner = RideDAL.GetAllRides().FirstOrDefault(r => r.Driver.AccountId == DriverId);
+
+            return ridesByCarOwner == null;
         }
 
     }

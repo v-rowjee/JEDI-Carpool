@@ -124,6 +124,7 @@
     <Compile Include="BLL\BookingBL.cs" />
     <Compile Include="BLL\CarBL.cs" />
     <Compile Include="BLL\RideBL.cs" />
+    <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -276,6 +277,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Booking\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
