@@ -11,6 +11,7 @@ namespace JEDI_Carpool.BLL
     {
         string BookRide(BookingModel model);
         List<BookingModel> GetBookings(int? RideId);
+        List<BookingModel> GetBookingsByAccountId(int AccountId);
     }
     public class BookingBL :IBookingBL
     {
@@ -36,6 +37,10 @@ namespace JEDI_Carpool.BLL
             return BookingDAL.GetBookings(RideId);
         }
 
+        public List<BookingModel> GetBookingsByAccountId(int AccountId)
+        {
+            return BookingDAL.GetBookingsByAccountId(AccountId);
+        }
 
     }
 }

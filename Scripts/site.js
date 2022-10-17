@@ -36,6 +36,9 @@ $(document).ready(function () {
     });
 });
 
+// Animation
+document.addEventListener('DOMContentLoaded', function () { window.setTimeout(document.querySelector('svg').classList.add('animated'), 1000); })
+
 // add shadow to all cards when hover
 //(() => {
 //    $(".card").hover(

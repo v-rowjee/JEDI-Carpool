@@ -16,17 +16,20 @@ namespace JEDI_Carpool.Controllers
         public IAccountBL AccountBL;
         public IRideBL RideBL;
         public ICarBL CarBL;
-        public RideController(IAccountBL AccountBL, IRideBL RideBL, ICarBL CarBL)
+        public IBookingBL BookingBL;
+        public RideController(IAccountBL AccountBL, IRideBL RideBL, ICarBL CarBL, IBookingBL BookingBL)
         {
             this.AccountBL = AccountBL;
             this.RideBL = RideBL;
             this.CarBL = CarBL;
+            this.BookingBL = BookingBL;
         }
         public RideController()
         {
             this.AccountBL = new AccountBL();
             this.RideBL = new RideBL();
             this.CarBL = new CarBL();
+            this.BookingBL = new BookingBL();
         }
 
 
@@ -89,7 +92,7 @@ namespace JEDI_Carpool.Controllers
                     ride.SeatsLeft = RideBL.GetSeatsLeft(ride);
                     ViewBag.Ride = ride;
 
-                    var bookings = RideBL.GetBookings(id);
+                    var bookings = BookingBL.GetBookings(ride.RideId);
                     ViewBag.Bookings = bookings;
 
                     return view;
@@ -112,7 +115,7 @@ namespace JEDI_Carpool.Controllers
                 model.Passenger = account;
                 model.Ride = ride;
 
-                var result = RideBL.BookRide(model);
+                var result = BookingBL.BookRide(model);
 
                 if(result == "Success")
                 {

@@ -34,21 +34,22 @@ namespace JEDI_Carpool.Controllers
         public ActionResult Index()
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
-            var view = View();
 
             if (loggeduser != null)
             {
-                var data = AccountBL.GetAccount(loggeduser);
-                ViewBag.Account = data;
+                var account = AccountBL.GetAccount(loggeduser);
+                ViewBag.Account = account;
 
-                view.MasterName = "~/Views/Shared/_Layout.cshtml";
-            }
-            else
-            {
-                view.MasterName = "~/Views/Shared/_GuestLayout.cshtml";
-            }
+                var driverRides = RideBL.GetAllRides().Where(r => r.Driver.AccountId.Equals(account.AccountId)).ToList();
+                ViewBag.Rides = driverRides;
 
-            return view;
+                //var passengerRides = RideBL.GetAllRides().Where(r => );
+                //ViewBag.Bookings = passengerRides;
+
+                return View();
+            }
+            return Redirect("/");
+
         }
     }
 }

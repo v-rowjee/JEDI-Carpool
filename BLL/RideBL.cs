@@ -15,8 +15,6 @@ namespace JEDI_Carpool.BLL
         List<RideViewModel> GetAllRides();
         string Share(ShareRideViewModel model);
         List<RideViewModel> Search(SearchRideViewModel model);
-        List<BookingModel> GetBookings(int? id);
-        string BookRide(BookingModel model);
         int GetSeatsLeft(RideViewModel model);
     }
     public class RideBL : IRideBL
@@ -53,6 +51,7 @@ namespace JEDI_Carpool.BLL
             // remove all rides that have no seats remaining
             foreach (var ride in rides.ToList())
             {
+                ride.SeatsLeft = GetSeatsLeft(ride);
                 if (!ValidateSeatsLeft(ride))
                 {
                     rides.RemoveAll(r => r.RideId.Equals(ride.RideId));
@@ -79,23 +78,6 @@ namespace JEDI_Carpool.BLL
         public List<RideViewModel> Search(SearchRideViewModel model)
         {
             return RideDAL.SearchRide(model);
-        }
-
-        public List<BookingModel> GetBookings(int? id)
-        {
-            return BookingDAL.GetBookings(id);
-        }
-
-        public string BookRide(BookingModel model)
-        {
-            if (!ValidateSeatsLeft(model.Ride)){
-                return "NoSeat";
-            }
-            else if (!ValidateInputSeats(model))
-            {
-                return "LessSeat";
-            }
-            return BookingDAL.BookRide(model);
         }
 
         public int GetSeatsLeft(RideViewModel ride)

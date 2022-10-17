@@ -13,6 +13,7 @@ namespace JEDI_Carpool.DAL
     {
         string BookRide(BookingModel model);
         List<BookingModel> GetBookings(int? RideId);
+        List<BookingModel> GetBookingsByAccountId(int AccountId);
     }
     public class BookingDAL: IBookingDAL
     {
@@ -65,5 +66,43 @@ namespace JEDI_Carpool.DAL
             }
             return bookings;
         }
+
+
+        private const string GetBookingsByAccountIdQuery = @"
+            SELECT b.BookingId, b.Seat, a.AccountId, a.Email, a.FirstName, a.LastName, a.Phone  
+            FROM Booking b INNER JOIN Account a ON b.PassengerId=a.AccountId
+            INNER JOIN Ride r ON r.RideId=b.RideId
+            INNER JOIN Account a ON a.AccountId=r.DriverId
+            WHERE a.AccountId=@AccountId";
+        public List<BookingModel> GetBookingsByAccountId(int AccountId)
+        {
+            List<BookingModel> bookings = new List<BookingModel>();
+            BookingModel booking;
+
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@AccountId", AccountId));
+
+            var dt = DBCommand.GetDataWithCondition(GetBookingsByAccountIdQuery, parameters);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                booking = new BookingModel();
+
+                booking.BookingId = int.Parse(row["BookingId"].ToString());
+
+                var passenger = new AccountModel();
+                passenger.FirstName = row["FirstName"].ToString();
+                passenger.LastName = row["LastName"].ToString();
+                passenger.Email = row["Email"].ToString();
+                passenger.Phone = row["Phone"].ToString();
+                booking.Passenger = passenger;
+
+                booking.Seat = int.Parse(row["Seat"].ToString());
+
+                bookings.Add(booking);
+            }
+            return bookings;
+        }
+
     }
 }
