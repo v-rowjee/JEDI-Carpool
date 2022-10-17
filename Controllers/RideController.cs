@@ -32,7 +32,7 @@ namespace JEDI_Carpool.Controllers
 
 
         // GET: Ride
-        public ActionResult Index()
+        public ActionResult Index(SearchRideViewModel model)
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
             var view = View();

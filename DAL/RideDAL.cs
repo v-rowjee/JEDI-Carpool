@@ -13,7 +13,7 @@ namespace JEDI_Carpool.DAL
     public interface IRideDAL
     {
         string Share(ShareRideViewModel model);
-        List<RideViewModel> GetRidesWithCondition(SearchRideViewModel model);
+        List<RideViewModel> SearchRide(SearchRideViewModel model);
         List<RideViewModel> GetAllRides();
         RideViewModel GetRide(int? id);
         string BookRide(BookingModel model);
@@ -67,17 +67,15 @@ namespace JEDI_Carpool.DAL
 
 
         private const string SearchRidesQuery = @"
-            SELECT acc.FirstName, acc.LastName, acc.Email,rid.Fare, rid.Comment, car.PlateNumber, car.Model, car.Year, car.Seat, car.Color
+            SELECT acc.FirstName, acc.LastName, acc.Email,rid.Fare, rid.Comment, car.PlateNumber, car.Model, car.Year, car.Seat, car.Color, SUM(Seat)
             FROM Account acc 
             INNER JOIN Ride rid ON rid.DriverId=acc.AccountId 
             INNER JOIN Car car ON car.DriverId=acc.AccountId
             INNER JOIN Booking grp ON grp.RideId=rid.RideId
-            WHERE OriginId IN (SELECT LocationId FROM Location WHERE City=@OCity AND Country=@OCountry)
-            AND DestinationId IN (SELECT LocationId FROM Location WHERE City=@DCity AND Country=@DCountry)
-            AND DAY(DateTime) >= DAY(@DateTime)
-            AND car.Seat >= (SELECT SUM(Seat) FROM Booking GROUP BY RideId)
-";
-        public List<RideViewModel> GetRidesWithCondition(SearchRideViewModel model)
+            WHERE OriginId IN (SELECT LocationId FROM Location WHERE City=@OCity AND Country=@Country)
+            AND DestinationId IN (SELECT LocationId FROM Location WHERE City=@DCity AND Country=@Country)
+            AND DAY(DateTime) >= DAY(@DateTime)";
+        public List<RideViewModel> SearchRide(SearchRideViewModel model)
         {
             var rides = new List<RideViewModel>();
             RideViewModel ride;
@@ -85,12 +83,9 @@ namespace JEDI_Carpool.DAL
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@OAddress", model.OAddress));
             parameters.Add(new SqlParameter("@OCity", model.OAddress));
-            parameters.Add(new SqlParameter("@OCountry", model.OCountry));
-
             parameters.Add(new SqlParameter("@DAddress", model.DAddress));
             parameters.Add(new SqlParameter("@DCity", model.DCity));
-            parameters.Add(new SqlParameter("@DCountry", model.DCountry));
-
+            parameters.Add(new SqlParameter("@Country", model.Country));
             parameters.Add(new SqlParameter("@DateTime", model.Date));
 
             var dt = DBCommand.GetDataWithCondition(SearchRidesQuery, parameters);

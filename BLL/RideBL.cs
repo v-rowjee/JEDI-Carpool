@@ -75,7 +75,7 @@ namespace JEDI_Carpool.BLL
 
         public List<RideViewModel> Search(SearchRideViewModel model)
         {
-            return RideDAL.GetRidesWithCondition(model);
+            return RideDAL.SearchRide(model);
         }
 
         public List<BookingModel> GetBookings(int? id)
