@@ -15,52 +15,20 @@
     <div class="card shadow-sm my-5 p-3 rounded-4">
         <div class="card-body">
             <form id="searchForm">
-                <div class="row g-3 p-3 align-items-center">
+                <div class="row g-3 align-items-center">
 
                     <div class="col-lg-3">
-                        <div class="accordion">
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <button class="accordion-button py-2" type="button" data-bs-toggle="collapse" data-bs-target=".locations">
-                                        <i class="fa-solid fa-location-dot me-2"></i>
-                                        <p class="m-0">Origin</p>
-                                    </button>
-                                </div>
-                                <div class="accordion-collapse collapse locations p-3">
-                                    <input type="text" class="form-control my-2" placeholder="Address">
-                                    <input type="text" class="form-control mb-2" placeholder="City">
-                                </div>
-                            </div>
-                        </div>
+                        <input type="text" class="form-control" placeholder="City of Origin">
                     </div>
                     <div class="col-lg-3">
-                        <div class="accordion">
-                            <div class="accordion-item">
-                                <div class="accordion-header">
-                                    <button class="accordion-button py-2" type="button" data-bs-toggle="collapse" data-bs-target=".locations">
-                                        <i class="fa-solid fa-location-dot me-2"></i>
-                                        <p class="m-0">Destination</p>
-                                    </button>
-                                </div>
-                                <div class="accordion-collapse collapse locations p-3">
-                                    <input type="text" class="form-control my-2" placeholder="Address">
-                                    <input type="text" class="form-control mb-2" placeholder="City">
-                                </div>
-                            </div>
-                        </div>
+                        <input type="text" class="form-control" placeholder="City of Destination">
                     </div>
                     <div class="col-lg-3">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fa-solid fa-globe"></i></span>
-                            <input type="text" class="form-control" placeholder="Country" value="
-                                   @if (ViewBag.Account != null) { @ViewBag.Account.Address.Country; }">
-                        </div>
+                        <input type="text" class="form-control" placeholder="Country" value="
+                                @if (ViewBag.Account != null) { @ViewBag.Account.Address.Country; }">
                     </div>
                     <div class="col-lg-2">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-                            <input type="number" class="form-control" min="1" value="1">
-                        </div>
+                        <input type="number" class="form-control no-arrow" min="1" value="1">
                     </div>
                     <div class="col-lg-1">
                         <button id="search" class="btn btn-primary w-100">

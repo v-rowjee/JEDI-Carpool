@@ -140,8 +140,7 @@ namespace JEDI_Carpool.DAL
             INNER JOIN Ride rid ON rid.DriverId=acc.AccountId
             INNER JOIN Location org ON org.LocationId=rid.OriginId
             INNER JOIN Location dest ON dest.LocationId=rid.DestinationId
-            WHERE DateTime > GETDATE()
-            -- WHERE car.Seat >= (SELECT SUM(Seat) FROM Booking GROUP BY RideId)
+            WHERE DateTime >= GETDATE()
             ORDER BY DateTime";
         public List<RideViewModel> GetAllRides()
         {
@@ -269,7 +268,7 @@ namespace JEDI_Carpool.DAL
             INNER JOIN Location org ON org.LocationId=rid.OriginId
             INNER JOIN Location dest ON dest.LocationId=rid.DestinationId
             INNER JOIN Booking b ON b.RideId=rid.RideId
-            WHERE DateTime > GETDATE()
+            WHERE DateTime >= GETDATE()
             AND b.PassengerId=@PassengerId
             ORDER BY DateTime";
         public List<RideViewModel> GetRidesByPassengerId(int id)
