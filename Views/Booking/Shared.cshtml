@@ -63,7 +63,7 @@
                 </div>
             </div>
         }
-        @if (ViewBag.PassengerRides.Count == 0)
+        @if (Enumerable.Count(ViewBag.DriverRides) == 0)
         {
             <div class="col-md-4 offset-1">
                 <img src="~/Content/Images/order.gif" class="img-fluid" alt="order" />
