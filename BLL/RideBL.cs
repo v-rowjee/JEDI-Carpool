@@ -90,7 +90,7 @@ namespace JEDI_Carpool.BLL
         public int GetSeatsLeft(RideViewModel ride)
         {
             var seatsMax = ride.Car.Seat;
-            var bookings = BookingDAL.GetBookings(ride.RideId);
+            var bookings = BookingDAL.GetBookingsByRideId(ride.RideId);
             int seatsTaken = 0;
             foreach (var booking in bookings)
             {
@@ -104,12 +104,6 @@ namespace JEDI_Carpool.BLL
         private bool ValidateSeatsLeft(RideViewModel model)
         {
             return GetSeatsLeft(model) > 0;
-        }
-        private bool ValidateInputSeats(BookingModel model)
-        {
-            var seatsWanted = model.Seat;
-            var seatsLeft = GetSeatsLeft(model.Ride);
-            return seatsLeft >= seatsWanted;
         }
 
     }

@@ -68,7 +68,10 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.result == "Success") {
-                        Snackbar.show({ text: "Ride created successfully!" });
+                        Snackbar.show({
+                            text: "Ride created successfully!",
+                            actionTextColor: "#CFE2FF",
+                        });
                         window.location.replace(response.url);
                     }
                     else if (response.result == "NoUser") {

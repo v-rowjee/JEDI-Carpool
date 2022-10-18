@@ -92,7 +92,7 @@ namespace JEDI_Carpool.Controllers
                     ride.SeatsLeft = RideBL.GetSeatsLeft(ride);
                     ViewBag.Ride = ride;
 
-                    var bookings = BookingBL.GetBookings(ride.RideId);
+                    var bookings = BookingBL.GetBookingsByRideId(ride.RideId);
                     ViewBag.Bookings = bookings;
 
                     return view;
@@ -147,7 +147,7 @@ namespace JEDI_Carpool.Controllers
 
                 if (result == "Success")
                 {
-                    return Json(new { result = result, url = Url.Action("Index", "Home") });
+                    return Json(new { result = result, url = Url.Action("Shared", "Booking") });
                 }
                 else if (result == "NoCar") 
                 { 

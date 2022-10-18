@@ -1,15 +1,18 @@
 ﻿@{
     ViewBag.Title = "Bookings";
 }
+@section scripts {
+    <script src="~/Scripts/booking.js"></script>
+}
 
 <div class="container">
     <div class="text-center mb-4">
         <h2 class="display-5 fw-bold">Booked Rides</h2>
     </div>
-    <div class="row justify-content-around">
+    <div class="row">
         @foreach (var Ride in ViewBag.PassengerRides)
         {
-            <div class="col-md-6">
+            <div class="col-lg-6">
                 <div class="card shadow-sm mb-5">
                     <div class="card-header">
                         <div class="row pt-2 align-items-center">
@@ -55,22 +58,30 @@
                             </div>
                         </div>
                         <div class="row mt-3 g-3">
-                            <div class="col-12">
+                            <div class="col-sm-10">
                                 @Html.ActionLink("View", "View", "Ride", new { @id = Ride.RideId }, new { @class = "btn btn-sm btn-primary w-100" })
+                            </div>
+                            <div class="col-sm-2">
+                                <form id="deleteBookingForm">
+                                    <input type="hidden" id="rideId" value="@Ride.RideId" />
+                                    <button id="deleteBooking" class="btn btn-sm btn-outline-danger w-100">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         }
-        @if(ViewBag.PassengerRides.Count == 0)
+        @if (ViewBag.PassengerRides.Count == 0)
         {
             <div class="col-md-4 offset-1">
                 <img src="~/Content/Images/order.gif" class="img-fluid" alt="order" />
             </div>
-            <div class="col-md-6 offset-1">
-                <h2>No rides have been <br /> booked yet.</h2>
-                @Html.ActionLink("Book a ride","Index","Ride",null,new {@class="btn btn-primary my-3 px-4"})
+            <div class="col-md-6 offset-1 align-self-center">
+                <h2>No rides have been <br />booked curently.</h2>
+                @Html.ActionLink("Book a ride", "Index", "Ride", null, new { @class = "btn btn-primary my-3 px-4" })
             </div>
         }
     </div>

@@ -63,6 +63,16 @@
                 </div>
             </div>
         }
+        @if (ViewBag.PassengerRides.Count == 0)
+        {
+            <div class="col-md-4 offset-1">
+                <img src="~/Content/Images/order.gif" class="img-fluid" alt="order" />
+            </div>
+            <div class="col-md-6 offset-1 align-self-center">
+                <h2>No rides have been <br />shared currently.</h2>
+                @Html.ActionLink("Share a ride", "Share", "Ride", null, new { @class = "btn btn-primary my-3 px-4" })
+            </div>
+        }
     </div>
 </div>
 

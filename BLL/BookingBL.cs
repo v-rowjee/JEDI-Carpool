@@ -10,8 +10,9 @@ namespace JEDI_Carpool.BLL
     public interface IBookingBL
     {
         string BookRide(BookingModel model);
-        List<BookingModel> GetBookings(int? RideId);
-        List<BookingModel> GetBookingsByAccountId(int AccountId);
+        List<BookingModel> GetBookingsByRideId(int? RideId);
+        List<BookingModel> GetBookingsByDriverId(int AccountId);
+        bool DeleteBooking(int id);
     }
     public class BookingBL :IBookingBL
     {
@@ -29,18 +30,43 @@ namespace JEDI_Carpool.BLL
 
         public string BookRide(BookingModel model)
         {
-            return BookingDAL.BookRide(model);
+            if (ValidateInputSeats(model))
+            {
+                return BookingDAL.BookRide(model);
+            }
+            return "NoSeat";
         }
 
-        public List<BookingModel> GetBookings(int? RideId)
+        public List<BookingModel> GetBookingsByRideId(int? RideId)
         {
-            return BookingDAL.GetBookings(RideId);
+            return BookingDAL.GetBookingsByRideId(RideId);
         }
 
-        public List<BookingModel> GetBookingsByAccountId(int AccountId)
+        public List<BookingModel> GetBookingsByDriverId(int AccountId)
         {
-            return BookingDAL.GetBookingsByAccountId(AccountId);
+            return BookingDAL.GetBookingsByDriverId(AccountId);
         }
 
+
+        public bool DeleteBooking(int id)
+        {
+            return BookingDAL.DeleteBooking(id);
+        }
+
+
+        // Validations
+        private bool ValidateInputSeats(BookingModel model)
+        {
+            var seatsMax = model.Ride.Car.Seat;
+            var seatsWanted = model.Seat;
+            var bookings = BookingDAL.GetBookingsByRideId(model.Ride.RideId);
+            int seatsTaken = 0;
+            foreach (var booking in bookings)
+            {
+                seatsTaken += booking.Seat;
+            }
+            var seatsLeft = seatsMax - seatsTaken;
+            return seatsLeft >= seatsWanted;
+        }
     }
 }

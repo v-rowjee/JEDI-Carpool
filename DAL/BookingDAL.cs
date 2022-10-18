@@ -12,13 +12,23 @@ namespace JEDI_Carpool.DAL
     public interface IBookingDAL
     {
         string BookRide(BookingModel model);
-        List<BookingModel> GetBookings(int? RideId);
-        List<BookingModel> GetBookingsByAccountId(int AccountId);
+        List<BookingModel> GetBookingsByRideId(int? RideId);
+        List<BookingModel> GetBookingsByDriverId(int AccountId);
+        bool DeleteBooking(int id);
     }
     public class BookingDAL: IBookingDAL
     {
         private const string BookRideQuery = @"
-            INSERT INTO Booking VALUES (@RideId, @PassengerId, @Seat)";
+            IF NOT EXISTS (SELECT BookingId FROM Booking 
+                            WHERE PassengerId=@PassengerId 
+                            AND RideId=@RideId)
+                BEGIN
+                    INSERT INTO Booking VALUES (@RideId, @PassengerId, @Seat)
+                END
+            ELSE
+                BEGIN
+                    UPDATE Booking SET Seat=Seat+@Seat WHERE PassengerId=@PassengerId
+                END";
         public string BookRide(BookingModel model)
         {
             var parameters = new List<SqlParameter>();
@@ -37,7 +47,7 @@ namespace JEDI_Carpool.DAL
             FROM Booking b INNER JOIN Account a ON b.PassengerId=a.AccountId
             INNER JOIN Ride r ON r.RideId=b.RideId
             WHERE b.RideId=@RideId";
-        public List<BookingModel> GetBookings(int? RideId)
+        public List<BookingModel> GetBookingsByRideId(int? RideId)
         {
             List<BookingModel> bookings = new List<BookingModel>();
             BookingModel booking;
@@ -54,6 +64,7 @@ namespace JEDI_Carpool.DAL
                 booking.BookingId = int.Parse(row["BookingId"].ToString());
 
                 var passenger = new AccountModel();
+                passenger.AccountId = int.Parse(row["AccountId"].ToString());
                 passenger.FirstName = row["FirstName"].ToString();
                 passenger.LastName = row["LastName"].ToString();
                 passenger.Email = row["Email"].ToString();
@@ -74,7 +85,7 @@ namespace JEDI_Carpool.DAL
             INNER JOIN Ride r ON r.RideId=b.RideId
             INNER JOIN Account a ON a.AccountId=r.DriverId
             WHERE a.AccountId=@AccountId";
-        public List<BookingModel> GetBookingsByAccountId(int AccountId)
+        public List<BookingModel> GetBookingsByDriverId(int AccountId)
         {
             List<BookingModel> bookings = new List<BookingModel>();
             BookingModel booking;
@@ -91,6 +102,7 @@ namespace JEDI_Carpool.DAL
                 booking.BookingId = int.Parse(row["BookingId"].ToString());
 
                 var passenger = new AccountModel();
+                passenger.AccountId = int.Parse(row["AccountId"].ToString());
                 passenger.FirstName = row["FirstName"].ToString();
                 passenger.LastName = row["LastName"].ToString();
                 passenger.Email = row["Email"].ToString();
@@ -102,6 +114,16 @@ namespace JEDI_Carpool.DAL
                 bookings.Add(booking);
             }
             return bookings;
+        }
+
+
+        private const string DeleteBookingQuery = @"
+            DELETE FROM Booking WHERE BookingId = @BookingId";
+        public bool DeleteBooking(int id)
+        {
+            var parameter = new SqlParameter("@BookingId", id);
+
+            return DBCommand.DeleteData(DeleteBookingQuery, parameter);
         }
 
     }
