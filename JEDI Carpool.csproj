@@ -180,6 +180,7 @@
     <Content Include="Content\Images\map.png" />
     <Content Include="Content\Images\mobile.gif" />
     <Content Include="Content\Images\notes.png" />
+    <Content Include="Content\Images\order.gif" />
     <Content Include="Content\Images\register.png" />
     <Content Include="Content\Images\login.png" />
     <Content Include="Content\Images\security.png" />
@@ -277,6 +278,7 @@
     <Content Include="Views\Ride\View.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Ride\Edit.cshtml" />
+    <Content Include="Views\Booking\Shared.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

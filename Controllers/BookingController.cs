@@ -40,9 +40,6 @@ namespace JEDI_Carpool.Controllers
                 var account = AccountBL.GetAccount(loggeduser);
                 ViewBag.Account = account;
 
-                var driverRides = RideBL.GetAllRides().Where(r => r.Driver.AccountId == account.AccountId);
-                ViewBag.DriverRides = driverRides;
-
                 var passengerRides = RideBL.GetRidesByPassengerId(account.AccountId);
                 ViewBag.PassengerRides = passengerRides;
 
@@ -53,6 +50,7 @@ namespace JEDI_Carpool.Controllers
         }
 
         // POST: Booking/Create
+        [HttpPost]
         public JsonResult Create(BookingModel model)
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
@@ -84,5 +82,24 @@ namespace JEDI_Carpool.Controllers
             else return Json(new { result = "NoUser", url = Url.Action("Index", "Login") });
 
         }
+
+        // GET: Booking/Shared
+        public ActionResult Shared()
+        {
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+
+            if (loggeduser != null)
+            {
+                var account = AccountBL.GetAccount(loggeduser);
+                ViewBag.Account = account;
+
+                var driverRides = RideBL.GetAllRides().Where(r => r.Driver.AccountId == account.AccountId);
+                ViewBag.DriverRides = driverRides;
+
+                return View();
+            }
+            return Redirect("/");
+        }
+
     }
 }
