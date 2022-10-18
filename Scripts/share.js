@@ -52,6 +52,10 @@
             $("#date").addClass("is-invalid")
             error += "Choose a valid date. <br><br>"
         }
+        if (time < moment().add(2,'hours').format("hh:mm")) {
+            $("#time").addClass("is-invalid")
+            error += "Choose a time at least <b>two hours<b> before ride. <br><br>"
+        }
 
         if (error != '') {
             error = error.slice(0,-8) // to remove the last <br><br>
