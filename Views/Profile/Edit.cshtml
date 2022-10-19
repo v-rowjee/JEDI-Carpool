@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-9">
             <h1 class="display-4 fw-bold mb-5">Account Details:</h1>
-            <form id="accountForm">
+            <form id="accountForm" class="needs-validation" novalidate>
                 <div class="card mb-3">
                     <div class="card-header">
                         <label class="form-label fw-bold">Email</label>
@@ -24,26 +24,44 @@
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">First Name</label>
                                 <input type="text" id="fname" class="form-control" value="@ViewBag.Account.FirstName" required />
+                                <div class="invalid-feedback">
+                                    Please provide your first name
+                                </div>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Last Name</label>
                                 <input type="text" id="lname" class="form-control" value="@ViewBag.Account.LastName" required />
+                                <div class="invalid-feedback">
+                                    Please provide your last name
+                                </div>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Phone</label>
                                 <input type="text" id="phone" class="form-control" value="@ViewBag.Account.Phone" required />
+                                <div class="invalid-feedback">
+                                    Please provide your phone number
+                                </div>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Region</label>
-                                <input type="text" id="address" class="form-control" value="@ViewBag.Account.Address.Region" />
+                                <input type="text" id="region" class="form-control" value="@ViewBag.Account.Address.Region" required />
+                                <div class="invalid-feedback">
+                                    Please provide your region address
+                                </div>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">City</label>
-                                <input type="text" id="city" class="form-control" value="@ViewBag.Account.Address.City" />
+                                <input type="text" id="city" class="form-control" value="@ViewBag.Account.Address.City" required />
+                                <div class="invalid-feedback">
+                                    Please provide your city address
+                                </div>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Country</label>
-                                <input type="text" id="country" class="form-control" value="@ViewBag.Account.Address.Country" />
+                                <input type="text" id="country" class="form-control" value="@ViewBag.Account.Address.Country" required />
+                                <div class="invalid-feedback">
+                                    Please provide your country address
+                                </div>
                             </div>
                         </div>
                     </div>

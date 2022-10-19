@@ -11,17 +11,19 @@
         var fname = $('#fname').val()
         var lname = $('#lname').val()
         var phone = $('#phone').val()
-        var address = $('#address').val()
+        var region = $('#region').val()
         var city = $('#city').val()
         var country = $('#country').val()
 
         var error = ''
 
-        if (email === '') error += "Email Address required<br><br>"
-        if (password === '') error += "Password required<br><br>"
-        if (fname === '') error += "First Name required<br><br>"
-        if (lname === '') error += "Last Name required<br><br>"
-        if (phone === '') error += "Phone Number required<br><br>"
+        if (!email) error += "Email Address required<br><br>"
+        if (!fname) error += "First Name required<br><br>"
+        if (!lname) error += "Last Name required<br><br>"
+        if (!phone) error += "Phone number required<br><br>"
+        if (!region) error += "Region required<br><br>"
+        if (!city) error += "City required<br><br>"
+        if (!country) error += "Country required<br><br>"
 
         $("#email-feedback").html("Please provide a valid email.");
 
@@ -40,7 +42,7 @@
                 LastName: lname,
                 Phone: phone,
                 Address: {
-                    Address: address,
+                    Region: region,
                     City: city,
                     Country: country
                 }
