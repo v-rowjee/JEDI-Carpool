@@ -24,21 +24,21 @@ namespace JEDI_Carpool.DAL
             DECLARE @OrgId INT;
             DECLARE @DestId INT;
 
-            IF NOT EXISTS (SELECT * FROM Location WHERE Address=@OAddress AND City=@OCity AND Country=@OCountry)
+            IF NOT EXISTS (SELECT * FROM Location WHERE Region=@ORegion AND City=@OCity AND Country=@OCountry)
                 BEGIN
-                    INSERT INTO Location (Address, City, Country) VALUES (@OAddress, @OCity, @OCountry);
+                    INSERT INTO Location (Region, City, Country) VALUES (@ORegion, @OCity, @OCountry);
                     SET @OrgId = SCOPE_IDENTITY();
                 END
             ELSE
-                SET @OrgId = (SELECT LocationId FROM Location WHERE Address=@OAddress AND City=@OCity AND Country=@OCountry)
+                SET @OrgId = (SELECT LocationId FROM Location WHERE Region=@ORegion AND City=@OCity AND Country=@OCountry)
 
-            IF NOT EXISTS (SELECT * FROM Location WHERE Address=@DAddress AND City=@DCity AND Country=@DCountry)
+            IF NOT EXISTS (SELECT * FROM Location WHERE Region=@DRegion AND City=@DCity AND Country=@DCountry)
                 BEGIN
-                    INSERT INTO Location (Address, City, Country) VALUES (@DAddress, @DCity, @DCountry);
+                    INSERT INTO Location (Region, City, Country) VALUES (@DRegion, @DCity, @DCountry);
                     SET @DestId = SCOPE_IDENTITY();
                 END
             ELSE
-                SET @DestId = (SELECT LocationId FROM Location WHERE Address=@DAddress AND City=@Dcity AND Country=@DCountry)
+                SET @DestId = (SELECT LocationId FROM Location WHERE Region=@DRegion AND City=@Dcity AND Country=@DCountry)
 
             INSERT INTO Ride (DriverId, OriginId, DestinationId, DateTime, Fare, Comment) VALUES (@DriverId, @OrgId, @DestId, @DateTime, @Fare, @Comment)
 
@@ -51,11 +51,11 @@ namespace JEDI_Carpool.DAL
             parameters.Add(new SqlParameter("@Fare", model.Fare));
             parameters.Add(new SqlParameter("@Comment", model.Comment != null ? model.Comment : (object)DBNull.Value));
 
-            parameters.Add(new SqlParameter("@OAddress",model.Origin.Address));
+            parameters.Add(new SqlParameter("@ORegion",model.Origin.Region));
             parameters.Add(new SqlParameter("@OCity", model.Origin.City));
             parameters.Add(new SqlParameter("@OCountry", model.Origin.Country));
 
-            parameters.Add(new SqlParameter("@DAddress", model.Destination.Address));
+            parameters.Add(new SqlParameter("@DRegion", model.Destination.Region));
             parameters.Add(new SqlParameter("@DCity", model.Destination.City));
             parameters.Add(new SqlParameter("@DCountry", model.Destination.Country));
 
@@ -80,11 +80,12 @@ namespace JEDI_Carpool.DAL
             RideViewModel ride;
 
             var parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@OAddress", model.OAddress));
-            parameters.Add(new SqlParameter("@OCity", model.OAddress));
-            parameters.Add(new SqlParameter("@DAddress", model.DAddress));
-            parameters.Add(new SqlParameter("@DCity", model.DCity));
-            parameters.Add(new SqlParameter("@Country", model.Country));
+            parameters.Add(new SqlParameter("@ORegion", model.Origin.Region));
+            parameters.Add(new SqlParameter("@OCity", model.Origin.City));
+            parameters.Add(new SqlParameter("@OCountry", model.Origin.Country));
+            parameters.Add(new SqlParameter("@DRegion", model.Destination.Region));
+            parameters.Add(new SqlParameter("@DCity", model.Destination.City));
+            parameters.Add(new SqlParameter("@DCountry", model.Destination.Country));
             parameters.Add(new SqlParameter("@DateTime", model.Date));
 
             var dt = DBCommand.GetDataWithCondition(SearchRidesQuery, parameters);
@@ -105,12 +106,12 @@ namespace JEDI_Carpool.DAL
                 car.Color = row["Color"].ToString();
 
                 var origin = new LocationModel();
-                origin.Address = row["OAddress"].ToString();
+                origin.Region = row["ORegion"].ToString();
                 origin.City = row["OCity"].ToString();
                 origin.Country = row["OCountry"].ToString();
 
                 var destination = new LocationModel();
-                destination.Address = row["DAddress"].ToString();
+                destination.Region = row["DRegion"].ToString();
                 destination.City = row["DCity"].ToString();
                 destination.Country = row["DCountry"].ToString();
 
@@ -133,8 +134,8 @@ namespace JEDI_Carpool.DAL
             SELECT rid.RideId, rid.Fare, rid.DateTime, rid.Comment,
                 acc.AccountId, acc.FirstName, acc.LastName, acc.Email, acc.Phone,
                 car.Model, car.PlateNumber, car.Seat, car.Year, car.Color,
-                org.Address as OAddress, org.City as OCity, org.Country as OCountry,
-                dest.Address as DAddress, dest.City as DCity, dest.Country as DCountry
+                org.Region as ORegion, org.City as OCity, org.Country as OCountry,
+                dest.Region as DRegion, dest.City as DCity, dest.Country as DCountry
             FROM Account acc
             INNER JOIN Car car ON car.DriverId=acc.AccountId
             INNER JOIN Ride rid ON rid.DriverId=acc.AccountId
@@ -168,12 +169,12 @@ namespace JEDI_Carpool.DAL
                 driver.Car = car;
 
                 var origin = new LocationModel();
-                origin.Address = row["OAddress"].ToString();
+                origin.Region = row["ORegion"].ToString();
                 origin.City = row["OCity"].ToString();
                 origin.Country = row["OCountry"].ToString();
 
                 var destination = new LocationModel();
-                destination.Address = row["DAddress"].ToString();
+                destination.Region = row["DRegion"].ToString();
                 destination.City = row["DCity"].ToString();
                 destination.Country = row["DCountry"].ToString();
 
@@ -197,8 +198,8 @@ namespace JEDI_Carpool.DAL
             SELECT rid.RideId, rid.Fare, rid.DateTime, rid.Comment,
                 acc.AccountId, acc.FirstName, acc.LastName, acc.Email, acc.Phone,
                 car.Model, car.PlateNumber, car.Seat, car.Year, car.Color,
-                org.Address as OAddress, org.City as OCity, org.Country as OCountry,
-                dest.Address as DAddress, dest.City as DCity, dest.Country as DCountry
+                org.Region as ORegion, org.City as OCity, org.Country as OCountry,
+                dest.Region as DRegion, dest.City as DCity, dest.Country as DCountry
             FROM Account acc
             INNER JOIN Car car ON car.DriverId=acc.AccountId
             INNER JOIN Ride rid ON rid.DriverId=acc.AccountId
@@ -233,12 +234,12 @@ namespace JEDI_Carpool.DAL
                 driver.Car = car;
 
                 var origin = new LocationModel();
-                origin.Address = row["OAddress"].ToString();
+                origin.Region = row["ORegion"].ToString();
                 origin.City = row["OCity"].ToString();
                 origin.Country = row["OCountry"].ToString();
 
                 var destination = new LocationModel();
-                destination.Address = row["DAddress"].ToString();
+                destination.Region = row["DRegion"].ToString();
                 destination.City = row["DCity"].ToString();
                 destination.Country = row["DCountry"].ToString();
 
@@ -260,8 +261,8 @@ namespace JEDI_Carpool.DAL
             SELECT rid.RideId, rid.Fare, rid.DateTime, rid.Comment,
                 acc.AccountId, acc.FirstName, acc.LastName, acc.Email, acc.Phone,
                 car.Model, car.PlateNumber, car.Seat, car.Year, car.Color,
-                org.Address as OAddress, org.City as OCity, org.Country as OCountry,
-                dest.Address as DAddress, dest.City as DCity, dest.Country as DCountry
+                org.Region as ORegion, org.City as OCity, org.Country as OCountry,
+                dest.Region as DRegion, dest.City as DCity, dest.Country as DCountry
             FROM Account acc
             INNER JOIN Car car ON car.DriverId=acc.AccountId
             INNER JOIN Ride rid ON rid.DriverId=acc.AccountId
@@ -301,12 +302,12 @@ namespace JEDI_Carpool.DAL
                 driver.Car = car;
 
                 var origin = new LocationModel();
-                origin.Address = row["OAddress"].ToString();
+                origin.Region = row["ORegion"].ToString();
                 origin.City = row["OCity"].ToString();
                 origin.Country = row["OCountry"].ToString();
 
                 var destination = new LocationModel();
-                destination.Address = row["DAddress"].ToString();
+                destination.Region = row["DRegion"].ToString();
                 destination.City = row["DCity"].ToString();
                 destination.Country = row["DCountry"].ToString();
 

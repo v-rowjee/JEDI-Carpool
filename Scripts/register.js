@@ -6,7 +6,7 @@
             return response.json();
         })
         .then(function (payload) {
-            $('#address').val(payload.location.region.name)
+            $('#region').val(payload.location.region.name)
             $('#city').val(payload.location.city)
             $('#country').val(payload.location.country.name)
         });
@@ -22,17 +22,21 @@
         var fname = $('#fname').val()
         var lname = $('#lname').val()
         var phone = $('#phone').val()
-        var address = $('#address').val()
+        var region = $('#region').val()
         var city = $('#city').val()
         var country = $('#country').val()
 
         var error = ''
 
-        if (email === '') error += "Email Address required<br><br>"
-        if (password === '') error += "Password required<br><br>"
-        if (fname === '') error += "First Name required<br><br>"
-        if (lname === '') error += "Last Name required<br><br>"
-        if (phone === '') error += "Phone number required<br><br>"
+        if (!email) error += "Email Address required<br><br>"
+        if (!password) error += "Password required<br><br>"
+        if (!fname) error += "First Name required<br><br>"
+        if (!lname) error += "Last Name required<br><br>"
+        if (!phone) error += "Phone number required<br><br>"
+        if (!region) error += "Region required<br><br>"
+        if (!city) error += "City required<br><br>"
+        if (!country) error += "Country required<br><br>"
+
 
         $("#email-feedback").html("Please provide a valid email.");
 
@@ -45,7 +49,7 @@
         }
         else {
 
-            if (!address || !city || !country) {
+            if (!region || !city || !country) {
                 var RegisterViewModelObj = {
                     Email: email,
                     Password: password,
@@ -62,7 +66,7 @@
                     LastName: lname,
                     Phone: phone,
                     Address: {
-                        Address: address,
+                        Region: region,
                         City: city,
                         Country: country
                     }

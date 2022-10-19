@@ -26,7 +26,7 @@
                         @Html.ActionLink("Home", "Index", "Home", null, new { @class = @ViewBag.Title == "Home" ? "nav-link active" : "nav-link" })
                     </li>
                     <li class="nav-item mx-2">
-                        @Html.ActionLink("Pick ride", "Index", "Ride", null, new { @class = @ViewBag.Title == "Pick A Ride" ? "nav-link active" : "nav-link" })
+                        @Html.ActionLink("Pick ride", "Search", "Ride", null, new { @class = @ViewBag.Title == "Pick A Ride" ? "nav-link active" : "nav-link" })
                     </li>
                     <li class="nav-item mx-2">
                         @Html.ActionLink("Share ride", "Share", "Ride", null, new { @class = @ViewBag.Title == "Share A Ride" ? "nav-link active" : "nav-link" })
@@ -48,7 +48,7 @@
                                 @Html.ActionLink("Car", "Index", "Car", null, new { @class = "dropdown-item" })
                             </li>
                             <li>
-                                @Html.ActionLink("My Rides", "Shared", "Booking", null, new { @class = "dropdown-item" })
+                                @Html.ActionLink("My Rides", "Index", "Ride", null, new { @class = "dropdown-item" })
                             </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>

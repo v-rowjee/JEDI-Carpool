@@ -8,22 +8,21 @@
     $('#search').click(() => {
         var oAddress = $("#oAddress").val()
         var oCity = $("#oCity").val()
-        var oCountry = $("#oCountry").val()
         var dAddress = $("#dAddress").val()
         var dCity = $("#dCity").val()
-        var dCountry = $("#dCountry").val()
+        var country = $("#country").val()
         var date = $("#date").val()
 
         var SearchRideViewModelObj = {
             Origin: {
                 Address: oAddress,
                 City: oCity,
-                Country: oCountry
+                Country: country
             },
             Destination: {
                 Address: dAddress,
                 City: dCity,
-                Country: dCountry
+                Country: country
             },
             Date: date
         }

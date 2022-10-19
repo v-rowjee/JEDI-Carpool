@@ -84,24 +84,6 @@ namespace JEDI_Carpool.Controllers
 
         }
 
-        // GET: Booking/Shared
-        public ActionResult Shared()
-        {
-            var loggeduser = Session["CurrentUser"] as LoginViewModel;
-
-            if (loggeduser != null)
-            {
-                var account = AccountBL.GetAccount(loggeduser);
-                ViewBag.Account = account;
-
-                var driverRides = RideBL.GetAllRides().Where(r => r.Driver.AccountId == account.AccountId);
-                ViewBag.DriverRides = driverRides;
-
-                return View();
-            }
-            return Redirect("/");
-        }
-
         // POST: Booking/Delete
         [HttpPost]
         public ActionResult Delete(BookingModel model)

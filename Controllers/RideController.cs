@@ -35,7 +35,26 @@ namespace JEDI_Carpool.Controllers
 
 
         // GET: Ride
-        public ActionResult Index(SearchRideViewModel model)
+        public ActionResult Index()
+        {
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+
+            if (loggeduser != null)
+            {
+                var account = AccountBL.GetAccount(loggeduser);
+                ViewBag.Account = account;
+
+                var driverRides = RideBL.GetAllRides().Where(r => r.Driver.AccountId == account.AccountId);
+                ViewBag.DriverRides = driverRides;
+
+                return View();
+            }
+            return Redirect("/");
+        }
+
+
+        // GET: Ride/Search
+        public ActionResult Search(SearchRideViewModel model)
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
             var view = View();
@@ -47,19 +66,16 @@ namespace JEDI_Carpool.Controllers
             {
                 var seatsLeft = RideBL.GetSeatsLeft(ride);
                 ride.SeatsLeft = seatsLeft;
-                if (seatsLeft < 1)
-                {
-                    rides.RemoveAll(r => r.RideId.Equals(ride.RideId));
-                }
             }
+            rides.RemoveAll(r => r.SeatsLeft < 1);
 
-            // Store filtered rides in viewbag
-            ViewBag.Rides = rides;
 
             if (loggeduser != null)
             {
-                var data = AccountBL.GetAccount(loggeduser);
-                ViewBag.Account = data;
+                var account = AccountBL.GetAccount(loggeduser);
+                ViewBag.Account = account;
+
+                rides.Where(r => r.Driver.Address.Country == account.Address.Country);
 
                 view.MasterName = "~/Views/Shared/_Layout.cshtml";
             }
@@ -67,6 +83,9 @@ namespace JEDI_Carpool.Controllers
             {
                 view.MasterName = "~/Views/Shared/_GuestLayout.cshtml";
             }
+
+            // Store filtered rides in viewbag
+            ViewBag.Rides = rides;
 
             return view;
         }

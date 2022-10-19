@@ -20,18 +20,18 @@ namespace JEDI_Carpool.DAL
     public class AccountDAL : IAccountDAL
     {
         private const string GetAccountQuery = @"
-            SELECT acc.*, loc.[Address], loc.[City], loc.[Country]
+            SELECT acc.*, loc.[Region], loc.[City], loc.[Country]
             FROM [dbo].[Account] as acc 
             FULL JOIN [dbo].[Location] as loc ON acc.[AddressId] = loc.[LocationId]
             WHERE acc.[Email] = @Email
         ";
         private const string GetAllAccountsQuery = @"
-            SELECT a.*, l.Address, l.City, l.Country 
+            SELECT a.*, l.Region, l.City, l.Country 
             FROM Account a LEFT JOIN Location l ON a.AddressId=l.LocationId";
         private const string UpdateAccountQuery = @"
-            IF NOT EXISTS ( SELECT * FROM Location WHERE Address=@Address AND City=@City AND Country=@Country )
+            IF NOT EXISTS ( SELECT * FROM Location WHERE Region=@Region AND City=@City AND Country=@Country )
                 BEGIN
-                    INSERT INTO Location (Address, City, Country) VALUES (@Address, @City, @Country);
+                    INSERT INTO Location (Region, City, Country) VALUES (@Region, @City, @Country);
                     UPDATE Account 
                     SET FirstName=@FirstName, LastName=@LastName, Phone=@Phone, Email=@Email, AddressId=SCOPE_IDENTITY()
                     WHERE AccountId=@AccountId;
@@ -39,15 +39,10 @@ namespace JEDI_Carpool.DAL
             ELSE
                 BEGIN
                     UPDATE Account
-                    SET FirstName=@FirstName, LastName=@LastName, Phone=@Phone, Email=@Email, AddressId= ( SELECT LocationId FROM Location WHERE Address=@Address AND City=@City AND Country=@Country )
+                    SET FirstName=@FirstName, LastName=@LastName, Phone=@Phone, Email=@Email, AddressId= ( SELECT LocationId FROM Location WHERE Region=@Region AND City=@City AND Country=@Country )
                     WHERE AccountId=@AccountId;
                 END
             ";
-        private const string UpdateAccountQueryWithoutAddress = @"
-            UPDATE Account
-            SET FirstName=@FirstName, LastName=@LastName, Phone=@Phone, Email=@Email
-            WHERE AccountId=@AccountId";
-
         public AccountModel GetAccount(LoginViewModel model)
         {
             var account = new AccountModel();
@@ -64,7 +59,7 @@ namespace JEDI_Carpool.DAL
                 account.Phone = row["Phone"].ToString();
 
                 var address = new LocationModel();
-                address.Address = row["Address"].ToString();
+                address.Region = row["Region"].ToString();
                 address.City = row["City"].ToString();
                 address.Country = row["Country"].ToString();
                 account.Address = address;
@@ -90,7 +85,7 @@ namespace JEDI_Carpool.DAL
                 account.Phone = row["Phone"].ToString();
 
                 var address = new LocationModel();
-                address.Address = row["Address"].ToString();
+                address.Region = row["Region"].ToString();
                 address.City = row["City"].ToString();
                 address.Country = row["Country"].ToString();
                 account.Address = address;
@@ -110,16 +105,12 @@ namespace JEDI_Carpool.DAL
             parameters.Add(new SqlParameter("@FirstName", model.FirstName));
             parameters.Add(new SqlParameter("@LastName", model.LastName));
             parameters.Add(new SqlParameter("@Phone", model.Phone));
+            parameters.Add(new SqlParameter("@Region", model.Address.Region));
+            parameters.Add(new SqlParameter("@City", model.Address.City));
+            parameters.Add(new SqlParameter("@Country", model.Address.Country));
 
-            if (model.Address.Address != null || model.Address.City != null || model.Address.Country != null)
-            {
-                parameters.Add(new SqlParameter("@Address", model.Address.Address));
-                parameters.Add(new SqlParameter("@City", model.Address.City));
-                parameters.Add(new SqlParameter("@Country", model.Address.Country));
-
-                isValid = DBCommand.InsertUpdateData(UpdateAccountQuery, parameters);
-            }
-            else isValid = DBCommand.InsertUpdateData(UpdateAccountQueryWithoutAddress, parameters);
+            isValid = DBCommand.InsertUpdateData(UpdateAccountQuery, parameters);
+            
 
             return isValid ? "Success" : "Error";
         }

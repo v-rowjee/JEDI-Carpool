@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Pick A Ride";
+}
+
+@section scripts {
+    <script src="~/Scripts/search.js"></script>
+}
+<div class="container text-center">
+    <h2 class="display-3 fw-bold mt-5">Find A Ride</h2>
+    <h5 class="text-muted">Enter your origin and destination and away you go!</h5>
+</div>
+
+<div class="container">
+    <div class="card shadow-sm my-5 p-3 rounded-4">
+        <div class="card-body">
+            <form id="searchForm">
+                <div class="row g-3 align-items-center justify-content-around">
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" id="oRegion" placeholder="Region From">
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" id="oCity" placeholder="City From">
+                    </div>
+                    <div class="col-lg-1 text-center">
+                        <i class="fa-solid fa-right-left"></i>
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" id="dRegion" placeholder="Region To">
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" id="dCity" placeholder="City To">
+                    </div>
+                    <div class="col-lg-2">
+                        <button id="search" class="btn btn-primary w-100">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            @* FILTER SEARCH HERE *@
+        </div>
+        <div class="col-lg-6">
+            @foreach (var Ride in ViewBag.Rides)
+            {
+                if (ViewBag.PreviousDate != @Ride.DateTime.ToString("ddd, dd MMMM yyyy"))
+                {
+                    ViewBag.PreviousDate = @Ride.DateTime.ToString("ddd, dd MMMM yyyy");
+                    <h4 class="fw-bold text-muted mb-4">
+                        <i class="fa-solid fa-calendar-days me-2"></i>
+                        @if (@Ride.DateTime.ToString("ddd, dd MMM") == DateTime.Now.ToString("ddd, dd MMM"))
+                        {
+                            <span>Today</span>
+                        }
+                        else
+                        {
+                            @Ride.DateTime.ToString("ddd, dd MMM")
+                        }
+                    </h4>
+                }
+                <div class="card shadow-sm mb-5">
+                    <div class="card-header">
+                        <div class="row pt-2 align-items-center">
+                            <div class="col">
+                                <h5 class="card-title fw-bold">
+                                    <i class="fa-solid fa-clock me-2"></i>
+                                    @Ride.DateTime.ToString("h:mm tt")
+                                </h5>
+                            </div>
+                            <div class="col text-end">
+                                <h6 class="card-title fw-bold text-muted">
+                                    Rs @Ride.Fare.ToString("0.00")
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body row align-items-center p-4">
+                        <div class="col-sm-6">
+                            <div class="card-text">
+                                <i class="fa-solid fa-location-dot me-2"></i>
+                                @Ride.Origin.Region, @Ride.Origin.City
+                            </div>
+                            <div class="card-text">
+                                <i class="fa-solid fa-arrow-down my-3"></i>
+                            </div>
+                            <div class="card-text">
+                                <i class="fa-solid fa-location-dot me-2 mb-3 mb-sm-0"></i>
+                                @Ride.Destination.Region, @Ride.Destination.City
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card-text">
+                                <i class="fa-solid fa-user me-2 ms-1"></i>
+                                @Ride.Driver.FirstName @Ride.Driver.LastName
+                            </div>
+                            <div class="card-text">
+                                <i class="fa-solid fa-car-side me-2 my-3"></i>
+                                @Ride.Car.Model (@Ride.Car.Year)
+                            </div>
+                            <div class="card-text">
+                                <i class="fa-solid fa-users me-2"></i>
+                                @Ride.SeatsLeft Seats Left
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            @Html.ActionLink("View Carpool", "View", "Ride", new { @id = Ride.RideId }, new { @class = "btn btn-sm btn-outline-primary w-100 stretched-link" })
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

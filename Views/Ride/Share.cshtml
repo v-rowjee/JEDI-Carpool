@@ -10,7 +10,7 @@
 <div class="container">
     @if (ViewBag.Message != null)
     {
-        <div class="alert alert-primary text-center" role="alert" onload="ShowMessage();">
+        <div class="alert alert-danger text-center sticky-top" style="top: 70px" role="alert">
             <i class="fa-solid fa-triangle-exclamation"></i> @ViewBag.Message
         </div>
     }
@@ -64,7 +64,7 @@
                                         <label for="origin" class="form-label mt-1">Origin</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="text" id="oAddress" class="form-control mt-1" placeholder="Address" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Address }" required>
+                                        <input type="text" id="oAddress" class="form-control mt-1" placeholder="Address" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Region }" required>
                                         <div class="invalid-feedback">
                                             Please enter an address of origin.
                                         </div>
@@ -177,7 +177,7 @@
                                 <p class="mb-5">Add any details relevant to your trip for passengers before they book.</p>
                                 <div class="mb-3">
                                     <label for="comment" class="form-label">Comment</label>
-                                    <textarea class="form-control" rows="5" id="comment" placeholder="We recommend writing the exact pick-up and drop-off locations in your description. (Optional)"></textarea>
+                                    <textarea class="form-control" rows="5" id="comment" placeholder="Write your comment here. (Optional)"></textarea>
                                 </div>
                                 <div class="row mt-5">
                                     <div class="col-6">
@@ -231,7 +231,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mt-5">
+                                    <div class="row my-5">
                                         <div class="col-6">
                                             <button type="button" class="btn btn-outline-primary w-100 btn-prev" data-to="#pills-comment-tab">Back</button>
                                         </div>
