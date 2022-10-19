@@ -16,6 +16,6 @@
     margin: 0;
 }
 /* Firefox */
-..no-arrow[type=number] {
+.no-arrow[type=number] {
     -moz-appearance: textfield;
 }

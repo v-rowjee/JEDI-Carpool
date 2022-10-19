@@ -2,7 +2,7 @@
 
     $("#date").attr("min", moment().format("YYYY-MM-DD"))
     $("#date").val(moment().format("YYYY-MM-DD"))
-    $("#time").val(moment().format("HH:mm"))
+    $("#time").val(moment().add(2,'hours').format("HH:mm"))
 
     $('#shareForm').submit((e) => {
         e.preventDefault();
@@ -52,7 +52,7 @@
             $("#date").addClass("is-invalid")
             error += "Choose a valid date. <br><br>"
         }
-        if (time < moment().add(2,'hours').format("hh:mm")) {
+        if (time < moment().add(119,'minutes').format("hh:mm")) {
             $("#time").addClass("is-invalid")
             error += "Choose a time at least <b>two hours<b> before ride. <br><br>"
         }
