@@ -64,9 +64,9 @@
                                         <label for="origin" class="form-label mt-1">Origin</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="text" id="oAddress" class="form-control mt-1" placeholder="Address" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Region }" required>
+                                        <input type="text" id="oRegion" class="form-control mt-1" placeholder="Address" value="@if (ViewBag.Account != null) { @ViewBag.Account.Address.Region }" required>
                                         <div class="invalid-feedback">
-                                            Please enter an address of origin.
+                                            Please enter an region of origin.
                                         </div>
                                         <input type="text" id="oCity" class="form-control mt-3" placeholder="City" value="@if (@ViewBag.Account != null) { @ViewBag.Account.Address.City }" required>
                                         <div class="invalid-feedback">
@@ -79,9 +79,9 @@
                                         <label for="destination" class="form-label mt-1">Destination</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input type="text" id="dAddress" class="form-control" placeholder="Address" required>
+                                        <input type="text" id="dRegion" class="form-control" placeholder="Address" required>
                                         <div class="invalid-feedback">
-                                            Please enter an address of destination.
+                                            Please enter an region of destination.
                                         </div>
                                         <input type="text" id="dCity" class="form-control mt-3" placeholder="City" required>
                                         <div class="invalid-feedback">

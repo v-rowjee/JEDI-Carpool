@@ -10,9 +10,9 @@
     })
 
     $('#share').click(() => {
-        var oAddress = $("#oAddress").val()
+        var oRegion = $("#oRegion").val()
         var oCity = $("#oCity").val()
-        var dAddress = $("#dAddress").val()
+        var dRegion = $("#dRegion").val()
         var dCity = $("#dCity").val()
         var country = $("#country").val()
         var date = $("#date").val()
@@ -28,20 +28,20 @@
             Fare: fare,
             Comment: comment,
             Origin: {
-                Address: oAddress,
+                Region: oRegion,
                 City: oCity,
                 Country: country
             },
             Destination: {
-                Address: dAddress,
+                Region: dRegion,
                 City: dCity,
                 Country: country
             }
         }
 
-        if (!oAddress) error += "Address of Origin required.<br><br>"
+        if (!oRegion) error += "Address of Origin required.<br><br>"
         if (!oCity) error += "City of Origin required.<br><br>"
-        if (!dAddress) error += "Address of Destination required.<br><br>"
+        if (!dRegion) error += "Address of Destination required.<br><br>"
         if (!dCity) error += "City of Destination required.<br><br>"
         if (!country) error += "Country required.<br><br>"
         if (!date) error += "Date required.<br><br>"

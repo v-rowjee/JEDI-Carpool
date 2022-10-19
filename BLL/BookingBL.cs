@@ -12,6 +12,7 @@ namespace JEDI_Carpool.BLL
         string BookRide(BookingModel model);
         List<BookingModel> GetBookingsByRideId(int? RideId);
         List<BookingModel> GetBookingsByDriverId(int AccountId);
+        List<BookingModel> GetBookings();
         bool DeleteBooking(int id);
     }
     public class BookingBL :IBookingBL
@@ -35,6 +36,11 @@ namespace JEDI_Carpool.BLL
                 return BookingDAL.BookRide(model);
             }
             return "NoSeat";
+        }
+
+        public List<BookingModel> GetBookings()
+        {
+            return BookingDAL.GetBookings();
         }
 
         public List<BookingModel> GetBookingsByRideId(int? RideId)
