@@ -1,5 +1,16 @@
 ﻿$(function () {
 
+    // fetching data from ipregistry api
+    fetch('https://api.ipregistry.co/?key=tryout')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (payload) {
+            $('#address').val(payload.location.region.name)
+            $('#city').val(payload.location.city)
+            $('#country').val(payload.location.country.name)
+        });
+
     $('#registerForm').submit((e) => {
         e.preventDefault();
         return false;
