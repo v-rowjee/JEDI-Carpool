@@ -163,7 +163,7 @@
                     {
                         if (ViewBag.Ride.Driver.AccountId == ViewBag.Account.AccountId)
                         {
-                            @Html.ActionLink("Cancel Ride", "Cancel", "Ride", new { @id = ViewBag.Ride.RideId }, new { @class = "btn btn-primary w-100" })
+                            @Html.ActionLink("Cancel Ride", "Cancel", "Ride", new { @id = ViewBag.Ride.RideId }, new { @class = "btn btn-danger w-100" })
                         }
                         else
                         {
