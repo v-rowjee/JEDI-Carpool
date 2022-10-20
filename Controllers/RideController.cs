@@ -86,27 +86,7 @@ namespace JEDI_Carpool.Controllers
             }
 
             // FILTER RIDES: filter search
-            if(model != null)
-            {
-                ViewBag.Rides = null;
-                if (model.RegionFrom != null)
-                {
-                    rides.RemoveAll(r => r.Origin.Region != model.RegionFrom);
-                }
-                if (model.CityFrom != null)
-                {
-                    rides.RemoveAll(r => r.Origin.City != model.CityFrom);
-                }
-                if (model.RegionTo != null)
-                {
-                    rides.RemoveAll(r => r.Destination.Region != model.RegionTo);
-                }
-                if (model.CityTo != null)
-                {
-                    rides.RemoveAll(r => r.Destination.City != model.CityTo);
-                }
-
-            }
+            rides = RideBL.FilterRides(model, rides);
 
             // Store filtered rides in viewbag
             ViewBag.Rides = rides;

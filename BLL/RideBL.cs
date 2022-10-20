@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Helpers;
+using System.Web.Mvc;
 
 namespace JEDI_Carpool.BLL
 {
@@ -16,6 +17,7 @@ namespace JEDI_Carpool.BLL
         string Share(ShareRideViewModel model);
         int GetSeatsLeft(RideViewModel model);
         List<RideViewModel> GetRidesByPassengerId(int id);
+        List<RideViewModel> FilterRides(SearchRideViewModel search, List<RideViewModel> rides);
     }
     public class RideBL : IRideBL
     {
@@ -91,6 +93,30 @@ namespace JEDI_Carpool.BLL
                 seatsTaken += booking.Seat;
             }
             return seatsMax - seatsTaken;
+        }
+
+        public List<RideViewModel> FilterRides(SearchRideViewModel search, List<RideViewModel> rides)
+        {
+            if (search != null)
+            {
+                if (search.RegionFrom != null)
+                {
+                    rides.RemoveAll(r => r.Origin.Region != search.RegionFrom);
+                }
+                if (search.CityFrom != null)
+                {
+                    rides.RemoveAll(r => r.Origin.City != search.CityFrom);
+                }
+                if (search.RegionTo != null)
+                {
+                    rides.RemoveAll(r => r.Destination.Region != search.RegionTo);
+                }
+                if (search.CityTo != null)
+                {
+                    rides.RemoveAll(r => r.Destination.City != search.CityTo);
+                }
+            }
+            return rides;
         }
 
 

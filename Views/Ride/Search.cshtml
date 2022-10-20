@@ -116,4 +116,10 @@
             }
         </div>
     </div>
+
+    @if (Enumerable.Count(ViewBag.Rides) == 0)
+    {
+        <img src="~/Content/Images/error.gif" class="img-fluid" alt="no rides"/>
+    }
+
 </div>
