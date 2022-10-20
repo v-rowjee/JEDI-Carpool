@@ -137,7 +137,7 @@
     <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\RideController.cs" />
     <Compile Include="DAL\AccountDAL.cs" />
@@ -254,7 +254,7 @@
     <Content Include="Scripts\Moment\moment-with-locales.min.js" />
     <Content Include="Scripts\Moment\moment.js" />
     <Content Include="Scripts\Moment\moment.min.js" />
-    <Content Include="Scripts\profile.js" />
+    <Content Include="Scripts\account.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\search.js" />
     <Content Include="Scripts\share.js" />
@@ -279,12 +279,12 @@
     <Content Include="Views\Ride\Index.cshtml" />
     <Content Include="Scripts\Moment\moment.min.js.map" />
     <Content Include="Scripts\Moment\moment-with-locales.min.js.map" />
-    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Car\Index.cshtml" />
     <Content Include="Views\Car\Add.cshtml" />
     <Content Include="Views\Shared\_SideNav.cshtml" />
     <Content Include="Views\Car\Edit.cshtml" />
-    <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Ride\View.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Ride\Edit.cshtml" />

@@ -7,7 +7,6 @@
 
     $('#edit').click(() => {
         var email = $('#email').val()
-        var password = $('#password').val()
         var fname = $('#fname').val()
         var lname = $('#lname').val()
         var phone = $('#phone').val()
@@ -50,7 +49,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/Profile/Edit",
+                url: "/Account/Edit",
                 data: AccountModelObj,
                 dataType: "json",
                 success: (response) => {
