@@ -10,7 +10,7 @@
         @foreach (var Ride in ViewBag.DriverRides)
         {
             <div class="col-md-6">
-                <div class="card shadow-sm mb-5">
+                <div class="card shadow-sm mb-5 @(Ride.DateTime.Date == DateTime.Now.Date ? "text-bg-light" : "")">
                     <div class="card-header">
                         <div class="row pt-2 align-items-center">
                             <div class="col">
@@ -43,7 +43,9 @@
                         <div class="col-sm-6">
                             <div class="card-text">
                                 <i class="fa-solid fa-calendar-days me-2 ms-1"></i>
-                                @Ride.DateTime.ToString("ddd, dd MMM yyyy")
+                                @(Ride.DateTime.Date == DateTime.Now.Date
+                                    ? "Today"
+                                    : Ride.DateTime.ToString("dddd, dd MMMM"))
                             </div>
                             <div class="card-text">
                                 <i class="fa-solid fa-car-side me-2 my-3"></i>
