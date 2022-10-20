@@ -42,9 +42,23 @@
 </div>
 
 <div class="container">
-    <div class="row">
-        <div class="col-lg-3">
-            @* FILTER SEARCH HERE *@
+    <div class="row justify-content-around">
+        <div class="col-lg-4">
+            <div class="sticky-top top-70 z-2">
+                <h3 class="fw-bold mb-3">Filter Search</h3>
+                <div class="card mb-5">
+                    <div class="card-body p-4">
+                        <div class="mb-4">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" id="date" class="form-control" value="@(DateTime.Now.ToString("yyyy-mm-dd"))" min="@(DateTime.Now.ToString("yyyy-mm-dd"))">
+                        </div>
+                        <div class="mb-4">
+                            <label for="seat" class="form-label">Seat</label>
+                            <input type="number" id="seat" class="form-control" value="1" min="1">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-lg-6">
             @foreach (var Ride in ViewBag.Rides)
@@ -115,11 +129,11 @@
                 </div>
             }
         </div>
+        @if (!Enumerable.Any(ViewBag.Rides))
+        {
+            <div class="col-lg-6">
+                <img src="~/Content/Images/error.gif" class="img-fluid" alt="no rides" />
+            </div>
+        }
     </div>
-
-    @if (Enumerable.Count(ViewBag.Rides) == 0)
-    {
-        <img src="~/Content/Images/error.gif" class="img-fluid" alt="no rides"/>
-    }
-
 </div>
