@@ -43,26 +43,6 @@
 
 <div class="container">
     <div class="row g-4 justify-content-around">
-        @*<div class="col-lg-4">
-            <div class="sticky-top top-70 z-2">
-                <h3 class="fw-bold mb-3">Filter Search</h3>
-                <div class="card">
-                    <div class="card-body p-4">
-                        <div class="mb-4">
-                            <label for="date" class="form-label">Date</label>
-                            <input type="date" name="date" class="form-control" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" min="@(DateTime.Now.ToString("yyyy-MM-dd"))">
-                        </div>
-                        <div class="mb-4">
-                            <label for="seat" class="form-label">Seat</label>
-                            <input type="number" name="seat" class="form-control" value="1" min="1">
-                        </div>
-                        <div class="mb-4">
-                            <input type="submit" class="btn btn-primary w-100" value="Search" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>*@
         <div class="col-lg-6">
             @foreach (var Ride in ViewBag.Rides)
             {
@@ -113,8 +93,16 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="card-text">
-                                <i class="fa-solid fa-user me-2 ms-1"></i>
-                                @Ride.Driver.FirstName @Ride.Driver.LastName
+                                @if (ViewBag.Account != null)
+                                {
+                                    <i class="fa-solid fa-user me-2 ms-1"></i>
+                                    @Ride.Driver.FirstName @Ride.Driver.LastName
+                                }
+                                else
+                                {
+                                    <i class="fa-solid fa-calendar-days me-2 ms-1"></i>
+                                    @Ride.DateTime.ToString("ddd, dd MMM")
+                                }
                             </div>
                             <div class="card-text">
                                 <i class="fa-solid fa-car-side me-2 my-3"></i>
@@ -126,7 +114,14 @@
                             </div>
                         </div>
                         <div class="text-center mt-4">
-                            @Html.ActionLink("View Carpool", "View", "Ride", new { @id = Ride.RideId }, new { @class = "btn btn-sm btn-outline-primary w-100 stretched-link" })
+                            @if (ViewBag.Account != null)
+                            {
+                                @Html.ActionLink("View Carpool", "View", "Ride", new { @id = Ride.RideId }, new { @class = "btn btn-sm btn-outline-primary w-100 stretched-link" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("View Carpool", "Index", "Login", null, new { @class = "btn btn-sm btn-outline-primary w-100 stretched-link" })
+                            }
                         </div>
                     </div>
                 </div>
