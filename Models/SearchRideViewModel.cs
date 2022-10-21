@@ -11,6 +11,8 @@ namespace JEDI_Carpool.Models
         public string CityFrom { get; set; }
         public string RegionTo { get; set; }
         public string CityTo { get; set; }
+        public DateTime Date { get; set; }
+        public int Seat { get; set; }
 
     }
 }

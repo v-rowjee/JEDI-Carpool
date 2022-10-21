@@ -31,7 +31,7 @@
                         <input type="text" class="form-control text-capitalize" name="CityTo"value="@(ViewBag.Filter.CityTo ?? "")" placeholder="City To">
                     </div>
                     <div class="col-lg-2">
-                        <button id="search" class="btn btn-primary w-100">
+                        <button class="btn btn-primary w-100">
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
@@ -42,24 +42,27 @@
 </div>
 
 <div class="container">
-    <div class="row justify-content-around">
-        <div class="col-lg-4">
+    <div class="row g-4 justify-content-around">
+        @*<div class="col-lg-4">
             <div class="sticky-top top-70 z-2">
                 <h3 class="fw-bold mb-3">Filter Search</h3>
-                <div class="card mb-5">
+                <div class="card">
                     <div class="card-body p-4">
                         <div class="mb-4">
                             <label for="date" class="form-label">Date</label>
-                            <input type="date" id="date" class="form-control" value="@(DateTime.Now.ToString("yyyy-mm-dd"))" min="@(DateTime.Now.ToString("yyyy-mm-dd"))">
+                            <input type="date" name="date" class="form-control" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" min="@(DateTime.Now.ToString("yyyy-MM-dd"))">
                         </div>
                         <div class="mb-4">
                             <label for="seat" class="form-label">Seat</label>
-                            <input type="number" id="seat" class="form-control" value="1" min="1">
+                            <input type="number" name="seat" class="form-control" value="1" min="1">
+                        </div>
+                        <div class="mb-4">
+                            <input type="submit" class="btn btn-primary w-100" value="Search" />
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="col-lg-6">
             @foreach (var Ride in ViewBag.Rides)
             {

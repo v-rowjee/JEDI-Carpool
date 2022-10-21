@@ -5,17 +5,19 @@
         var oCity = $("#oCity").val()
         var dRegion = $("#dRegion").val()
         var dCity = $("#dCity").val()
+        var date = $("#date").val()
 
         var SearchRideViewModelObj = {
             RegionFrom: oRegion,
             CityFrom: oCity,
             RegionTo: dRegion,
-            CityTo: dCity
+            CityTo: dCity,
+            Date: date
         }
 
-        //var urlQuery = new URLSearchParams(SearchRideViewModelObj).toString();
-        //var url = "https://localhost:44306/Ride/Search/?"
-        //window.location.replace(url + urlQuery)
+        $.get("/Ride/Search", (data, status) => {
+            alert(data)
+        })
 
     })
 

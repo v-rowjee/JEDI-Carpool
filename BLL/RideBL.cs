@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -101,20 +102,28 @@ namespace JEDI_Carpool.BLL
             {
                 if (search.RegionFrom != null)
                 {
-                    rides.RemoveAll(r => r.Origin.Region != search.RegionFrom);
+                    rides.RemoveAll(r => !string.Equals(r.Origin.Region, search.RegionFrom, StringComparison.CurrentCultureIgnoreCase));
                 }
                 if (search.CityFrom != null)
                 {
-                    rides.RemoveAll(r => r.Origin.City != search.CityFrom);
+                    rides.RemoveAll(r => !string.Equals(r.Origin.City, search.CityFrom, StringComparison.CurrentCultureIgnoreCase));
                 }
                 if (search.RegionTo != null)
                 {
-                    rides.RemoveAll(r => r.Destination.Region != search.RegionTo);
+                    rides.RemoveAll(r => !string.Equals(r.Destination.Region, search.RegionTo, StringComparison.CurrentCultureIgnoreCase));
                 }
                 if (search.CityTo != null)
                 {
-                    rides.RemoveAll(r => r.Destination.City != search.CityTo);
+                    rides.RemoveAll(r => !string.Equals(r.Destination.City, search.CityTo, StringComparison.CurrentCultureIgnoreCase));
                 }
+                //if (search.Date != null)
+                //{
+                //    rides.RemoveAll(r => r.DateTime.Date != search.Date);
+                //}
+                //if (search.Seat > 0)
+                //{
+                //    rides.RemoveAll(r => r.SeatsLeft >= search.Seat);
+                //}
             }
             return rides;
         }
