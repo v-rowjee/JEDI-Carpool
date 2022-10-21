@@ -7,9 +7,12 @@ namespace JEDI_Carpool.Models
 {
     public class SearchRideViewModel
     {
-        public LocationModel Origin { get; set; }
-        public LocationModel Destination { get; set; }
+        public string RegionFrom { get; set; }
+        public string CityFrom { get; set; }
+        public string RegionTo { get; set; }
+        public string CityTo { get; set; }
         public DateTime Date { get; set; }
-        public int Seats { get; set; }
+        public int Seat { get; set; }
+
     }
 }

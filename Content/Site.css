@@ -19,3 +19,10 @@
 .no-arrow[type=number] {
     -moz-appearance: textfield;
 }
+
+.top-70{
+    top: 70px;
+}
+.z-2{
+    z-index: 2;
+}

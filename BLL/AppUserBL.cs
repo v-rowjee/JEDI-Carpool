@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CryptoHelper;
+using System.Security.Policy;
 
 namespace JEDI_Carpool.BLL
 {
@@ -33,13 +35,19 @@ namespace JEDI_Carpool.BLL
 
         public bool AuthenticateUser(LoginViewModel model)
         {
-            return AppUserDAL.AuthenticateUser(model);
+            var hashedPassword = AppUserDAL.GetHashedPassword(model);
+            if(hashedPassword != null)
+            {
+                return VerifyPassword(hashedPassword, model.Password);
+            }
+            return false;
         }
 
         public string RegisterUser(RegisterViewModel model)
         {
             if (ValidateDuplicatedEmail(model.Email))
             {
+                model.Password = HashPassword(model.Password);
                 return AppUserDAL.RegisterUser(model);
             }
             return "DuplicatedEmail";
@@ -50,6 +58,18 @@ namespace JEDI_Carpool.BLL
             var accountsWithSameEmail = AccountDAL.GetAllAccounts().Where(x => x.Email.Equals(email.Trim()));
 
             return accountsWithSameEmail.Count() == 0;
+        }
+
+        // Hash a password
+        private string HashPassword(string password)
+        {
+            return Crypto.HashPassword(password);
+        }
+
+        // Verify the password hash against the given password
+        private bool VerifyPassword(string hash, string password)
+        {
+            return Crypto.VerifyHashedPassword(hash, password);
         }
     }
 }

@@ -61,7 +61,7 @@ namespace JEDI_Carpool.Controllers
 
             var rides = RideBL.GetAllRides();
 
-            // FILTER RIDES
+            // FILTER RIDES: remove all ride where no seat left
             foreach (var ride in rides.ToList())
             {
                 var seatsLeft = RideBL.GetSeatsLeft(ride);
@@ -75,6 +75,7 @@ namespace JEDI_Carpool.Controllers
                 var account = AccountBL.GetAccount(loggeduser);
                 ViewBag.Account = account;
 
+                // FILTER RIDES: show only rides in user's country
                 rides.Where(r => r.Driver.Address.Country == account.Address.Country);
 
                 view.MasterName = "~/Views/Shared/_Layout.cshtml";
@@ -84,8 +85,13 @@ namespace JEDI_Carpool.Controllers
                 view.MasterName = "~/Views/Shared/_GuestLayout.cshtml";
             }
 
+            // FILTER RIDES: filter search
+            rides = RideBL.FilterRides(model, rides);
+
             // Store filtered rides in viewbag
             ViewBag.Rides = rides;
+
+            ViewBag.Filter = model;
 
             return view;
         }

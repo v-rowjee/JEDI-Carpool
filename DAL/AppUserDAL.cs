@@ -13,6 +13,7 @@ namespace JEDI_Carpool.DAL
     {
         bool AuthenticateUser(LoginViewModel model);
         string RegisterUser(RegisterViewModel model);
+        string GetHashedPassword(LoginViewModel model);
     }
     public class AppUserDAL : IAppUserDAL
     {
@@ -38,6 +39,10 @@ namespace JEDI_Carpool.DAL
 
             INSERT INTO [dbo].[AppUser] ([AccountId],[Password])
             VALUES ( SCOPE_IDENTITY() , @Password)";
+        private const string GetHashedPasswordQuery = @"
+            SELECT Password 
+            FROM AppUser au INNER JOIN Account a ON au.AccountId=a.AccountId
+            WHERE a.Email=@Email";
 
         public bool AuthenticateUser(LoginViewModel model)
         {
@@ -69,6 +74,22 @@ namespace JEDI_Carpool.DAL
 
 
             return result ? "Success" : "Error";
+        }
+
+        public string GetHashedPassword(LoginViewModel model)
+        {
+            string hashedPassword = null;
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@Email", model.Email));
+
+            var dt = DBCommand.GetDataWithCondition(GetHashedPasswordQuery, parameters);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                hashedPassword = row["Password"].ToString();
+            }
+
+            return hashedPassword;
         }
 
     }

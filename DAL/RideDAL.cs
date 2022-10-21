@@ -13,7 +13,6 @@ namespace JEDI_Carpool.DAL
     public interface IRideDAL
     {
         string Share(ShareRideViewModel model);
-        List<RideViewModel> SearchRide(SearchRideViewModel model);
         List<RideViewModel> GetAllRides();
         RideViewModel GetRide(int? id);
         List<RideViewModel> GetRidesByPassengerId(int id);
@@ -62,71 +61,6 @@ namespace JEDI_Carpool.DAL
             DBCommand.InsertUpdateData(CreateRideQuery, parameters);
 
             return "Success";
-        }
-
-
-        private const string SearchRidesQuery = @"
-            SELECT acc.FirstName, acc.LastName, acc.Email,rid.Fare, rid.Comment, car.PlateNumber, car.Model, car.Year, car.Seat, car.Color, SUM(Seat)
-            FROM Account acc 
-            INNER JOIN Ride rid ON rid.DriverId=acc.AccountId 
-            INNER JOIN Car car ON car.DriverId=acc.AccountId
-            INNER JOIN Booking grp ON grp.RideId=rid.RideId
-            WHERE OriginId IN (SELECT LocationId FROM Location WHERE City=@OCity AND Country=@Country)
-            AND DestinationId IN (SELECT LocationId FROM Location WHERE City=@DCity AND Country=@Country)
-            AND DAY(DateTime) >= DAY(@DateTime)";
-        public List<RideViewModel> SearchRide(SearchRideViewModel model)
-        {
-            var rides = new List<RideViewModel>();
-            RideViewModel ride;
-
-            var parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter("@ORegion", model.Origin.Region));
-            parameters.Add(new SqlParameter("@OCity", model.Origin.City));
-            parameters.Add(new SqlParameter("@OCountry", model.Origin.Country));
-            parameters.Add(new SqlParameter("@DRegion", model.Destination.Region));
-            parameters.Add(new SqlParameter("@DCity", model.Destination.City));
-            parameters.Add(new SqlParameter("@DCountry", model.Destination.Country));
-            parameters.Add(new SqlParameter("@DateTime", model.Date));
-
-            var dt = DBCommand.GetDataWithCondition(SearchRidesQuery, parameters);
-
-            foreach (DataRow row in dt.Rows)
-            {
-                ride = new RideViewModel();
-
-                var driver = new AccountModel();
-                driver.FirstName = row["FirstName"].ToString();
-                driver.LastName = row["LastName"].ToString();
-                ride.Driver = driver;
-
-                var car = new CarModel();
-                car.Model = row["Model"].ToString();
-                car.Year = int.Parse(row["Year"].ToString());
-                car.Seat = int.Parse(row["Seat"].ToString());
-                car.Color = row["Color"].ToString();
-
-                var origin = new LocationModel();
-                origin.Region = row["ORegion"].ToString();
-                origin.City = row["OCity"].ToString();
-                origin.Country = row["OCountry"].ToString();
-
-                var destination = new LocationModel();
-                destination.Region = row["DRegion"].ToString();
-                destination.City = row["DCity"].ToString();
-                destination.Country = row["DCountry"].ToString();
-
-                ride.Driver = driver;
-                ride.Car = car;
-                ride.Fare = Convert.ToInt32(row["Fare"]);
-                ride.DateTime = DateTime.Parse(row["DateTime"].ToString());
-                ride.Origin = origin;
-                ride.Destination = destination;
-                ride.Comment = row["Comment"].ToString();
-
-                rides.Add(ride);
-            }
-
-            return rides;
         }
 
 

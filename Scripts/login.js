@@ -30,11 +30,17 @@
                 dataType: "json",
                 success: (response) => {
                     if (response.result) {
-                        Snackbar.show({ text: "Authentication successful!" });
+                        Snackbar.show({
+                            text: "Authentication successful!",
+                            actionTextColor: "#CFE2FF"
+                        });
                         window.location.replace(response.url);
                     }
                     else {
-                        Snackbar.show({ text: "Unable to authenticate" });
+                        Snackbar.show({
+                            text: "Unable to authenticate",
+                            actionTextColor: "#CFE2FF"
+                        });
                     }
                 }
             })

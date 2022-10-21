@@ -9,21 +9,21 @@ using System.Web.Mvc;
 
 namespace JEDI_Carpool.Controllers
 {
-    public class ProfileController : Controller
+    public class AccountController : Controller
     {
         public IAccountBL AccountBL;
-        public ProfileController(IAccountBL AccountBL)
+        public AccountController(IAccountBL AccountBL)
         {
             this.AccountBL = AccountBL;
         }
-        public ProfileController()
+        public AccountController()
         {
             this.AccountBL = new AccountBL();
         }
 
 
 
-        // GET: Profile
+        // GET: Account
         public ActionResult Index()
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
@@ -36,7 +36,7 @@ namespace JEDI_Carpool.Controllers
             else return Redirect("/");
         }
 
-        // GET: Profile/Edit
+        // GET: Account/Edit
         public ActionResult Edit()
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
@@ -49,7 +49,7 @@ namespace JEDI_Carpool.Controllers
             else return Redirect("/");
         }
 
-        // POST: Profile/Edit
+        // POST: Account/Edit
         [HttpPost]
         public JsonResult Edit(AccountModel model)
         {
@@ -67,7 +67,7 @@ namespace JEDI_Carpool.Controllers
                 newloggeduser.Password = loggeduser.Password;   // old password
                 this.Session["CurrentUser"] = newloggeduser;
 
-                return Json(new { result = result, url = Url.Action("Index", "Profile") });
+                return Json(new { result = result, url = Url.Action("Index", "Account") });
             }
             else if (result == "DuplicatedEmail")
             {

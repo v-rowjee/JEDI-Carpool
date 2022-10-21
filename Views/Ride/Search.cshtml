@@ -13,25 +13,25 @@
 <div class="container">
     <div class="card shadow-sm my-5 p-3 rounded-4">
         <div class="card-body">
-            <form id="searchForm">
+            <form id="searchForm" method="GET">
                 <div class="row g-3 align-items-center justify-content-around">
                     <div class="col-lg-2">
-                        <input type="text" class="form-control" id="oRegion" placeholder="Region From">
+                        <input type="text" class="form-control text-capitalize" name="RegionFrom" value="@(ViewBag.Filter.RegionFrom ?? "")" placeholder="Region From">
                     </div>
                     <div class="col-lg-2">
-                        <input type="text" class="form-control" id="oCity" placeholder="City From">
+                        <input type="text" class="form-control text-capitalize" name="CityFrom" value="@(ViewBag.Filter.CityFrom ?? "")" placeholder="City From">
                     </div>
                     <div class="col-lg-1 text-center">
                         <i class="fa-solid fa-right-left"></i>
                     </div>
                     <div class="col-lg-2">
-                        <input type="text" class="form-control" id="dRegion" placeholder="Region To">
+                        <input type="text" class="form-control text-capitalize" name="RegionTo"value="@(ViewBag.Filter.RegionTo ?? "")" placeholder="Region To">
                     </div>
                     <div class="col-lg-2">
-                        <input type="text" class="form-control" id="dCity" placeholder="City To">
+                        <input type="text" class="form-control text-capitalize" name="CityTo"value="@(ViewBag.Filter.CityTo ?? "")" placeholder="City To">
                     </div>
                     <div class="col-lg-2">
-                        <button id="search" class="btn btn-primary w-100">
+                        <button class="btn btn-primary w-100">
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
@@ -42,10 +42,27 @@
 </div>
 
 <div class="container">
-    <div class="row">
-        <div class="col-lg-3">
-            @* FILTER SEARCH HERE *@
-        </div>
+    <div class="row g-4 justify-content-around">
+        @*<div class="col-lg-4">
+            <div class="sticky-top top-70 z-2">
+                <h3 class="fw-bold mb-3">Filter Search</h3>
+                <div class="card">
+                    <div class="card-body p-4">
+                        <div class="mb-4">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" name="date" class="form-control" value="@(DateTime.Now.ToString("yyyy-MM-dd"))" min="@(DateTime.Now.ToString("yyyy-MM-dd"))">
+                        </div>
+                        <div class="mb-4">
+                            <label for="seat" class="form-label">Seat</label>
+                            <input type="number" name="seat" class="form-control" value="1" min="1">
+                        </div>
+                        <div class="mb-4">
+                            <input type="submit" class="btn btn-primary w-100" value="Search" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
         <div class="col-lg-6">
             @foreach (var Ride in ViewBag.Rides)
             {
@@ -115,5 +132,11 @@
                 </div>
             }
         </div>
+        @if (!Enumerable.Any(ViewBag.Rides))
+        {
+            <div class="col-lg-6">
+                <img src="~/Content/Images/error.gif" class="img-fluid" alt="no rides" />
+            </div>
+        }
     </div>
 </div>

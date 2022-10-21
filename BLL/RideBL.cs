@@ -4,8 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Helpers;
+using System.Web.Mvc;
 
 namespace JEDI_Carpool.BLL
 {
@@ -14,9 +16,9 @@ namespace JEDI_Carpool.BLL
         RideViewModel GetRide(int? id);
         List<RideViewModel> GetAllRides();
         string Share(ShareRideViewModel model);
-        List<RideViewModel> Search(SearchRideViewModel model);
         int GetSeatsLeft(RideViewModel model);
         List<RideViewModel> GetRidesByPassengerId(int id);
+        List<RideViewModel> FilterRides(SearchRideViewModel search, List<RideViewModel> rides);
     }
     public class RideBL : IRideBL
     {
@@ -76,11 +78,6 @@ namespace JEDI_Carpool.BLL
             return car != null;
         }
 
-        public List<RideViewModel> Search(SearchRideViewModel model)
-        {
-            return RideDAL.SearchRide(model);
-        }
-
         public List<RideViewModel> GetRidesByPassengerId(int id)
         {
             return RideDAL.GetRidesByPassengerId(id);
@@ -97,6 +94,38 @@ namespace JEDI_Carpool.BLL
                 seatsTaken += booking.Seat;
             }
             return seatsMax - seatsTaken;
+        }
+
+        public List<RideViewModel> FilterRides(SearchRideViewModel search, List<RideViewModel> rides)
+        {
+            if (search != null)
+            {
+                if (search.RegionFrom != null)
+                {
+                    rides.RemoveAll(r => !string.Equals(r.Origin.Region, search.RegionFrom, StringComparison.CurrentCultureIgnoreCase));
+                }
+                if (search.CityFrom != null)
+                {
+                    rides.RemoveAll(r => !string.Equals(r.Origin.City, search.CityFrom, StringComparison.CurrentCultureIgnoreCase));
+                }
+                if (search.RegionTo != null)
+                {
+                    rides.RemoveAll(r => !string.Equals(r.Destination.Region, search.RegionTo, StringComparison.CurrentCultureIgnoreCase));
+                }
+                if (search.CityTo != null)
+                {
+                    rides.RemoveAll(r => !string.Equals(r.Destination.City, search.CityTo, StringComparison.CurrentCultureIgnoreCase));
+                }
+                //if (search.Date != null)
+                //{
+                //    rides.RemoveAll(r => r.DateTime.Date != search.Date);
+                //}
+                //if (search.Seat > 0)
+                //{
+                //    rides.RemoveAll(r => r.SeatsLeft >= search.Seat);
+                //}
+            }
+            return rides;
         }
 
 
