@@ -15,8 +15,14 @@
             Date: date
         }
 
-        $.get("/Ride/Search", (data, status) => {
-            alert(data)
+        $.ajax({
+            type: "POST",
+            url: "/Ride/Search",
+            data: ShareRideViewModelObj,
+            dataType: "json",
+            success: (response) => {
+
+            }
         })
 
     })

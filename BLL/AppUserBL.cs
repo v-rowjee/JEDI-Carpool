@@ -36,7 +36,11 @@ namespace JEDI_Carpool.BLL
         public bool AuthenticateUser(LoginViewModel model)
         {
             var hashedPassword = AppUserDAL.GetHashedPassword(model);
-            return VerifyPassword(hashedPassword, model.Password);
+            if(hashedPassword != null)
+            {
+                return VerifyPassword(hashedPassword, model.Password);
+            }
+            return false;
         }
 
         public string RegisterUser(RegisterViewModel model)
