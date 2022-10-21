@@ -104,7 +104,7 @@ namespace JEDI_Carpool.Controllers
 
                 var result = BookingBL.DeleteBooking(booking.BookingId);
 
-                return Json(new { result = result, url = Url.Action("Index", "Ride") });
+                return Json(new { result = result, url = Url.Action("Search", "Ride") });
             }
             else return Json(new { result = "NoUser", url = Url.Action("Index", "Login") });
         }
