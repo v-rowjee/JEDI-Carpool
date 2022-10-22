@@ -8,7 +8,7 @@ namespace JEDI_Carpool.DAL.Common
 {
     public class DAL
     {
-        public const string connectionString = @"server=L-PC197T2Z;database=CarpoolManagement;uid=wbpoc;pwd=sql@tfs2008";
+        public const string connectionString = @"server=L-PC197T2Z;database=JEDICarpool_db;uid=wbpoc;pwd=sql@tfs2008";
 
         public SqlConnection Connection;
 
