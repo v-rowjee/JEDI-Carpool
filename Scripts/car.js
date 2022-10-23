@@ -147,21 +147,21 @@
             url: "/Car/Delete",
             dataType: "json",
             success: (response) => {
-                if (response.result) {
+                if (response.result == "Success") {
                     Snackbar.show({
                         text: "Car details removed!",
                         actionTextColor: "#CFE2FF"
                     });
                     window.location.replace(response.url);
                 }
-                else if (reponse.result == "HasRide") {
+                else if (response.result == "HasRide") {
                     Snackbar.show({
                         text: "You have an active ride. Cannot delete car.",
                         actionTextColor: "#CFE2FF",
-                        //actionText: "VIEW",
-                        //onActionClick: ()=>{
-                        //    window.location.replace(response.url)
-                        //}
+                        actionText: "VIEW",
+                        onActionClick: ()=>{
+                            window.location.replace(response.url)
+                        }
                     });
                 }
                 else {
