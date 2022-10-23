@@ -41,12 +41,14 @@ namespace JEDI_Carpool.Controllers
                 var account = AccountBL.GetAccount(loggeduser);
                 ViewBag.Account = account;
 
-                var passengerRides = RideBL.GetRidesByPassengerId(account.AccountId);
-                ViewBag.PassengerRides = passengerRides;
-
                 var passengerBookings = BookingBL.GetBookings()
                     .Where(b => b.Passenger.AccountId == account.AccountId);
                 ViewBag.PassengerBookings = passengerBookings;
+
+                foreach (var booking in passengerBookings)
+                {
+                    booking.Ride.SeatsLeft = RideBL.GetSeatsLeft(booking.Ride);
+                }
 
 
                 return View();

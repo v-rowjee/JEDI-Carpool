@@ -289,6 +289,7 @@
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Ride\Edit.cshtml" />
     <Content Include="Views\Ride\Search.cshtml" />
+    <Content Include="Views\Booking\_Modal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
