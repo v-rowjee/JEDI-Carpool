@@ -41,10 +41,12 @@
                     </div>
                 </div>
             </div>
-            <div class="my-2 float-end">
-                @Html.ActionLink("Edit", "Edit", "Car", null, new { @class = "btn btn-sm btn-secondary px-5 me-2" })
-                <input type="button" id="delete" class="btn btn-sm btn-danger px-5" value="Remove" />
-            </div>
+            <form id="deleteCarForm">
+                <div class="my-2 float-end">
+                    @Html.ActionLink("Edit", "Edit", "Car", null, new { @class = "btn btn-sm btn-secondary px-5 me-2" })
+                    <input type="submit" id="delete" class="btn btn-sm btn-danger px-5" value="Remove" />
+                </div>
+            </form>
         </div>
     </div>
 </div>

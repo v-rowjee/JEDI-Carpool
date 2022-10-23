@@ -137,7 +137,10 @@
 
 
     // DELETE CAR
-
+    $('#deleteCarForm').submit((e) => {
+        e.preventDefault();
+        return false;
+    })
     $('#delete').click(() => {
         $.ajax({
             type: "POST",
@@ -155,8 +158,10 @@
                     Snackbar.show({
                         text: "You have an active ride. Cannot delete car.",
                         actionTextColor: "#CFE2FF",
-                        actionText: "VIEW",
-                        onActionClick: () => window.location.replace(response.url)
+                        //actionText: "VIEW",
+                        //onActionClick: ()=>{
+                        //    window.location.replace(response.url)
+                        //}
                     });
                 }
                 else {

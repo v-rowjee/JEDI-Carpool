@@ -137,7 +137,7 @@ namespace JEDI_Carpool.Controllers
             }
             else if ( result == "HasRide")
             {
-                return Json(new { result = result, url = Url.Action("Ride", "Booking") });
+                return Json(new { result = result, url = Url.Action("Index", "Ride") });
             }
             else
             {
