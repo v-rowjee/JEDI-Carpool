@@ -16,6 +16,7 @@ namespace JEDI_Carpool.DAL
         List<RideViewModel> GetAllRides();
         RideViewModel GetRide(int? id);
         List<RideViewModel> GetRidesByPassengerId(int id);
+        bool DeleteRide(int id);
     }
     public class RideDAL : IRideDAL
     {
@@ -258,6 +259,16 @@ namespace JEDI_Carpool.DAL
             }
 
             return rides;
+        }
+
+
+        private const string DeleteRideQuery = @"
+            DELETE FROM Booking WHERE RideId=@RideId;
+            DELETE FROM Ride WHERE RideId=@RideId";
+        public bool DeleteRide(int id)
+        {
+            var parameter = new SqlParameter("@RideId", id);
+            return DBCommand.DeleteData(DeleteRideQuery, parameter);
         }
 
     }

@@ -187,24 +187,26 @@ namespace JEDI_Carpool.Controllers
         }
 
 
-        // GET: Ride/Edit
-        public ActionResult Edit(int id)
+        // POST: Ride/Delete
+        [HttpPost]
+        public JsonResult Delete(int id)
         {
             var loggeduser = Session["CurrentUser"] as LoginViewModel;
 
             if (loggeduser != null)
             {
-                var account = AccountBL.GetAccount(loggeduser);
-                var ride = RideBL.GetRide(id);
+                var result = RideBL.DeleteRide(id);
 
-                if(account.AccountId == ride.Driver.AccountId)
+                if (result)
                 {
-                    ViewBag.Account = account;
-                    ViewBag.Ride = ride;
+                    return Json(new { result = result, url = Url.Action("Share", "Ride") });
                 }
-                else RedirectToAction("Index");
+                else
+                {
+                    return Json(new { result = "Error" });
+                }
             }
-            return RedirectToAction("Index");
+            return Json(new { result = "Error" });
         }
 
     }

@@ -19,6 +19,7 @@ namespace JEDI_Carpool.BLL
         int GetSeatsLeft(RideViewModel model);
         List<RideViewModel> GetRidesByPassengerId(int id);
         List<RideViewModel> FilterRides(SearchRideViewModel search, List<RideViewModel> rides);
+        bool DeleteRide(int id);
     }
     public class RideBL : IRideBL
     {
@@ -116,18 +117,14 @@ namespace JEDI_Carpool.BLL
                 {
                     rides.RemoveAll(r => !string.Equals(r.Destination.City, search.CityTo, StringComparison.CurrentCultureIgnoreCase));
                 }
-                //if (search.Date != null)
-                //{
-                //    rides.RemoveAll(r => r.DateTime.Date != search.Date);
-                //}
-                //if (search.Seat > 0)
-                //{
-                //    rides.RemoveAll(r => r.SeatsLeft >= search.Seat);
-                //}
             }
             return rides;
         }
 
+        public bool DeleteRide(int id)
+        {
+            return RideDAL.DeleteRide(id);
+        }
 
         // Validations
         private bool ValidateSeatsLeft(RideViewModel model)
