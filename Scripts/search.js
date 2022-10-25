@@ -1,30 +1,17 @@
 ﻿$(function () {
 
-    $('#search').click(() => {
-        var oRegion = $("#oRegion").val()
-        var oCity = $("#oCity").val()
-        var dRegion = $("#dRegion").val()
-        var dCity = $("#dCity").val()
-        var date = $("#date").val()
+    $("#swap-location").click(() => {
 
-        var SearchRideViewModelObj = {
-            RegionFrom: oRegion,
-            CityFrom: oCity,
-            RegionTo: dRegion,
-            CityTo: dCity,
-            Date: date
-        }
+        var oRegion = $("input[name=RegionFrom]").val();
+        var oCity = $("input[name=CityFrom]").val();
+        var dRegion = $("input[name=RegionTo]").val();
+        var dCity = $("input[name=CityTo]").val();
 
-        $.ajax({
-            type: "POST",
-            url: "/Ride/Search",
-            data: ShareRideViewModelObj,
-            dataType: "json",
-            success: (response) => {
+        $("input[name=RegionFrom]").val(dRegion)
+        $("input[name=CityFrom]").val(dCity)
 
-            }
-        })
-
+        $("input[name=RegionTo]").val(oRegion)
+        $("input[name=CityTo]").val(oCity)
     })
 
 })

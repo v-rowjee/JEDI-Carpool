@@ -192,6 +192,7 @@
     <Content Include="Content\Images\order.gif" />
     <Content Include="Content\Images\register.png" />
     <Content Include="Content\Images\login.png" />
+    <Content Include="Content\Images\ride.png" />
     <Content Include="Content\Images\security.png" />
     <Content Include="Content\Images\wallet.png" />
     <Content Include="favicon.ico" />

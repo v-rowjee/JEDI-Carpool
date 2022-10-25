@@ -22,7 +22,7 @@
                         <input type="text" class="form-control text-capitalize" name="CityFrom" value="@(ViewBag.Filter.CityFrom ?? "")" placeholder="City From">
                     </div>
                     <div class="col-lg-1 text-center">
-                        <i class="fa-solid fa-right-left"></i>
+                        <i class="fa-solid fa-right-left" id="swap-location"></i>
                     </div>
                     <div class="col-lg-2">
                         <input type="text" class="form-control text-capitalize" name="RegionTo"value="@(ViewBag.Filter.RegionTo ?? "")" placeholder="Region To">
@@ -126,12 +126,12 @@
                     </div>
                 </div>
             }
+            @if (!Enumerable.Any(ViewBag.Rides))
+            {
+                <div class="alert alert-danger text-center" role="alert">
+                    <i class="fa-solid fa-triangle-exclamation"></i> No Rides Found
+                </div>
+            }
         </div>
-        @if (!Enumerable.Any(ViewBag.Rides))
-        {
-            <div class="col-lg-6">
-                <img src="~/Content/Images/error.gif" class="img-fluid" alt="no rides" />
-            </div>
-        }
     </div>
 </div>

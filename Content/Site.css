@@ -26,3 +26,6 @@
 .z-2{
     z-index: 2;
 }
+#swap-location{
+    cursor: pointer;
+}
