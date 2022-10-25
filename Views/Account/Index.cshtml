@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "Account";
 }
+@section scripts {
+    <script src="~/Scripts/account.js"></script>
+}
 
 <div class="container">
     <div class="row g-5">
@@ -46,10 +49,35 @@
                     </div>
                 </div>
                 <div class="my-2 float-end">
-                    @Html.ActionLink("Edit", "Edit", "Account", null, new { @class= "btn btn-sm btn-secondary me-2 px-5" })
-                    <input type="button" id="delete" class="btn btn-sm btn-danger px-5" value="Delete" disabled />
+                    @Html.ActionLink("Edit", "Edit", "Account", null, new { @class = "btn btn-sm btn-secondary me-2 px-5" })
+                    <button type="button" class="btn btn-sm btn-danger px-5" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Account Deletion</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    By deleting this account you are deleting all current rides and bookings. You will no longer be able to access logged in features.
+                </p>
+                <p>
+                    Press the delete button below to confirm the deletion of your account.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="delete" class="btn btn-danger px-5">Delete</button>
+            </div>
         </div>
     </div>
 </div>

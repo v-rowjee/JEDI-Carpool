@@ -85,4 +85,27 @@
 
     })
 
+    $('#delete').click(() => {
+        $.ajax({
+            type: "POST",
+            url: "/Account/Delete",
+            dataType: "json",
+            success: (response) => {
+                if (response.result) {
+                    Snackbar.show({
+                        text: "Account deleted successfully!",
+                        actionTextColor: "#CFE2FF"
+                    });
+                    window.location.replace(response.url);
+                }
+                else {
+                    Snackbar.show({
+                        text: "An Error Occured",
+                        actionTextColor: "#CFE2FF"
+                    });
+                }
+            }
+        })
+    })
+
 })

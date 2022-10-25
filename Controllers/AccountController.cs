@@ -80,5 +80,20 @@ namespace JEDI_Carpool.Controllers
 
         }
 
+
+        // POST: Account/Delete
+        [HttpPost]
+        public JsonResult Delete()
+        {
+            var loggeduser = Session["CurrentUser"] as LoginViewModel;
+            
+            if (loggeduser != null)
+            {
+                var account = AccountBL.GetAccount(loggeduser);
+                var result = AccountBL.DeleteAccount(account.AccountId);
+                return Json(new { result = result, url = Url.Action("Logout", "Home") });
+            }
+            return Json(new { result = false });
+        }
     }
 }

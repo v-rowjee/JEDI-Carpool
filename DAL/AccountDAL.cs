@@ -16,6 +16,7 @@ namespace JEDI_Carpool.DAL
         AccountModel GetAccount(LoginViewModel model);
         List<AccountModel> GetAllAccounts();
         string UpdateAccount(AccountModel model);
+        bool DeleteAccount(int id);
     }
     public class AccountDAL : IAccountDAL
     {
@@ -43,6 +44,14 @@ namespace JEDI_Carpool.DAL
                     WHERE AccountId=@AccountId;
                 END
             ";
+        private const string DeleteAccountQuery = @"
+            DELETE FROM AppUser WHERE AccountId=@AccountId;
+            DELETE FROM Car WHERE DriverId=@AccountId;
+            DELETE FROM Booking WHERE PassengerId=@AccountId;
+            DELETE FROM Ride WHERE DriverId=@AccountId;
+            DELETE FROM Account WHERE AccountId=@AccountId";
+
+
         public AccountModel GetAccount(LoginViewModel model)
         {
             var account = new AccountModel();
@@ -115,5 +124,10 @@ namespace JEDI_Carpool.DAL
             return isValid ? "Success" : "Error";
         }
 
+        public bool DeleteAccount(int id)
+        {
+            var parameter = new SqlParameter("@AccountId", id);
+            return DBCommand.DeleteData(DeleteAccountQuery, parameter);
+        }
     }
 }

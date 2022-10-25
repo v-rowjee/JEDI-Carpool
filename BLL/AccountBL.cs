@@ -11,42 +11,48 @@ namespace JEDI_Carpool.DAL.Common
         AccountModel GetAccount(LoginViewModel model);
         List<AccountModel> GetAllAccounts();
         string UpdateAccount(AccountModel model);
+        bool DeleteAccount(int id);
     }
     public class AccountBL : IAccountBL
     {
-        public IAccountDAL accountDAL;
-        public AccountBL(IAccountDAL accountDAL)
+        public IAccountDAL AccountDAL;
+        public AccountBL(IAccountDAL AccountDAL)
         {
-            this.accountDAL = accountDAL;
+            this.AccountDAL = AccountDAL;
         }
         public AccountBL()
         {
-            this.accountDAL = new AccountDAL();
+            this.AccountDAL = new AccountDAL();
         }
 
 
         public AccountModel GetAccount(LoginViewModel model)
         {
-            return accountDAL.GetAccount(model);
+            return AccountDAL.GetAccount(model);
         }
 
         public List<AccountModel> GetAllAccounts()
         {
-            return accountDAL.GetAllAccounts();
+            return AccountDAL.GetAllAccounts();
         }
 
         public string UpdateAccount(AccountModel model)
         {
             if (ValidateDuplicatedEmail(model))
             {
-                return accountDAL.UpdateAccount(model);
+                return AccountDAL.UpdateAccount(model);
             }
             return "DuplicatedEmail";
         }
 
+        public bool DeleteAccount(int id)
+        {
+            return AccountDAL.DeleteAccount(id);
+        }
+
         private bool ValidateDuplicatedEmail(AccountModel model)
         {
-            var accounts = accountDAL.GetAllAccounts()
+            var accounts = AccountDAL.GetAllAccounts()
                 .Where(x => x.Email.Equals(model.Email))
                 .FirstOrDefault(a => a.AccountId != model.AccountId);
 
