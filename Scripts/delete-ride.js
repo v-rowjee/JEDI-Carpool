@@ -17,8 +17,9 @@ $('#deleteRide').click(() => {
                 Snackbar.show({
                     text: "Ride removed!",
                     actionTextColor: "#CFE2FF",
+                    actionText: "Share New",
+                    onActionClick: () => window.location.replace(response.url)
                 });
-                location.reload()
             }
             else {
                 Snackbar.show({
