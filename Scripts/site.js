@@ -18,6 +18,14 @@
     })
 })()
 
+//page laod
+$(window).on('load', function () {
+    $('#loading').css("width", "100%")
+    setTimeout(() => {
+        $('#loading').fadeOut()
+    }, 750);
+})
+
 // https://codepen.io/adethis/pen/BaWMLKO
 $(document).ready(function () {
     // Action next
