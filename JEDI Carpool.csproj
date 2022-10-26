@@ -142,6 +142,7 @@
     <Compile Include="BLL\RideBL.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\CarController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -298,6 +299,7 @@
     <Content Include="Views\Ride\View.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Ride\Search.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
