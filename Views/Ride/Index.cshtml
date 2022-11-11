@@ -64,8 +64,8 @@
                                 @Html.ActionLink("View", "View", "Ride", new { @id = Ride.RideId }, new { @class = "btn btn-sm btn-primary w-100" })
                             </div>
                             <div class="col-sm-2">
-                                <form id="deleteRideForm">
-                                    <input id="rideId" type="hidden" value="@Ride.RideId" hidden />
+                                <form method="post" id="deleteRideForm">
+                                    <input id="rideId" type="hidden" value="@Ride.RideId" />
                                     <button id="deleteRide" class="btn btn-sm btn-outline-danger w-100" data-bs-toggle="tooltip" data-bs-title="Remove this ride">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>

@@ -18,7 +18,7 @@ $('#deleteRide').click(() => {
                     text: "Ride removed!",
                     actionTextColor: "#CFE2FF",
                     actionText: "Share New",
-                    onActionClick: () => window.location.replace(response.url)
+                    onActionClick: () => { window.location.replace(response.url) }
                 });
             }
             else {
